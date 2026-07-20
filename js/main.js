@@ -27,22 +27,42 @@
     var title = document.querySelector(".intro__title");
     if (!title) return;
 
-    // Split "Resetrix" into char spans
-    var text = title.textContent;
-    title.textContent = "";
-    var chars = [];
-    for (var i = 0; i < text.length; i++) {
-      var s = document.createElement("span");
-      s.className = "char";
-      s.textContent = text[i];
-      title.appendChild(s);
-      chars.push(s);
+    var chars = Array.prototype.slice.call(title.querySelectorAll(".char"));
+    var spirit = title.querySelector(".intro__spirit-dot");
+
+    function startSpiritWave() {
+      if (REDUCED || !window.anime || !spirit || spirit.dataset.waveStarted) return;
+      spirit.dataset.waveStarted = "true";
+
+      anime({
+        targets: spirit.querySelector(".spirit-tail"),
+        keyframes: [
+          { d: "M39 48C29 39 24 29 31 18C38 7 54 2 68 9C56 14 49 21 53 29C58 38 53 46 45 50Z", duration: 520 },
+          { d: "M39 48C38 39 40 30 48 23C56 15 67 13 73 20C62 17 56 23 59 31C62 39 55 47 45 50Z", duration: 620 },
+          { d: "M39 48C31 38 31 27 38 18C46 8 58 5 68 11C58 12 53 18 55 25C58 33 55 42 45 50Z", duration: 540 },
+        ],
+        easing: "easeInOutSine",
+        loop: true,
+      });
+
+      anime({
+        targets: spirit.querySelector(".spirit-tail-highlight"),
+        keyframes: [
+          { d: "M41 40C31 31 34 17 47 10", duration: 520 },
+          { d: "M41 40C45 32 52 26 63 24", duration: 620 },
+          { d: "M41 40C38 31 42 20 52 15", duration: 540 },
+        ],
+        easing: "easeInOutSine",
+        loop: true,
+      });
     }
 
     var alreadyScrolled = (window.scrollY || 0) > 40;
 
     if (REDUCED || alreadyScrolled || !window.anime) {
       // Final visible state, no animation
+      if (spirit) spirit.classList.add("is-alive");
+      startSpiritWave();
       document.querySelectorAll(".intro__tagline, .intro__sub, .intro__cue")
         .forEach(function (el) { el.style.opacity = "1"; });
       return;
@@ -57,6 +77,18 @@
       duration: 900,
       delay: anime.stagger(55),
     })
+    .add({
+      targets: spirit,
+      opacity: [0, 1],
+      scale: [0.18, 1.22, 1],
+      rotate: ["-20deg", "8deg", "0deg"],
+      duration: 820,
+      easing: "easeOutElastic(1, .55)",
+      complete: function () {
+        if (spirit) spirit.classList.add("is-alive");
+        startSpiritWave();
+      },
+    }, 330)
     .add({
       targets: ".intro__tagline",
       opacity: [0, 1],

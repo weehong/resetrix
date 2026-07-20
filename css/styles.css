@@ -256,6 +256,173 @@ main { position: relative; z-index: 10; }
 }
 .intro__title .char { display: inline-block; will-change: transform, opacity; }
 
+.intro__title-visual { display: inline-block; }
+
+.intro__spirit-i {
+  position: relative;
+  cursor: default;
+}
+
+/* Keep Sora's original i stem while clipping away only its native dot. */
+.intro__spirit-glyph {
+  display: inline-block;
+  clip-path: inset(31% -35% 0 -35%);
+}
+
+.intro__spirit-dot {
+  position: absolute;
+  left: 50%;
+  bottom: 0.68em;
+  width: 0.44em;
+  height: 0.58em;
+  color: #67e8f9;
+  transform-origin: 50% 88%;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.js .intro__spirit-dot {
+  opacity: 0;
+  transform: scale(0.2) rotate(-18deg);
+}
+
+.js .intro__spirit-dot.is-alive {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.intro__spirit-dot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 0.07em rgba(103, 232, 249, 0.72));
+}
+
+.spirit-body,
+.spirit-tail,
+.spirit-tail-highlight,
+.spirit-core,
+.spirit-sparks circle {
+  transform-box: view-box;
+  will-change: transform, opacity;
+}
+
+.spirit-body {
+  transform-origin: 41px 70px;
+  filter: url(#spirit-soft-glow);
+}
+
+.spirit-tail {
+  transform-origin: 42px 48px;
+  filter: url(#spirit-soft-glow);
+}
+
+.spirit-tail-highlight {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.78);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  transform-origin: 42px 48px;
+}
+
+.spirit-core {
+  fill: rgba(255, 255, 255, 0.78);
+  transform-origin: 41px 70px;
+  filter: blur(1px);
+}
+
+.spirit-sparks { fill: #a5f3fc; }
+.spirit-sparks circle { opacity: 0; transform-origin: center; }
+
+.intro__spirit-dot.is-alive .spirit-tail {
+  animation: spirit-tail-flicker 1.8s ease-in-out infinite;
+}
+
+.intro__spirit-dot.is-alive .spirit-tail-highlight {
+  animation: spirit-tail-highlight 1.35s ease-in-out infinite;
+}
+
+.intro__spirit-dot.is-alive .spirit-body {
+  animation: spirit-body-breathe 1.35s ease-in-out infinite;
+}
+
+.intro__spirit-dot.is-alive .spirit-core {
+  animation: spirit-core-pulse 0.86s ease-in-out infinite alternate;
+}
+
+.intro__spirit-dot.is-alive .spirit-sparks circle:nth-child(1) {
+  animation: spirit-spark-left 1.7s ease-out 0.15s infinite;
+}
+
+.intro__spirit-dot.is-alive .spirit-sparks circle:nth-child(2) {
+  animation: spirit-spark-right 1.45s ease-out 0.65s infinite;
+}
+
+.intro__spirit-dot.is-alive .spirit-sparks circle:nth-child(3) {
+  animation: spirit-spark-high 1.9s ease-out 1.05s infinite;
+}
+
+.intro__spirit-i:hover .spirit-tail,
+.intro__spirit-i:hover .spirit-tail-highlight { animation-duration: 0.72s; }
+.intro__spirit-i:hover .spirit-body { animation-duration: 0.7s; }
+
+@keyframes spirit-tail-flicker {
+  0%, 100% { transform: rotate(-1.5deg) translateX(0) scale(1); }
+  28% { transform: rotate(2deg) translateX(1px) scale(0.98, 1.025); }
+  56% { transform: rotate(-2deg) translateX(-1px) scale(1.02, 0.985); }
+  78% { transform: rotate(1deg) translateY(-1px) scale(0.99, 1.02); }
+}
+
+@keyframes spirit-tail-highlight {
+  0%, 100% { opacity: 0.38; transform: translateY(1px); }
+  45% { opacity: 0.95; transform: translateY(-1px); }
+  72% { opacity: 0.58; transform: translateX(1px); }
+}
+
+@keyframes spirit-body-breathe {
+  0%, 100% { transform: scale(1); }
+  34% { transform: scale(1.035, 0.975); }
+  68% { transform: scale(0.98, 1.035); }
+}
+
+@keyframes spirit-core-pulse {
+  from { opacity: 0.48; transform: scale(0.78); }
+  to { opacity: 0.95; transform: scale(1.12); }
+}
+
+@keyframes spirit-spark-left {
+  0%, 28% { opacity: 0; transform: translate(7px, 8px) scale(0.35); }
+  42% { opacity: 0.9; }
+  78%, 100% { opacity: 0; transform: translate(-7px, -8px) scale(1.1); }
+}
+
+@keyframes spirit-spark-right {
+  0%, 22% { opacity: 0; transform: translate(-5px, 9px) scale(0.4); }
+  40% { opacity: 0.85; }
+  76%, 100% { opacity: 0; transform: translate(7px, -9px) scale(1); }
+}
+
+@keyframes spirit-spark-high {
+  0%, 35% { opacity: 0; transform: translate(-3px, 8px) scale(0.3); }
+  48% { opacity: 0.75; }
+  82%, 100% { opacity: 0; transform: translate(4px, -10px) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .intro__spirit-dot,
+  .js .intro__spirit-dot.is-alive {
+    opacity: 1;
+    transform: none;
+  }
+  .intro__spirit-dot *,
+  .intro__spirit-i:hover .spirit-tail,
+  .intro__spirit-i:hover .spirit-tail-highlight,
+  .intro__spirit-i:hover .spirit-body { animation: none !important; }
+  .spirit-core { opacity: 0.78; transform: none; }
+}
+
 .intro__tagline {
   margin-top: 1.4rem;
   font-size: clamp(1.05rem, 2.4vw, 1.5rem);

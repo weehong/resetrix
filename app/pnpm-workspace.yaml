@@ -1,3 +1,4 @@
 allowBuilds:
   '@swc/core': true
+  browser-tabs-lock: false
   esbuild: true

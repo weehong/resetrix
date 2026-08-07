@@ -1,6 +1,29 @@
 {
+	"auth": {
+		"backToSignIn": "Volver al inicio de sesión",
+		"checkingSession": "Comprobando tu sesión…",
+		"completingSignIn": "Completando el inicio de sesión…",
+		"logOut": "Cerrar sesión",
+		"noAccess": "Sin acceso",
+		"noAccessMessage": "Has iniciado sesión, pero tu identidad aún no tiene acceso a Resetrix. Pide a un operador que te asigne el rol de usuario y vuelve a intentarlo.",
+		"redirectingToLogin": "Redirigiendo al inicio de sesión…",
+		"signInFailed": "Error al iniciar sesión"
+	},
 	"home": {
-		"greeting": "¡Hola, Mundo!",
 		"translate": "Traducir"
+	},
+	"profile": {
+		"email": "Correo electrónico",
+		"loadError": "No pudimos cargar tu perfil. Comprueba tu conexión e inténtalo de nuevo.",
+		"loadErrorTitle": "Algo salió mal",
+		"loading": "Cargando tu perfil…",
+		"memberSince": "Miembro desde",
+		"name": "Nombre",
+		"permissions": "Permisos",
+		"retry": "Reintentar",
+		"roles": "Roles",
+		"subtitle": "Tu identidad en Resetrix y lo que puedes hacer.",
+		"title": "Perfil",
+		"userId": "ID de usuario"
 	}
 }

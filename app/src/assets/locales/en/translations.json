@@ -1,6 +1,29 @@
 {
+	"auth": {
+		"backToSignIn": "Back to sign in",
+		"checkingSession": "Checking your session…",
+		"completingSignIn": "Completing sign-in…",
+		"logOut": "Log out",
+		"noAccess": "No access",
+		"noAccessMessage": "You are signed in, but your identity has not been granted access to Resetrix yet. Ask an operator to assign you the user role, then try again.",
+		"redirectingToLogin": "Redirecting to sign in…",
+		"signInFailed": "Sign-in failed"
+	},
 	"home": {
-		"greeting": "Hello, world!",
 		"translate": "Translate"
+	},
+	"profile": {
+		"email": "Email",
+		"loadError": "We could not load your profile. Check your connection and try again.",
+		"loadErrorTitle": "Something went wrong",
+		"loading": "Loading your profile…",
+		"memberSince": "Member since",
+		"name": "Name",
+		"permissions": "Permissions",
+		"retry": "Try again",
+		"roles": "Roles",
+		"subtitle": "Your identity in Resetrix and what you may do.",
+		"title": "Profile",
+		"userId": "User ID"
 	}
 }

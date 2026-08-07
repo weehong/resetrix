@@ -10,9 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// Sample model — replace with your own domain entities.
+/// Local projection of an Auth0 User. `auth0Sub` is the stable identity key
+/// (Auth0 `sub`); email/name sync from token claims on each authenticated call.
 model User {
   id        String   @id @default(cuid())
+  auth0Sub  String   @unique
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())

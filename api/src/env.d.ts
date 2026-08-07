@@ -11,5 +11,10 @@ declare namespace NodeJS {
 		readonly RATE_LIMIT_WINDOW_MS?: string;
 		readonly RATE_LIMIT_MAX?: string;
 		readonly DATABASE_URL?: string;
+		readonly AUTH0_JWKS_URI?: string;
+		readonly AUTH0_ISSUER?: string;
+		readonly AUTH0_AUDIENCE?: string;
+		readonly AUTH0_TEST_JWT_SECRET?: string;
+		readonly AUTH0_ROLES_NAMESPACE?: string;
 	}
 }

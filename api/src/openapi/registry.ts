@@ -33,6 +33,37 @@ function dataEnvelope(schema: z.ZodTypeAny): z.ZodTypeAny {
 	return z.object({ data: schema });
 }
 
+registry.registerComponent("securitySchemes", "bearerAuth", {
+	type: "http",
+	scheme: "bearer",
+	bearerFormat: "JWT",
+	description: "Auth0-issued access token for the Resetrix API audience.",
+});
+
+const ProfileSchema = registry.register(
+	"Profile",
+	z.object({
+		id: z.string(),
+		email: z.string().email(),
+		name: z.string().nullable(),
+		createdAt: z.string().datetime(),
+		updatedAt: z.string().datetime(),
+		roles: z.array(z.string()),
+		permissions: z.array(z.string()),
+	})
+);
+
+const ErrorSchema = registry.register(
+	"ApiError",
+	z.object({
+		error: z.object({
+			code: z.string(),
+			message: z.string(),
+			details: z.unknown().optional(),
+		}),
+	})
+);
+
 registry.registerPath({
 	method: "get",
 	path: "/health",
@@ -64,6 +95,34 @@ registry.registerPath({
 			description: "A dependency is unavailable.",
 			content: {
 				"application/json": { schema: dataEnvelope(ReadinessSchema) },
+			},
+		},
+	},
+});
+
+registry.registerPath({
+	method: "get",
+	path: "/api/v1/me",
+	summary: "Profile for the authenticated User",
+	tags: ["Users"],
+	security: [{ bearerAuth: [] }],
+	responses: {
+		200: {
+			description: "The signed-in User's Profile.",
+			content: {
+				"application/json": { schema: dataEnvelope(ProfileSchema) },
+			},
+		},
+		401: {
+			description: "Missing or invalid Bearer access token.",
+			content: {
+				"application/json": { schema: ErrorSchema },
+			},
+		},
+		403: {
+			description: "The token lacks the read:profile permission.",
+			content: {
+				"application/json": { schema: ErrorSchema },
 			},
 		},
 	},

@@ -5,7 +5,7 @@ import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
 
-import { env } from "@/config/env.js";
+import { env, isProduction } from "@/config/env.js";
 import { errorHandler } from "@/middlewares/error-handler.js";
 import { notFoundHandler } from "@/middlewares/not-found.js";
 import { requestLogger } from "@/middlewares/request-logger.js";
@@ -54,12 +54,15 @@ export function createApp(): Application {
 		})
 	);
 
-	// OpenAPI docs.
-	const openApiDocument = buildOpenApiDocument();
-	app.get("/openapi.json", (_request, response) => {
-		response.json(openApiDocument);
-	});
-	app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+	// OpenAPI docs are a development/staging aid only; production does not
+	// expose them.
+	if (!isProduction) {
+		const openApiDocument = buildOpenApiDocument();
+		app.get("/openapi.json", (_request, response) => {
+			response.json(openApiDocument);
+		});
+		app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+	}
 
 	// Application routes.
 	app.use(apiRouter);

@@ -32,6 +32,17 @@ const EnvSchema = z.object({
 		.default("false")
 		.transform((value) => value === "true"),
 	DATABASE_URL: z.string().url().optional(),
+	// Auth0 (API audience). Optional in development/test so unauthenticated
+	// probes and docs still boot; production must supply all three.
+	// Empty strings count as "unset" for Auth0 config.
+	AUTH0_JWKS_URI: z.string().url().optional().or(z.literal("")),
+	AUTH0_ISSUER: z.string().url().optional().or(z.literal("")),
+	AUTH0_AUDIENCE: z.string().optional(),
+	// Test-only HS256 secret used when AUTH0_JWKS_URI is unset (so signed test
+	// JWTs need no remote JWKS). Never used in production.
+	AUTH0_TEST_JWT_SECRET: z.string().optional(),
+	// Namespace prefix for the roles custom claim in Auth0 access tokens.
+	AUTH0_ROLES_NAMESPACE: z.string().default("https://resetrix.dev"),
 });
 
 /**
@@ -40,20 +51,32 @@ const EnvSchema = z.object({
  * can tell whether the value was actually supplied before defaulting it.
  */
 const ConfiguredEnvSchema = EnvSchema.transform((config, context) => {
-	if (config.DATABASE_URL) {
-		return { ...config, DATABASE_URL: config.DATABASE_URL };
-	}
-
 	if (config.NODE_ENV === "production") {
-		context.addIssue({
-			code: z.ZodIssueCode.custom,
-			path: ["DATABASE_URL"],
-			message: "DATABASE_URL is required in production",
-		});
-		return z.NEVER;
+		let hasIssue = false;
+		for (const key of [
+			"DATABASE_URL",
+			"AUTH0_JWKS_URI",
+			"AUTH0_ISSUER",
+			"AUTH0_AUDIENCE",
+		] as const) {
+			if (!config[key]) {
+				hasIssue = true;
+				context.addIssue({
+					code: z.ZodIssueCode.custom,
+					path: [key],
+					message: `${key} is required in production`,
+				});
+			}
+		}
+		if (hasIssue) {
+			return z.NEVER;
+		}
 	}
 
-	return { ...config, DATABASE_URL: LOCAL_DATABASE_URL };
+	return {
+		...config,
+		DATABASE_URL: config.DATABASE_URL ?? LOCAL_DATABASE_URL,
+	};
 });
 
 export type Env = z.infer<typeof ConfiguredEnvSchema>;

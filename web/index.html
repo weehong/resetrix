@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  RESETRIX PTE. LTD. — Immersive Scroll Experience
+  ============================================================================
+  The whole page IS the scroll journey:
+    Intro (title)  ->  4 scroll-story chapters (8 lifecycle beats)  ->  Finale
+
+  HOW TO RUN LOCALLY:
+    cd <this folder>
+    python3 -m http.server 8000        # or: npx serve
+    open http://localhost:8000
+  (A local server is required because three.js loads as an ES module.
+   There is NO build step and NO npm install.)
+
+  WHERE TO EDIT CONTENT:
+    * Phase titles / paragraphs ...... this file, search "EDIT COPY"
+    * Contact email .................. search "EDIT EMAIL" (here + js/main.js)
+    * Phase colors / 3D formations ... js/scene.js  (FORMATION_BUILDERS, FORMATION_COLORS)
+    * Scroll behavior / timings ...... js/lifecycle.js
+  ============================================================================
+-->
+<html lang="en" data-phase="0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resetrix — Digital Transformation, Engineered for SMEs</title>
+  <meta name="description" content="Resetrix Pte. Ltd. is a Singapore software house helping SMEs achieve digital transformation through technical consultancy and custom software development." />
+
+  <!-- Inline SVG favicon (no binary assets needed) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%2322d3ee' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2322d3ee'/%3E%3C/svg%3E" />
+
+  <!-- Fonts: Sora (display) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Set .js before first paint so CSS can hide JS-animated intro elements
+       (prevents a flash of visible content before anime.js runs). -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- three.js self-hosted so its content can be integrity-verified / audited. -->
+  <!-- anime.js  -> all visual/text animation (UI transitions, timelines)      -->
+  <!-- GSAP      -> used ONLY as the scroll engine (pin + scrub progress)      -->
+  <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js" integrity="sha384-oLmuahJgYYR1aWgZwdMQQ2AClE6A2eEwV2x1Z7cbIHehfkkmommQLH3wX1NDEszb" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+
+  <!-- App scripts (load order-safe: lifecycle.js waits for scene-ready event) -->
+  <script type="module" src="js/scene.js"></script>
+  <script defer src="js/lifecycle.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+
+<body class="is-prejourney">
+
+  <!-- ================================================================
+       LAYER 0 — Fixed full-screen 3D canvas (rendered by js/scene.js)
+       ================================================================ -->
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ================================================================
+       FIXED CHROME — minimal, always visible
+       ================================================================ -->
+  <header class="chrome">
+    <!-- EDIT COPY: logo / wordmark -->
+    <a class="chrome__logo" href="#top" data-scroll="top">Resetrix<span class="chrome__logo-dot">.</span></a>
+    <a class="chrome__contact" href="#finale" data-scroll="finale">Contact</a>
+  </header>
+
+  <!-- Four narrative chapters. Active state is set by lifecycle.js. -->
+  <nav class="rail" aria-label="Development lifecycle progress">
+    <div class="rail__track"><div class="rail__fill"></div></div>
+    <button class="rail__dot" type="button" data-goto="0" aria-label="Chapter 1: Find the signal"><span class="rail__label" aria-hidden="true">Find the signal</span></button>
+    <button class="rail__dot" type="button" data-goto="1" aria-label="Chapter 2: Shape the system"><span class="rail__label" aria-hidden="true">Shape the system</span></button>
+    <button class="rail__dot" type="button" data-goto="2" aria-label="Chapter 3: Earn the trust"><span class="rail__label" aria-hidden="true">Earn the trust</span></button>
+    <button class="rail__dot" type="button" data-goto="3" aria-label="Chapter 4: Put it in motion"><span class="rail__label" aria-hidden="true">Put it in motion</span></button>
+  </nav>
+
+  <!-- Live phase counter (bottom-left). Updated by js/lifecycle.js. -->
+  <div class="counter" aria-hidden="true">
+    <span class="counter__current">01</span>
+    <span class="counter__sep">/</span>
+    <span class="counter__total">04</span>
+    <span class="counter__name">Find the signal</span>
+  </div>
+
+  <main id="top">
+
+    <!-- ================================================================
+         SCREEN 0 — INTRO  (100vh, scrolls away as phase 1 assembles)
+         ================================================================ -->
+    <section id="intro" class="intro">
+      <div class="architecture" aria-hidden="true">
+        <div class="architecture__visual">
+          <svg viewBox="0 0 1440 900" focusable="false">
+            <defs>
+              <filter id="architecture-glow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <linearGradient id="architecture-flow" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#22d3ee" stop-opacity="0.15" />
+                <stop offset="0.5" stop-color="#a5f3fc" stop-opacity="0.9" />
+                <stop offset="1" stop-color="#22d3ee" stop-opacity="0.15" />
+              </linearGradient>
+            </defs>
+
+            <g class="architecture__grid">
+              <path d="M70 120H1370M70 280H1370M70 440H1370M70 600H1370M70 760H1370" />
+              <path d="M160 70V830M360 70V830M560 70V830M760 70V830M960 70V830M1160 70V830M1360 70V830" />
+            </g>
+
+            <g class="architecture__links">
+              <path d="M500 342H605C642 342 642 410 680 410" />
+              <path d="M500 492H605C642 492 642 450 680 450" />
+              <path d="M800 430H910C948 430 948 285 990 285H1050" />
+              <path d="M800 430H910C948 430 948 430 990 430H1050" />
+              <path d="M800 430H910C948 430 948 575 990 575H1050" />
+              <path d="M740 370V245C740 210 775 210 775 175" />
+              <path d="M740 490V655" />
+              <path d="M305 655V600M530 655V600M740 655V490M950 655V600M1175 655V600" />
+            </g>
+
+            <g class="architecture__flows">
+              <path pathLength="1" d="M500 342H605C642 342 642 410 680 410" />
+              <path pathLength="1" d="M500 492H605C642 492 642 450 680 450" />
+              <path pathLength="1" d="M800 430H910C948 430 948 285 990 285H1050" />
+              <path pathLength="1" d="M800 430H910C948 430 948 430 990 430H1050" />
+              <path pathLength="1" d="M800 430H910C948 430 948 575 990 575H1050" />
+            </g>
+
+            <g class="architecture__nodes">
+              <g class="architecture__node architecture__node--product" transform="translate(100 230)">
+                <rect width="400" height="310" rx="18" />
+                <path class="architecture__panel-rule" d="M0 48H400" />
+                <circle class="architecture__window-dot" cx="26" cy="24" r="4" />
+                <circle class="architecture__window-dot" cx="42" cy="24" r="4" />
+                <circle class="architecture__window-dot" cx="58" cy="24" r="4" />
+                <text x="82" y="29">PRODUCT / WORKSPACE</text>
+                <g class="architecture__code" transform="translate(28 80)">
+                  <path d="M0 0H78M94 0H186M18 28H126M145 28H236M18 56H82M101 56H202M0 84H108M127 84H170" />
+                  <path class="architecture__code-accent" d="M0 118H58M76 118H156M18 146H96M114 146H260" />
+                </g>
+                <g class="architecture__interface" transform="translate(284 80)">
+                  <rect width="88" height="38" rx="6" />
+                  <rect y="54" width="88" height="86" rx="6" />
+                  <path d="M14 18H58M14 75H72M14 92H62M14 109H48" />
+                </g>
+                <text class="architecture__meta" x="28" y="282">DESIGN + CODE / ONE PRODUCT LOOP</text>
+              </g>
+
+              <g class="architecture__core" transform="translate(740 430)">
+                <circle class="architecture__orbit architecture__orbit--outer" r="98" />
+                <circle class="architecture__orbit architecture__orbit--inner" r="72" />
+                <circle class="architecture__core-disc" r="49" />
+                <path d="M-18 0H18M0-18V18" />
+                <text x="-51" y="130">ENGINEERING CORE</text>
+              </g>
+
+              <g class="architecture__node architecture__node--cloud" transform="translate(690 105)">
+                <path d="M20 56C4 27 41 7 65 26C83-4 134 9 130 46C161 52 157 96 125 96H31C-1 96-8 67 20 56Z" />
+                <text x="42" y="66">CLOUD</text>
+              </g>
+
+              <g class="architecture__node architecture__node--service" transform="translate(1050 240)">
+                <rect width="250" height="90" rx="12" />
+                <circle cx="28" cy="45" r="9" /><text x="52" y="40">API SERVICES</text><text class="architecture__meta" x="52" y="62">CONNECTED SYSTEMS</text>
+              </g>
+              <g class="architecture__node architecture__node--service" transform="translate(1050 385)">
+                <rect width="250" height="90" rx="12" />
+                <circle cx="28" cy="45" r="9" /><text x="52" y="40">AUTOMATION</text><text class="architecture__meta" x="52" y="62">WORKFLOW ENGINE</text>
+              </g>
+              <g class="architecture__node architecture__node--service" transform="translate(1050 530)">
+                <rect width="250" height="90" rx="12" />
+                <circle cx="28" cy="45" r="9" /><text x="52" y="40">DATA PLATFORM</text><text class="architecture__meta" x="52" y="62">SECURE + OBSERVABLE</text>
+              </g>
+
+              <g class="architecture__pipeline" transform="translate(185 655)">
+                <path class="architecture__pipeline-line" d="M0 46H1110" />
+                <g transform="translate(120)"><circle cy="46" r="11" /><text x="-32" y="82">DISCOVER</text></g>
+                <g transform="translate(345)"><circle cy="46" r="11" /><text x="-24" y="82">DESIGN</text></g>
+                <g transform="translate(555)"><circle cy="46" r="11" /><text x="-19" y="82">BUILD</text></g>
+                <g transform="translate(765)"><circle cy="46" r="11" /><text x="-18" y="82">SHIP</text></g>
+                <g transform="translate(990)"><circle cy="46" r="11" /><text x="-27" y="82">EVOLVE</text></g>
+                <text class="architecture__meta" x="0" y="18">CONTINUOUS DELIVERY PIPELINE</text>
+              </g>
+            </g>
+
+            <g class="architecture__signals" filter="url(#architecture-glow)">
+              <circle cx="560" cy="342" r="4" /><circle cx="610" cy="492" r="4" />
+              <circle cx="875" cy="430" r="4" /><circle cx="950" cy="330" r="4" />
+              <circle cx="950" cy="530" r="4" /><circle cx="740" cy="210" r="4" />
+            </g>
+          </svg>
+        </div>
+        <p class="architecture__caption"><span></span>Software product engine / designed to evolve</p>
+      </div>
+
+      <!-- EDIT COPY: intro title + tagline -->
+      <h1 class="intro__title" aria-label="Resetrix"><span class="intro__title-visual" aria-hidden="true"><span class="char">R</span><span class="char">e</span><span class="char">s</span><span class="char">e</span><span class="char">t</span><span class="char">r</span><span class="char intro__spirit-i"><span class="intro__spirit-glyph">i</span><span class="intro__spirit-dot"><video class="intro__wisp-video" muted loop playsinline preload="metadata"><source src="assets/wisp.mp4" type="video/mp4" /></video></span></span><span class="char">x</span><span class="char"><span class="intro__cursor">_</span></span></span></h1>
+      <p class="intro__tagline">Digital transformation, engineered for SMEs.</p>
+      <p class="intro__sub">Technical consultancy &amp; custom software, built around your business.</p>
+      <button class="intro__cue" data-scroll="why" aria-label="Scroll to discover Resetrix">
+        <span class="intro__cue-text">Discover Resetrix</span>
+        <span class="intro__cue-arrow" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <!-- ================================================================
+         WHY RESETRIX — the name and positioning become a living system
+         ================================================================ -->
+    <section id="why" class="positioning" aria-labelledby="positioning-title">
+      <div class="positioning__stage">
+        <div class="positioning__copy section-reveal">
+          <p class="section-kicker">Why Resetrix</p>
+          <h2 id="positioning-title" class="section-title">Reset what limits you.<br />Rebuild around what works.</h2>
+          <p class="positioning__lead">Most software asks your business to adapt to it. We take the opposite approach: understand how your operation really works, then engineer the system around it.</p>
+          <div class="positioning__definitions" aria-label="The meaning behind Resetrix">
+            <div class="positioning__definition" data-definition="reset">
+              <span class="positioning__word">Reset</span>
+              <p>Question inherited friction and start from the real business need.</p>
+            </div>
+            <div class="positioning__definition" data-definition="matrix">
+              <span class="positioning__word">Matrix</span>
+              <p>Connect people, workflows, and technology into one adaptable system.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="matrix" aria-hidden="true">
+          <div class="matrix__label matrix__label--before">Rigid software</div>
+          <div class="matrix__label matrix__label--after">Built around you</div>
+          <div class="matrix__grid">
+            <span class="matrix__node" style="--x: 8%; --y: 14%; --tx: 20%; --ty: 20%"></span>
+            <span class="matrix__node" style="--x: 75%; --y: 8%; --tx: 50%; --ty: 20%"></span>
+            <span class="matrix__node" style="--x: 28%; --y: 75%; --tx: 80%; --ty: 20%"></span>
+            <span class="matrix__node" style="--x: 82%; --y: 58%; --tx: 20%; --ty: 50%"></span>
+            <span class="matrix__node matrix__node--core" style="--x: 48%; --y: 43%; --tx: 50%; --ty: 50%"></span>
+            <span class="matrix__node" style="--x: 5%; --y: 48%; --tx: 80%; --ty: 50%"></span>
+            <span class="matrix__node" style="--x: 62%; --y: 88%; --tx: 20%; --ty: 80%"></span>
+            <span class="matrix__node" style="--x: 93%; --y: 86%; --tx: 50%; --ty: 80%"></span>
+            <span class="matrix__node" style="--x: 42%; --y: 18%; --tx: 80%; --ty: 80%"></span>
+          </div>
+          <div class="matrix__status"><span></span><strong>System fit</strong><b>Adaptive</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         CAPABILITIES — selectable signals, not a conventional card wall
+         ================================================================ -->
+    <section id="capabilities" class="capabilities" aria-labelledby="capabilities-title">
+      <div class="capabilities__heading section-reveal">
+        <p class="section-kicker">What we build</p>
+        <h2 id="capabilities-title" class="section-title">One partner.<br />Every layer connected.</h2>
+        <p>Select a capability to see where it creates value.</p>
+      </div>
+
+      <div class="capability-console section-reveal">
+        <div class="capability-console__radar" aria-hidden="true">
+          <div class="capability-console__orbit capability-console__orbit--one"></div>
+          <div class="capability-console__orbit capability-console__orbit--two"></div>
+          <div class="capability-console__beam"></div>
+          <div class="capability-console__core"><span>RX</span></div>
+          <span class="capability-console__signal capability-console__signal--1"></span>
+          <span class="capability-console__signal capability-console__signal--2"></span>
+          <span class="capability-console__signal capability-console__signal--3"></span>
+          <p class="capability-console__readout">SIGNAL / <span>PRODUCT</span></p>
+        </div>
+
+        <div class="capability-console__content">
+          <div class="capability-tabs" role="tablist" aria-label="Resetrix capabilities">
+            <button class="capability-tab is-active" type="button" role="tab" aria-selected="true" data-capability="product" data-index="01">Web &amp; mobile</button>
+            <button class="capability-tab" type="button" role="tab" aria-selected="false" data-capability="systems" data-index="02">Backend systems</button>
+            <button class="capability-tab" type="button" role="tab" aria-selected="false" data-capability="integrations" data-index="03">APIs &amp; integrations</button>
+            <button class="capability-tab" type="button" role="tab" aria-selected="false" data-capability="experience" data-index="04">UX/UI design</button>
+            <button class="capability-tab" type="button" role="tab" aria-selected="false" data-capability="cloud" data-index="05">Cloud &amp; DevOps</button>
+            <button class="capability-tab" type="button" role="tab" aria-selected="false" data-capability="evolution" data-index="06">Consultancy &amp; support</button>
+          </div>
+
+          <div class="capability-detail" role="tabpanel" aria-live="polite">
+            <p class="capability-detail__index">Capability 01</p>
+            <h3 class="capability-detail__title">Products people can rely on.</h3>
+            <p class="capability-detail__description">Purpose-built web, Android, and iOS applications designed around real workflows, clear journeys, and long-term scale.</p>
+            <p class="capability-detail__outcome"><span>Outcome</span> One consistent product experience, wherever your customers or teams work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         THE JOURNEY — four scroll chapters, two lifecycle beats each.
+         Every chapter owns its own sticky stage and scroll range.
+         ================================================================ -->
+    <section id="journey" class="journey" aria-label="Our 8-step development lifecycle">
+      <article class="story-chapter" data-chapter="0" data-from="0" data-to="1" data-short="Find the signal">
+        <div class="story-chapter__stage">
+          <div class="story-chapter__number" aria-hidden="true">01</div>
+          <div class="chapter-illustration" aria-hidden="true">
+            <svg viewBox="0 0 600 600" focusable="false">
+              <g class="illustration-grid">
+                <path data-draw data-start="0.04" data-end="0.24" pathLength="1" d="M70 120H530M70 240H530M70 360H530M70 480H530" />
+                <path data-draw data-start="0.06" data-end="0.28" pathLength="1" d="M120 70V530M240 70V530M360 70V530M480 70V530" />
+              </g>
+              <g class="illustration-primary">
+                <path data-draw data-start="0.08" data-end="0.34" pathLength="1" d="M48 138C128 82 151 206 224 160S299 111 338 215" />
+                <path data-draw data-start="0.10" data-end="0.36" pathLength="1" d="M48 238C119 286 158 194 222 246S287 311 338 258" />
+                <path data-draw data-start="0.12" data-end="0.38" pathLength="1" d="M48 352C116 288 159 404 221 345S293 286 338 304" />
+                <path data-draw data-start="0.14" data-end="0.40" pathLength="1" d="M48 456C132 510 163 390 228 439S294 478 338 354" />
+              </g>
+              <g class="illustration-secondary">
+                <path data-draw data-start="0.30" data-end="0.58" pathLength="1" d="M338 215C377 231 379 274 407 290M338 258C371 265 378 282 407 290M338 304C371 304 382 297 407 290M338 354C375 337 377 306 407 290" />
+                <path data-draw data-start="0.46" data-end="0.78" pathLength="1" d="M407 290H451L464 251L486 332L501 290H554" />
+                <path data-draw data-start="0.54" data-end="0.84" pathLength="1" d="M407 245A45 45 0 1 0 407 335A45 45 0 1 0 407 245Z" />
+              </g>
+              <g class="illustration-node" data-reveal data-start="0.22" data-end="0.42">
+                <circle cx="407" cy="290" r="8" />
+                <circle class="node-ring" cx="407" cy="290" r="18" />
+                <text x="426" y="224">SIGNAL / 01</text>
+              </g>
+              <g class="illustration-readout" data-reveal data-start="0.60" data-end="0.82">
+                <text x="452" y="368">NOISE  0.12</text>
+                <text x="452" y="390">CLARITY 0.88</text>
+              </g>
+            </svg>
+          </div>
+          <div class="story-chapter__content">
+            <p class="story-chapter__eyebrow">Chapter 01 &middot; Discover</p>
+            <h2 class="story-chapter__statement">Every transformation begins as noise.</h2>
+            <p class="story-chapter__bridge">We listen until the signal appears.</p>
+            <div class="story-beats">
+              <div class="story-beats__track">
+                <section class="story-beat">
+                  <p class="story-beat__index">01 / Listen</p>
+                  <h3 class="story-beat__title">Find the real problem.</h3>
+                  <p class="story-beat__desc">We map workflows, surface friction, and define what success means before a single pixel is drawn.</p>
+                </section>
+                <section class="story-beat">
+                  <p class="story-beat__index">02 / Design</p>
+                  <h3 class="story-beat__title">Give the signal a shape.</h3>
+                  <p class="story-beat__desc">Requirements become clear journeys, wireframes, and interfaces built around how your team actually works.</p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="story-chapter" data-chapter="1" data-from="2" data-to="3" data-short="Shape the system">
+        <div class="story-chapter__stage">
+          <div class="story-chapter__number" aria-hidden="true">02</div>
+          <div class="chapter-illustration" aria-hidden="true">
+            <svg viewBox="0 0 600 600" focusable="false">
+              <g class="illustration-grid">
+                <path data-draw data-start="0.04" data-end="0.24" pathLength="1" d="M74 96H526V504H74ZM110 96V504M490 96V504M74 132H526M74 468H526" />
+                <path data-draw data-start="0.08" data-end="0.28" pathLength="1" d="M96 74V118M504 74V118M96 482V526M504 482V526M52 118H96M504 118H548M52 482H96M504 482H548" />
+              </g>
+              <g class="illustration-primary">
+                <path data-draw data-start="0.10" data-end="0.36" pathLength="1" d="M126 170H258V260H126ZM342 170H474V260H342ZM126 340H258V430H126ZM342 340H474V430H342Z" />
+                <path data-draw data-start="0.14" data-end="0.42" pathLength="1" d="M258 215H300V185H342M258 385H300V415H342M192 260V300H408V260M192 340V300M408 340V300" />
+              </g>
+              <g class="illustration-secondary">
+                <path data-draw data-start="0.42" data-end="0.70" pathLength="1" d="M262 266L300 228L338 266L300 304ZM262 334L300 296L338 334L300 372Z" />
+                <path data-draw data-start="0.54" data-end="0.82" pathLength="1" d="M108 150L84 150L84 450L108 450M492 150H516V450H492" />
+                <path data-draw data-start="0.60" data-end="0.88" pathLength="1" d="M144 194H238M362 194H456M144 364H238M362 364H456" />
+              </g>
+              <g class="illustration-node" data-reveal data-start="0.24" data-end="0.46">
+                <circle cx="192" cy="215" r="7" /><circle cx="408" cy="215" r="7" />
+                <circle cx="192" cy="385" r="7" /><circle cx="408" cy="385" r="7" />
+                <circle class="node-ring" cx="300" cy="300" r="14" />
+              </g>
+              <g class="illustration-readout" data-reveal data-start="0.62" data-end="0.86">
+                <text x="126" y="158">INPUT</text><text x="414" y="158">LOGIC</text>
+                <text x="126" y="456">DATA</text><text x="400" y="456">OUTPUT</text>
+                <text x="244" y="548">SYSTEM / ASSEMBLED</text>
+              </g>
+            </svg>
+          </div>
+          <div class="story-chapter__content">
+            <p class="story-chapter__eyebrow">Chapter 02 &middot; Build</p>
+            <h2 class="story-chapter__statement">Clarity becomes a system.</h2>
+            <p class="story-chapter__bridge">Aligned first. Engineered second.</p>
+            <div class="story-beats">
+              <div class="story-beats__track">
+                <section class="story-beat">
+                  <p class="story-beat__index">03 / Align</p>
+                  <h3 class="story-beat__title">Agree on the direction.</h3>
+                  <p class="story-beat__desc">You review the design and refine it with us. Nothing moves until the direction is understood and approved.</p>
+                </section>
+                <section class="story-beat">
+                  <p class="story-beat__index">04 / Develop</p>
+                  <h3 class="story-beat__title">Turn decisions into software.</h3>
+                  <p class="story-beat__desc">Short sprints, clean architecture, and regular demos turn the approved experience into a working product.</p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="story-chapter" data-chapter="2" data-from="4" data-to="5" data-short="Earn the trust">
+        <div class="story-chapter__stage">
+          <div class="story-chapter__number" aria-hidden="true">03</div>
+          <div class="chapter-illustration" aria-hidden="true">
+            <svg viewBox="0 0 600 600" focusable="false">
+              <g class="illustration-grid">
+                <path data-draw data-start="0.04" data-end="0.24" pathLength="1" d="M300 62V104M300 496V538M62 300H104M496 300H538M132 132L162 162M438 438L468 468M132 468L162 438M438 162L468 132" />
+              </g>
+              <g class="illustration-primary">
+                <path data-draw data-start="0.08" data-end="0.36" pathLength="1" d="M300 112A188 188 0 1 1 112 300A188 188 0 0 1 300 112Z" />
+                <path data-draw data-start="0.12" data-end="0.40" pathLength="1" d="M300 164A136 136 0 1 1 164 300A136 136 0 0 1 300 164Z" />
+                <path data-draw data-start="0.18" data-end="0.46" pathLength="1" d="M300 216A84 84 0 1 1 216 300A84 84 0 0 1 300 216Z" />
+                <path data-draw data-start="0.22" data-end="0.48" pathLength="1" d="M126 300H474M300 126V474" />
+              </g>
+              <g class="illustration-secondary">
+                <path data-draw data-start="0.42" data-end="0.68" pathLength="1" d="M153 390A188 188 0 0 1 447 210" />
+                <path data-draw data-start="0.50" data-end="0.76" pathLength="1" d="M237 302L283 348L374 248" />
+                <path data-draw data-start="0.58" data-end="0.86" pathLength="1" d="M194 414H406M214 438H386" />
+              </g>
+              <g class="illustration-scanner" data-reveal data-start="0.28" data-end="0.68">
+                <path d="M125 300H475" />
+              </g>
+              <g class="illustration-node" data-reveal data-start="0.24" data-end="0.48">
+                <circle cx="300" cy="300" r="8" /><circle class="node-ring" cx="300" cy="300" r="22" />
+                <circle cx="153" cy="390" r="6" /><circle cx="447" cy="210" r="6" />
+              </g>
+              <g class="illustration-readout" data-reveal data-start="0.62" data-end="0.88">
+                <text x="194" y="470">INTEGRITY / VERIFIED</text>
+                <text x="422" y="320">100%</text>
+              </g>
+            </svg>
+          </div>
+          <div class="story-chapter__content">
+            <p class="story-chapter__eyebrow">Chapter 03 &middot; Validate</p>
+            <h2 class="story-chapter__statement">A system earns trust under pressure.</h2>
+            <p class="story-chapter__bridge">We challenge it before the real world does.</p>
+            <div class="story-beats">
+              <div class="story-beats__track">
+                <section class="story-beat">
+                  <p class="story-beat__index">05 / Review</p>
+                  <h3 class="story-beat__title">Test every assumption.</h3>
+                  <p class="story-beat__desc">Features, edge cases, performance, and security are tested until the product is solid, not merely finished.</p>
+                </section>
+                <section class="story-beat">
+                  <p class="story-beat__index">06 / Sign off</p>
+                  <h3 class="story-beat__title">Make confidence explicit.</h3>
+                  <p class="story-beat__desc">You test-drive the release, final details are resolved, and launch begins with a shared green light.</p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="story-chapter" data-chapter="3" data-from="6" data-to="7" data-short="Put it in motion">
+        <div class="story-chapter__stage">
+          <div class="story-chapter__number" aria-hidden="true">04</div>
+          <div class="chapter-illustration" aria-hidden="true">
+            <svg viewBox="0 0 600 600" focusable="false">
+              <g class="illustration-grid">
+                <path data-draw data-start="0.04" data-end="0.24" pathLength="1" d="M78 470H522M104 492H496M130 514H470" />
+                <path data-draw data-start="0.08" data-end="0.28" pathLength="1" d="M110 120V456M300 86V456M490 120V456" />
+              </g>
+              <g class="illustration-primary">
+                <path data-draw data-start="0.10" data-end="0.36" pathLength="1" d="M72 402C142 402 144 320 214 320S286 402 356 402S428 320 528 320" />
+                <path data-draw data-start="0.14" data-end="0.42" pathLength="1" d="M72 364C151 364 140 242 230 242S302 364 382 364S449 242 528 242" />
+                <path data-draw data-start="0.20" data-end="0.48" pathLength="1" d="M110 166H214V218H110ZM248 122H352V174H248ZM386 166H490V218H386Z" />
+                <path data-draw data-start="0.24" data-end="0.50" pathLength="1" d="M214 192L248 148M352 148L386 192" />
+              </g>
+              <g class="illustration-secondary">
+                <path data-draw data-start="0.42" data-end="0.72" pathLength="1" d="M300 242C209 242 196 330 241 374C286 418 338 377 366 346C394 315 416 270 463 270C510 270 536 308 536 348C536 397 496 430 450 430C380 430 349 366 300 320C251 274 220 210 150 210C104 210 64 243 64 292C64 332 90 370 137 370C184 370 206 325 234 294C262 263 291 242 300 242Z" />
+                <path data-draw data-start="0.58" data-end="0.88" pathLength="1" d="M435 407L450 430L474 416M514 324L536 348L550 326" />
+              </g>
+              <g class="illustration-node" data-reveal data-start="0.24" data-end="0.50">
+                <circle cx="162" cy="192" r="7" /><circle cx="300" cy="148" r="7" /><circle cx="438" cy="192" r="7" />
+                <circle class="node-ring" cx="300" cy="320" r="16" />
+              </g>
+              <g class="illustration-readout" data-reveal data-start="0.64" data-end="0.90">
+                <text x="112" y="154">STAGE</text><text x="264" y="108">DEPLOY</text><text x="406" y="154">LIVE</text>
+                <text x="206" y="474">CONTINUOUS / OPERATION</text>
+              </g>
+            </svg>
+          </div>
+          <div class="story-chapter__content">
+            <p class="story-chapter__eyebrow">Chapter 04 &middot; Evolve</p>
+            <h2 class="story-chapter__statement">Launch is where momentum begins.</h2>
+            <p class="story-chapter__bridge">The system goes live. The partnership keeps moving.</p>
+            <div class="story-beats">
+              <div class="story-beats__track">
+                <section class="story-beat">
+                  <p class="story-beat__index">07 / Deliver</p>
+                  <h3 class="story-beat__title">Move without disruption.</h3>
+                  <p class="story-beat__desc">We handle deployment, migration, and go-live support so the transition feels controlled from day one.</p>
+                </section>
+                <section class="story-beat">
+                  <p class="story-beat__index">08 / Maintain</p>
+                  <h3 class="story-beat__title">Keep progress alive.</h3>
+                  <p class="story-beat__desc">Monitoring, updates, and continuous improvements keep your software secure and evolving with your business.</p>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================================================================
+         DIFFERENCE — compare delivery models through a live fit scanner
+         ================================================================ -->
+    <section id="difference" class="difference" aria-labelledby="difference-title">
+      <div class="difference__heading section-reveal">
+        <p class="section-kicker">Choose the right fit</p>
+        <h2 id="difference-title" class="section-title">The delivery model changes the outcome.</h2>
+      </div>
+
+      <div class="fit-lab section-reveal">
+        <div class="fit-lab__controls" role="tablist" aria-label="Compare software delivery models">
+          <button type="button" class="fit-option" role="tab" aria-selected="false" data-fit="saas">Off-the-shelf SaaS</button>
+          <button type="button" class="fit-option" role="tab" aria-selected="false" data-fit="agency">Large agency</button>
+          <button type="button" class="fit-option is-active" role="tab" aria-selected="true" data-fit="resetrix">Resetrix</button>
+        </div>
+
+        <div class="fit-lab__display" role="tabpanel" aria-live="polite">
+          <div class="fit-visual" aria-hidden="true">
+            <div class="fit-visual__frame">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="fit-visual__scan"></div>
+            <p>OPERATIONAL FIT / <strong>ADAPTIVE</strong></p>
+          </div>
+          <div class="fit-detail">
+            <p class="fit-detail__eyebrow">Selected model / Resetrix</p>
+            <h3>Built around your operation.</h3>
+            <dl>
+              <div><dt>Starting point</dt><dd>Your workflows and goals</dd></div>
+              <div><dt>Change model</dt><dd>Collaborative iteration</dd></div>
+              <div><dt>Best suited to</dt><dd>SMEs with specific needs</dd></div>
+              <div><dt>After launch</dt><dd>Continued product partnership</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         FAQ — native disclosure controls with animated signal feedback
+         ================================================================ -->
+    <section id="questions" class="questions" aria-labelledby="questions-title">
+      <div class="questions__intro section-reveal">
+        <p class="section-kicker">Common questions</p>
+        <h2 id="questions-title" class="section-title">Clarity before commitment.</h2>
+        <p>Explore how we work. If your question is more specific, tell us what you are trying to solve.</p>
+        <a class="questions__link" href="#finale">Start a conversation <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="faq section-reveal">
+        <details class="faq__item" open>
+          <summary><span>01</span>What does Resetrix build?<i aria-hidden="true"></i></summary>
+          <div class="faq__answer"><p>We design and engineer custom web and mobile applications, backend systems, integrations, and cloud foundations. We can support the full journey from product strategy and UX through deployment and ongoing improvement.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span>02</span>Why choose custom software over SaaS?<i aria-hidden="true"></i></summary>
+          <div class="faq__answer"><p>SaaS is a strong fit when standard workflows are enough. Custom software becomes valuable when your process, customer experience, integrations, or growth plans create requirements a generic product cannot serve well.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span>03</span>What if requirements change?<i aria-hidden="true"></i></summary>
+          <div class="faq__answer"><p>Change is expected. Short delivery cycles, regular demonstrations, and explicit decisions let us assess new information early and adjust the plan without losing sight of the intended outcome.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span>04</span>How do you choose the technology?<i aria-hidden="true"></i></summary>
+          <div class="faq__answer"><p>We start with product goals, users, security, integrations, operating cost, and the skills needed to maintain the system. The stack follows those constraints, not the other way around.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary><span>05</span>What happens after launch?<i aria-hidden="true"></i></summary>
+          <div class="faq__answer"><p>We can continue with monitoring, maintenance, security updates, technical guidance, and iterative product improvements so the software keeps pace with the business.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SCREEN 9 — FINALE (contact). Particles settle into a calm sphere.
+         ================================================================ -->
+    <section id="finale" class="finale">
+      <div class="finale__inner">
+        <!-- EDIT COPY: finale headline + subtext -->
+        <h2 class="finale__title">Built for today.<br />Ready to evolve.</h2>
+        <p class="finale__sub">Tell us about your project — we&rsquo;ll get back to you within one business day.</p>
+
+        <!-- Contact form: submits via mailto fallback (see js/main.js).
+             To wire a real backend later, search "API HOOK" in js/main.js. -->
+        <form class="contact" id="contact-form" novalidate>
+          <div class="contact__row">
+            <label class="contact__field">
+              <span class="contact__label">Name</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="contact__field">
+              <span class="contact__label">Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+          </div>
+          <label class="contact__field">
+            <span class="contact__label">What problem are you trying to solve?</span>
+            <textarea name="message" rows="4" required></textarea>
+          </label>
+          <button class="contact__submit" type="submit">
+            <span class="contact__submit-text">Send Message</span>
+          </button>
+          <p class="contact__status" role="status" aria-live="polite"></p>
+        </form>
+
+        <!-- EDIT EMAIL: shown as the direct-contact alternative -->
+        <p class="finale__alt">Prefer email? <a href="mailto:hello@resetrix.sg">hello@resetrix.sg</a></p>
+      </div>
+
+      <footer class="footer">
+        <!-- EDIT COPY: footer line -->
+        <p>&copy; 2026 Resetrix Pte. Ltd. &middot; Singapore</p>
+      </footer>
+    </section>
+
+  </main>
+
+  <noscript>
+    <p style="position:fixed;inset:auto 0 0 0;padding:1rem;text-align:center;background:#0a0f1e;color:#e6ecf5;z-index:99">
+      This experience needs JavaScript. Reach us at hello@resetrix.sg
+    </p>
+  </noscript>
+
+</body>
+</html>

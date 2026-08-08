@@ -1,0 +1,29 @@
+:root {
+  --bg: #05070f;
+  --bg-soft: #0a0f1e;
+  --ink: #e6ecf5;
+  --ink-dim: #8b96ab;
+  --line: rgba(139, 150, 171, 0.22);
+  --accent: #22d3ee;
+  --accent-ink: #04202a;
+  --accent-glow: rgba(34, 211, 238, 0.28);
+
+  /* Match Resetrix web (English) */
+  --font-display: "Sora", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-ui: var(--font-body);
+
+  /* 霞鹜文楷 — loaded via lxgw-wenkai-webfont CDN */
+  --font-cjk: "LXGW WenKai", "霞鹜文楷", serif;
+
+  --pad-x: clamp(1.25rem, 5vw, 2.5rem);
+  --radius: 1.25rem;
+}
+
+/* Chinese locale: WenKai for UI copy; Latin name keeps Sora via .name.
+   Slightly larger root size — CJK glyphs read better a step up from Latin. */
+html[lang="zh-CN"] {
+  --font-body: var(--font-cjk);
+  --font-ui: var(--font-cjk);
+  font-size: 112.5%;
+}

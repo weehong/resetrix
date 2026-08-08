@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Vernon Wee Hong KOH — 润思创科 RESETRIX PTE. LTD."
+  },
+  "contact": {
+    "title": "创始人",
+    "company": "润思创科 RESETRIX PTE. LTD.",
+    "slogan": "重新思考 · 重塑流程 · 重新聚焦",
+    "address": "新加坡巴耶利峇路60号 巴耶利峇广场 #06-28，邮编 409051"
+  },
+  "actions": {
+    "saveContact": "保存联系人",
+    "call": "拨打电话",
+    "email": "发邮件",
+    "website": "公司网站",
+    "maps": "地图导航"
+  },
+  "labels": {
+    "phone": "电话",
+    "email": "邮箱",
+    "website": "网站",
+    "address": "地址"
+  },
+  "language": {
+    "label": "语言",
+    "en": "EN",
+    "zh-CN": "中文"
+  }
+}

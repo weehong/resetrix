@@ -10,10 +10,12 @@ type RequireAuthProps = {
 };
 
 /**
- * Gate for the product SPA (ADR-0005). Until the User is authenticated this
- * renders only a status screen — never product UI — and sends the User to
- * Auth0 Universal Login, remembering where they were headed. An expired or
- * failed refresh takes the same path so the User can regain access cleanly.
+ * Gate for product routes under the authenticated layout (ADR-0005). Until
+ * the User is authenticated this renders only a status screen — never product
+ * UI — and sends the User to Auth0 Universal Login, remembering where they
+ * were headed. An expired or failed refresh takes the same path so the User
+ * can regain access cleanly. The public landing (`/`) and `/callback` sit
+ * outside this gate.
  */
 export const RequireAuth = ({ children }: RequireAuthProps): FunctionComponent => {
 	const { t } = useTranslation();

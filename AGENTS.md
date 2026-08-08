@@ -2,7 +2,7 @@
 
 Always read `repomix-output.xml` at the repo root before starting anything. If it does not exist, generate it first with:
 
-```
+```sh
 npx repomix@latest
 ```
 

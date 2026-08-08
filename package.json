@@ -1,5 +1,8 @@
 {
 	"name": "resetrix",
 	"private": true,
-	"description": "Resetrix repository root"
+	"description": "Resetrix repository root",
+	"scripts": {
+		"dev": "node scripts/dev.mjs"
+	}
 }

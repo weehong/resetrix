@@ -12,8 +12,8 @@ type AppProps = { router: TanstackRouter };
 
 const App = ({ router }: AppProps): FunctionComponent => {
 	const handleRedirectCallback = (appState: AppState | undefined): void => {
-		// Return the User to the page the gate originally sent them away from.
-		router.history.replace(appState?.returnTo ?? "/");
+		// Return the User to the page the gate (or Log in CTA) asked for.
+		router.history.replace(appState?.returnTo ?? "/home");
 	};
 
 	return (

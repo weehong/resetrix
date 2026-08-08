@@ -16,8 +16,8 @@ function readBearerToken(authorization: string | undefined): string | null {
 	if (!authorization) {
 		return null;
 	}
-	const [scheme, token] = authorization.split(" ");
-	if (scheme !== "Bearer" || !token) {
+	const [scheme, token] = authorization.trim().split(/\s+/);
+	if (scheme?.toLowerCase() !== "bearer" || !token) {
 		return null;
 	}
 	return token;
@@ -57,12 +57,28 @@ async function verifyAccessToken(token: string): Promise<AuthContext> {
 		throw HttpError.unauthorized("Bearer token is missing a subject");
 	}
 
+	// Auth0 custom claims on API access tokens must be namespaced; bare
+	// forms are a fallback for local HS256 test tokens. Login is denied in
+	// Auth0 when email is unverified; the API also requires the claim so a
+	// token cannot call protected routes without it.
+	const ns = env.AUTH0_ROLES_NAMESPACE;
+	const emailVerified =
+		payload[`${ns}/email_verified`] === true ||
+		payload["email_verified"] === true;
+	if (!emailVerified) {
+		throw HttpError.unauthorized("Email address is not verified");
+	}
+
 	return {
 		subject: payload.sub,
-		email: readStringClaim(payload["email"]),
-		name: readStringClaim(payload["name"]),
+		email:
+			readStringClaim(payload[`${ns}/email`]) ??
+			readStringClaim(payload["email"]),
+		name:
+			readStringClaim(payload[`${ns}/name`]) ??
+			readStringClaim(payload["name"]),
 		permissions: readStringArrayClaim(payload["permissions"]),
-		roles: readStringArrayClaim(payload[`${env.AUTH0_ROLES_NAMESPACE}/roles`]),
+		roles: readStringArrayClaim(payload[`${ns}/roles`]),
 	};
 }
 

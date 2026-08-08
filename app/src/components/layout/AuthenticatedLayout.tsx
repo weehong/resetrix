@@ -7,10 +7,10 @@ import { RequireAuth } from "@/features/auth/RequireAuth";
 import { ProfileGate } from "@/features/profile/ProfileGate";
 
 /**
- * Shell for the gated product SPA: everything under the `_authenticated`
+ * Shell for gated product routes: everything under the `_authenticated`
  * layout requires an Auth0 session and a successfully loaded Profile, then
  * gets the app header with the signed-in User and logout, which ends the
- * Auth0 session and returns to the SPA origin.
+ * Auth0 session and returns to the public landing (`/`).
  */
 export const AuthenticatedLayout = (): FunctionComponent => {
 	const { t } = useTranslation();

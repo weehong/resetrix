@@ -9,22 +9,26 @@ export async function signAccessToken(
 		sub?: string;
 		email?: string;
 		name?: string;
+		emailVerified?: boolean;
 		permissions?: Array<string>;
 		roles?: Array<string>;
 	} = {}
 ): Promise<string> {
 	const issuer = env.AUTH0_ISSUER || "https://test.auth0.local/";
 	const audience = env.AUTH0_AUDIENCE || "https://api.resetrix.test";
+	const ns = env.AUTH0_ROLES_NAMESPACE;
+	const emailVerified = claims.emailVerified ?? true;
 
 	const token = new SignJWT({
 		...(claims.email === undefined ? {} : { email: claims.email }),
 		...(claims.name === undefined ? {} : { name: claims.name }),
+		[`${ns}/email_verified`]: emailVerified,
 		...(claims.permissions === undefined
 			? {}
 			: { permissions: claims.permissions }),
 		...(claims.roles === undefined
 			? {}
-			: { [`${env.AUTH0_ROLES_NAMESPACE}/roles`]: claims.roles }),
+			: { [`${ns}/roles`]: claims.roles }),
 	})
 		.setProtectedHeader({ alg: "HS256" })
 		.setSubject(claims.sub ?? "auth0|test-user")

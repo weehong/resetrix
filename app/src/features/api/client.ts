@@ -89,7 +89,10 @@ export function createApiClient(
 		});
 
 		if (response.status === 401) {
-			throw new ApiUnauthorizedError();
+			const message = await readErrorMessage(response);
+			throw new ApiUnauthorizedError(
+				message ?? "Unauthorized"
+			);
 		}
 		if (response.status === 403) {
 			throw new ApiForbiddenError();
@@ -110,11 +113,32 @@ export function createApiClient(
 	return { get };
 }
 
+/**
+ * Use the cached access token first. Auth0 is currently issuing API tokens
+ * without a refresh_token even when `offline_access` is requested; calling
+ * getAccessTokenSilently() in that state triggers authorize/consent and loops.
+ * Fall back to the normal silent path only when the cache has no usable token.
+ */
+async function getAccessTokenForApi(
+	getAccessTokenSilently: ReturnType<
+		typeof useAuth0
+	>["getAccessTokenSilently"]
+): Promise<string> {
+	try {
+		return await getAccessTokenSilently({ cacheMode: "cache-only" });
+	} catch {
+		return getAccessTokenSilently();
+	}
+}
+
 /** API client bound to the signed-in User's Auth0 token source. */
 export function useApiClient(): ApiClient {
 	const { getAccessTokenSilently } = useAuth0();
 	return useMemo(
-		() => createApiClient(apiEnv.baseUrl, () => getAccessTokenSilently()),
+		() =>
+			createApiClient(apiEnv.baseUrl, () =>
+				getAccessTokenForApi(getAccessTokenSilently)
+			),
 		[getAccessTokenSilently]
 	);
 }

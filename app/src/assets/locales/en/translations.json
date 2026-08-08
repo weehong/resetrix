@@ -7,10 +7,18 @@
 		"noAccess": "No access",
 		"noAccessMessage": "You are signed in, but your identity has not been granted access to Resetrix yet. Ask an operator to assign you the user role, then try again.",
 		"redirectingToLogin": "Redirecting to sign in…",
+		"sessionRejected": "Sign-in could not be completed",
+		"sessionRejectedMessage": "Your Auth0 session is not accepted by Resetrix. Verify your email if prompted, then log out and try again.",
 		"signInFailed": "Sign-in failed"
 	},
 	"home": {
 		"translate": "Translate"
+	},
+	"landing": {
+		"brand": "Resetrix",
+		"inviteOnly": "Access is invite-only.",
+		"logIn": "Log in",
+		"tagline": "Sign in to continue to your workspace."
 	},
 	"profile": {
 		"email": "Email",

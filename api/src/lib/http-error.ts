@@ -37,6 +37,10 @@ export class HttpError extends Error {
 		return new HttpError(404, message, { code: "NOT_FOUND" });
 	}
 
+	public static conflict(message = "Conflict"): HttpError {
+		return new HttpError(409, message, { code: "CONFLICT" });
+	}
+
 	public static internal(message = "Internal server error"): HttpError {
 		return new HttpError(500, message, { code: "INTERNAL_SERVER_ERROR" });
 	}

@@ -36,11 +36,9 @@ function bootWithEnv(env: NodeJS.ProcessEnv): Promise<string> {
 			stderr += chunk.toString();
 		});
 		child.on("error", reject);
-		child.on("exit", (code) => {
+		child.on("exit", () => {
 			clearTimeout(timer);
-			if (code !== 0 && code !== null && !stdout.includes("APP_BOOTED")) {
-				resolve(stdout + stderr);
-			}
+			resolve(stdout + stderr);
 		});
 	});
 }

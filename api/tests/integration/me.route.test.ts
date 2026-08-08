@@ -40,6 +40,27 @@ describe("GET /api/v1/me", () => {
 		});
 	});
 
+	it("returns 401 when the email is not verified", async () => {
+		await cleanupUsers();
+		const token = await signAccessToken({
+			sub: "auth0|unverified",
+			emailVerified: false,
+			permissions: ["read:profile"],
+		});
+
+		const response = await request(app)
+			.get("/api/v1/me")
+			.set("Authorization", `Bearer ${token}`);
+
+		expect(response.status).toBe(401);
+		expect(response.body).toMatchObject({
+			error: {
+				code: "UNAUTHORIZED",
+				message: "Email address is not verified",
+			},
+		});
+	});
+
 	it("returns 200 with Profile and upserts the local User", async () => {
 		await cleanupUsers();
 		const token = await signAccessToken({

@@ -31,7 +31,7 @@ App runs at http://localhost:5173.
 
 ## Layout
 
-```
+```text
 src/
   common/       Shared types and utilities
   components/   Reusable UI

@@ -7,10 +7,18 @@
 		"noAccess": "Sin acceso",
 		"noAccessMessage": "Has iniciado sesión, pero tu identidad aún no tiene acceso a Resetrix. Pide a un operador que te asigne el rol de usuario y vuelve a intentarlo.",
 		"redirectingToLogin": "Redirigiendo al inicio de sesión…",
+		"sessionRejected": "No se pudo completar el inicio de sesión",
+		"sessionRejectedMessage": "Resetrix no acepta tu sesión de Auth0. Verifica tu correo si se te indica, cierra sesión e inténtalo de nuevo.",
 		"signInFailed": "Error al iniciar sesión"
 	},
 	"home": {
 		"translate": "Traducir"
+	},
+	"landing": {
+		"brand": "Resetrix",
+		"inviteOnly": "El acceso es solo por invitación.",
+		"logIn": "Iniciar sesión",
+		"tagline": "Inicia sesión para continuar a tu espacio de trabajo."
 	},
 	"profile": {
 		"email": "Correo electrónico",

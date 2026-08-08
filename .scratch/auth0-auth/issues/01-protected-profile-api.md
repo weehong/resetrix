@@ -1,6 +1,6 @@
 # 01 — Protected Profile API
 
-Status: ready-for-agent
+Status: resolved
 
 ## Parent
 
@@ -12,14 +12,20 @@ An invited User with a valid Auth0 access token that includes `read:profile` can
 
 ## Acceptance criteria
 
-- [ ] `GET /api/v1/me` without a Bearer token returns 401
-- [ ] `GET /api/v1/me` with a valid token that lacks `read:profile` returns 403
-- [ ] `GET /api/v1/me` with a valid token that includes `read:profile` returns 200 with a Profile (local User fields plus roles/permissions from the token)
-- [ ] A successful authenticated call upserts a local User by `auth0Sub` and syncs email/name when present in the token
-- [ ] `GET /health` still succeeds without authentication
-- [ ] `/docs` and `/openapi.json` are available in non-production and are not mounted when the app runs as production
-- [ ] Behavior is covered at the API HTTP seam (`createApp` + supertest) using signed test JWTs — no live Auth0 tenant required
+- [x] `GET /api/v1/me` without a Bearer token returns 401
+- [x] `GET /api/v1/me` with a valid token that lacks `read:profile` returns 403
+- [x] `GET /api/v1/me` with a valid token that includes `read:profile` returns 200 with a Profile (local User fields plus roles/permissions from the token)
+- [x] A successful authenticated call upserts a local User by `auth0Sub` and syncs email/name when present in the token
+- [x] `GET /health` still succeeds without authentication
+- [x] `/docs` and `/openapi.json` are available in non-production and are not mounted when the app runs as production
+- [x] Behavior is covered at the API HTTP seam (`createApp` + supertest) using signed test JWTs — no live Auth0 tenant required
 
 ## Blocked by
 
 None — can start immediately.
+
+## Comments
+
+- Implemented on branch `dev` in commit `31c47e2`.
+- Bugbot review found and fixed: permission check order (403 before upsert), P2002 email-conflict mapping, empty test JWT secret guard.
+- `repomix-output.xml` is untracked local tooling output and was intentionally not committed.

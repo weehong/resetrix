@@ -1,15 +1,21 @@
+# Production-oriented Compose stack. Inject secrets via the host environment
+# (or an env_file); do not commit real passwords. Example:
+#   export POSTGRES_PASSWORD=...
+#   export DATABASE_URL=postgresql://postgres:...@db:5432/resetrix?schema=public
+#   export AUTH0_JWKS_URI=... AUTH0_ISSUER=... AUTH0_AUDIENCE=...
+#   docker compose up --build
 services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: resetrix
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the environment}
+      POSTGRES_DB: ${POSTGRES_DB:-resetrix}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,7 +33,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/resetrix?schema=public"
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in the environment}
 
   api:
     build: .
@@ -40,7 +46,11 @@ services:
     environment:
       NODE_ENV: production
       PORT: "3000"
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/resetrix?schema=public"
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in the environment}
+      AUTH0_JWKS_URI: ${AUTH0_JWKS_URI:?Set AUTH0_JWKS_URI in the environment}
+      AUTH0_ISSUER: ${AUTH0_ISSUER:?Set AUTH0_ISSUER in the environment}
+      AUTH0_AUDIENCE: ${AUTH0_AUDIENCE:?Set AUTH0_AUDIENCE in the environment}
+      AUTH0_ROLES_NAMESPACE: ${AUTH0_ROLES_NAMESPACE:-https://api.resetrix.com}
     ports:
       - "3000:3000"
 

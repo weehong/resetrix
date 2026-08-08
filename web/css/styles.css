@@ -22,8 +22,9 @@
      Registered with @property below so the color *transitions* smoothly. */
   --accent:      #22d3ee;
 
-  --font-display: "Sora", "Inter", system-ui, sans-serif;
-  --font-body:    "Inter", system-ui, -apple-system, sans-serif;
+  /* 霞鹜文楷 — self-hosted in fonts/lxgw-wenkai/ */
+  --font-display: "LXGW WenKai", "Songti SC", "Noto Serif SC", serif;
+  --font-body:    "LXGW WenKai", "Songti SC", "Noto Serif SC", serif;
 
   --pad-x: clamp(1.25rem, 6vw, 7rem);   /* global side padding */
 }

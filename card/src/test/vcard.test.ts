@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { contact } from "../data/contact";
+import { people } from "../data/people";
 import { buildVcard } from "../lib/vcard";
+
+const vernon = people.vernonkoh;
 
 const text = {
   title: "Founder",
@@ -10,7 +12,7 @@ const text = {
 };
 
 describe("buildVcard", () => {
-  const vcard = buildVcard(contact, text);
+  const vcard = buildVcard(vernon, text);
 
   it("produces a vCard 3.0 document", () => {
     expect(vcard).toContain("BEGIN:VCARD");
@@ -37,12 +39,12 @@ describe("buildVcard", () => {
   });
 
   it("escapes commas and semicolons in localized text", () => {
-    const withChars = buildVcard(contact, { ...text, company: "A,B;C" });
+    const withChars = buildVcard(vernon, { ...text, company: "A,B;C" });
     expect(withChars).toContain("ORG:A\\,B\\;C");
   });
 
   it("reflects the active locale text passed in", () => {
-    const zh = buildVcard(contact, { ...text, title: "创始人" });
+    const zh = buildVcard(vernon, { ...text, title: "创始人" });
     expect(zh).toContain("TITLE:创始人");
   });
 });

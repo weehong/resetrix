@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { contact } from "../data/contact";
 import { buildVcard, downloadVcard } from "../lib/vcard";
 import { buildMapsUrl } from "../lib/maps";
+import { usePerson } from "../hooks/usePerson";
 import styles from "../App.module.css";
 
 function IconUserPlus() {
@@ -53,23 +53,25 @@ function IconMapPin() {
 
 export function ActionBar() {
   const { t } = useTranslation();
+  const {
+    person,
+    title,
+    company,
+    slogan,
+    address,
+  } = usePerson();
 
   const handleSave = () => {
-    const vcard = buildVcard(contact, {
-      title: t(contact.titleKey),
-      company: t(contact.companyKey),
-      slogan: t(contact.sloganKey),
-      address: t(contact.addressKey),
-    });
-    downloadVcard("Vernon-Wee-Hong-KOH.vcf", vcard);
+    const vcard = buildVcard(person, { title, company, slogan, address });
+    downloadVcard(person.vcardFilename, vcard);
   };
 
-  const mapsUrl = buildMapsUrl(contact.addressQuery, navigator.userAgent);
+  const mapsUrl = buildMapsUrl(person.addressQuery, navigator.userAgent);
 
   const secondary = [
-    { key: "call", href: `tel:${contact.phoneTel}`, icon: <IconPhone />, external: false },
-    { key: "email", href: `mailto:${contact.email}`, icon: <IconMail />, external: false },
-    { key: "website", href: contact.website, icon: <IconGlobe />, external: true },
+    { key: "call", href: `tel:${person.phoneTel}`, icon: <IconPhone />, external: false },
+    { key: "email", href: `mailto:${person.email}`, icon: <IconMail />, external: false },
+    { key: "website", href: person.website, icon: <IconGlobe />, external: true },
     { key: "maps", href: mapsUrl, icon: <IconMapPin />, external: true },
   ] as const;
 

@@ -1,31 +1,39 @@
 import { useTranslation } from "react-i18next";
-import { contact } from "../data/contact";
 import { buildMapsUrl } from "../lib/maps";
+import { usePerson } from "../hooks/usePerson";
 import styles from "../App.module.css";
 
 export function DetailList() {
   const { t } = useTranslation();
-  const mapsUrl = buildMapsUrl(contact.addressQuery, navigator.userAgent);
+  const {
+    phoneDisplay,
+    phoneTel,
+    email,
+    website,
+    address,
+    addressQuery,
+  } = usePerson();
+  const mapsUrl = buildMapsUrl(addressQuery, navigator.userAgent);
 
   const rows = [
     {
       label: t("labels.phone"),
-      value: contact.phoneDisplay,
-      href: `tel:${contact.phoneTel}`,
+      value: phoneDisplay,
+      href: `tel:${phoneTel}`,
     },
     {
       label: t("labels.email"),
-      value: contact.email,
-      href: `mailto:${contact.email}`,
+      value: email,
+      href: `mailto:${email}`,
     },
     {
       label: t("labels.website"),
-      value: contact.website.replace(/^https:\/\//, ""),
-      href: contact.website,
+      value: website.replace(/^https:\/\//, ""),
+      href: website,
     },
     {
       label: t("labels.address"),
-      value: t(contact.addressKey),
+      value: address,
       href: mapsUrl,
     },
   ];

@@ -1,4 +1,4 @@
-import type { Contact } from "../data/contact";
+import type { Person } from "../data/people";
 
 function escapeVcard(value: string): string {
   return value
@@ -15,7 +15,7 @@ export interface VcardLocalizedText {
   address: string;
 }
 
-export function buildVcard(c: Contact, text: VcardLocalizedText): string {
+export function buildVcard(c: Person, text: VcardLocalizedText): string {
   const lines = [
     "BEGIN:VCARD",
     "VERSION:3.0",

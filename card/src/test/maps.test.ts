@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { buildMapsUrl, isIos } from "../lib/maps";
-import { contact } from "../data/contact";
+import { people } from "../data/people";
+
+const addressQuery = people.vernonkoh.addressQuery;
 
 const IPHONE_UA =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1";
@@ -25,16 +27,16 @@ describe("isIos", () => {
 
 describe("buildMapsUrl", () => {
   it("returns Apple Maps URL on iOS", () => {
-    const url = buildMapsUrl(contact.addressQuery, IPHONE_UA);
+    const url = buildMapsUrl(addressQuery, IPHONE_UA);
     expect(url.startsWith("https://maps.apple.com/?q=")).toBe(true);
-    expect(url).toContain(encodeURIComponent(contact.addressQuery));
+    expect(url).toContain(encodeURIComponent(addressQuery));
   });
 
   it("returns Google Maps URL elsewhere", () => {
     for (const ua of [ANDROID_UA, DESKTOP_UA]) {
-      const url = buildMapsUrl(contact.addressQuery, ua);
+      const url = buildMapsUrl(addressQuery, ua);
       expect(url.startsWith("https://www.google.com/maps/search/")).toBe(true);
-      expect(url).toContain(`query=${encodeURIComponent(contact.addressQuery)}`);
+      expect(url).toContain(`query=${encodeURIComponent(addressQuery)}`);
     }
   });
 

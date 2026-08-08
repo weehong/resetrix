@@ -1,17 +1,19 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageToggle } from "./components/LanguageToggle";
 import { ProfileHeader } from "./components/ProfileHeader";
 import { ActionBar } from "./components/ActionBar";
 import { DetailList } from "./components/DetailList";
-import { useEffect } from "react";
+import { usePerson } from "./hooks/usePerson";
 import styles from "./App.module.css";
 
 export default function App() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
+  const { metaTitle } = usePerson();
 
   useEffect(() => {
-    document.title = t("meta.title");
-  }, [t, i18n.language]);
+    document.title = metaTitle;
+  }, [metaTitle, i18n.language]);
 
   return (
     <div className={styles.page}>

@@ -186,7 +186,7 @@ finish() {
 
 TOTAL_STAGES=6
 
-banner "card.resetrix.com — Netlify + DNS go-live"
+banner "*.resetrix.biz — Netlify + DNS go-live"
 
 # ── Stage 1: preflight build ──────────────────────────────────────────────
 stage "Preflight — verify the site builds"
@@ -210,20 +210,21 @@ note "drag the card/dist folder onto https://app.netlify.com/drop"
 ask NETLIFY_SITE_URL "Paste the site's default URL (e.g. https://lucky-name-123.netlify.app):"
 write_env NETLIFY_SITE_URL "$NETLIFY_SITE_URL"
 
-# ── Stage 3: custom domain ────────────────────────────────────────────────
-stage "Netlify — attach card.resetrix.com"
-say "Tell Netlify this site answers to the card subdomain."
+# ── Stage 3: wildcard domain ──────────────────────────────────────────────
+stage "Netlify — attach the wildcard domain"
+say "This site serves EVERY employee subdomain, so attach a wildcard domain."
 step "In Netlify: Site configuration → Domain management → 'Add a domain'."
-step "Enter: card.resetrix.com and confirm it as a subdomain of resetrix.com."
+step "Enter: *.resetrix.biz and confirm it (Netlify provisions wildcard SSL)."
 step "Netlify will show which DNS record it expects — keep that page open."
 pause "Press Enter once Netlify shows the expected DNS record"
 
 # ── Stage 4: DNS ──────────────────────────────────────────────────────────
-stage "DNS — point the subdomain at Netlify"
-say "Add the DNS record at the provider that hosts resetrix.com's DNS."
-note "Check your registrar/DNS dashboard (the provider that serves resetrix.com)."
-step "Create a CNAME record: name 'card' → value '$NETLIFY_SITE_URL' (without https://)."
-note "If your DNS is Netlify DNS for the apex domain, Netlify may auto-create this record."
+stage "DNS — wildcard CNAME"
+say "Add the wildcard DNS record at the provider that hosts resetrix.biz's DNS."
+note "Check your registrar/DNS dashboard (the provider that serves resetrix.biz)."
+step "Create a CNAME record: name '*' → value '$NETLIFY_SITE_URL' (without https://)."
+note "This makes vernonkoh.resetrix.biz, and any future employee subdomain, resolve."
+note "If your DNS is Netlify DNS for the apex domain, Netlify may auto-create it."
 step "Save the record. Propagation usually takes minutes, up to 24h."
 pause "Press Enter once the CNAME record is saved"
 
@@ -231,22 +232,23 @@ pause "Press Enter once the CNAME record is saved"
 stage "HTTPS — verify the certificate"
 say "Netlify provisions a Let's Encrypt certificate once DNS resolves."
 step "In Netlify: Site configuration → Domain management → HTTPS → 'Verify DNS configuration'."
-step "Wait until the certificate shows as active for card.resetrix.com."
-open_url "https://card.resetrix.com"
-if ! confirm "Does https://card.resetrix.com load the card with a valid lock icon?"; then
+step "Wait until a wildcard certificate shows as active for *.resetrix.biz."
+open_url "https://vernonkoh.resetrix.biz"
+if ! confirm "Does https://vernonkoh.resetrix.biz load the card with a valid lock icon?"; then
   warn "HTTPS not ready — wait for DNS/cert, then re-run this wizard (it remembers values)."
   exit 1
 fi
 
-# ── Stage 6: smoke test ───────────────────────────────────────────────────
-stage "Smoke test — the live card"
-say "Run this checklist on an actual phone (not a desktop browser):"
-step "Open https://card.resetrix.com — logo, name, title, company, slogan render in Resetrix style."
-step "Tap 'Save contact' — a vCard downloads/opens with name, phone, email, website, address, slogan."
+# ── Stage 6: short link + smoke test ─────────────────────────────────────
+stage "Short link + smoke test"
+say "Create the Short.io short link that the QR code prints, then smoke test on a phone."
+step "In Short.io, create the short link resetrix.biz/vernonkoh → https://vernonkoh.resetrix.biz."
+step "Open https://vernonkoh.resetrix.biz on a phone — logo, name, title, company, slogan render."
+step "Tap 'Save contact' — a vCard downloads with name, phone, email, website, address, slogan."
 step "Tap Call / Email / Website — phone dialer, mail app, and resetrix.com open."
 step "Tap Maps — Apple Maps opens on iPhone, Google Maps on Android, at the Paya Lebar Square address."
 step "Toggle EN / 中文 — UI and card text switch; reload and confirm the choice is remembered."
-step "Scan the printed QR artwork (public/qr/) — it must land on https://card.resetrix.com."
+step "Scan the printed QR artwork (public/qr/) — it must land on https://resetrix.biz/vernonkoh."
 pause "Press Enter when every check passes"
 
 finish

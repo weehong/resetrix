@@ -1,43 +1,28 @@
-# Resetrix
+<p align="center">
+  <img src="resetrix-logo.png" alt="Resetrix" width="160" height="160" />
+</p>
 
-Production codebase for Resetrix: marketing site, SPA, and HTTP API.
+<h1 align="center">Resetrix</h1>
 
-## Packages
+<p align="center"><em>Re-think. Re-work. Re-focus.</em></p>
 
-| Path | Role | Stack | Port |
-| --- | --- | --- | --- |
-| [`web/`](web/) | Marketing / landing site | Static HTML, CSS, vanilla JS | Static (any static server) |
-| [`app/`](app/) | Product SPA | Vite, React, TanStack Router/Query, pnpm | `5173` (dev) |
-| [`api/`](api/) | HTTP API | Express 5, TypeScript, Prisma, PostgreSQL, npm | `3000` (+ Postgres `5432`) |
+<p align="center"><a href="https://resetrix.com">resetrix.com</a></p>
 
-There is no monorepo workspace — each package installs and runs independently.
+## Who we are
 
-## Quick start
+Resetrix is an SME-focused software studio. Our name embodies our approach: **"Reset"** reflects our commitment to starting from scratch and helping SMEs rebuild their systems, customising every part of the software to their specific needs; **"Trix"**, derived from "Matrix", reflects our belief in collaboration and flexibility — like a matrix, we thrive on teamwork, where success is achieved through strong partnerships with our clients.
 
-### API (`api/`)
+## Mission
 
-```sh
-cd api
-npm install
-cp .env.example .env
-docker compose up -d db
-npm run db:migrate
-npm run dev
-```
+To empower SMEs by guiding them through digital transformation with expert support — driving innovation, growth, and success for our clients, believing that by helping them succeed, we succeed together.
 
-- Health: http://localhost:3000/health
-- Ready: http://localhost:3000/ready
-- Docs: http://localhost:3000/docs
+## Vision
 
-### SPA (`app/`)
+To be a trusted partner for SMEs, delivering scalable, high-quality software solutions that grow with their businesses. Through innovation and continuous learning, we stay at the forefront of technology, fostering long-term, transparent partnerships based on trust and collaboration.
 
-```sh
-cd app
-pnpm install
-pnpm dev
-```
+## Services
 
-### Marketing site (`web/`)
-
-Serve the `web/` directory with any static file server (for example
-`npx serve web` from the repo root).
+- **Digital Transformation** — guiding SMEs from traditional business models to efficient, modern digital operations.
+- **Software Customization** — end-to-end custom software built to fit your exact business model.
+- **Digital Consultancy** — roadmapping your post-transformation journey, from scaling to integrating new technologies.
+- **Responsive Support** — fast, reliable support that responds to all client queries within one hour.

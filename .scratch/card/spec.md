@@ -6,10 +6,10 @@ Status: in-progress
 
 Vernon's physical business card carries a QR code that must open a mobile-first
 digital business card. The card is a standalone Vite/React app (originally in
-`Business/card/`) served per-person under a **wildcard** `*.resetrix.biz` that
-Netlify serves for every employee subdomain. The card source lives inside this
-monorepo so it can be versioned with Resetrix and reused as a per-person
-template as more people onboard.
+`Business/card/`) served per-person on a `*.resetrix.biz` subdomain
+(`vernonkoh.resetrix.biz`, `mary.resetrix.biz`, ...) deployed to Netlify. The
+card source lives inside this monorepo so it can be versioned with Resetrix and
+reused as a per-person template as more people onboard.
 
 ## Solution
 
@@ -17,8 +17,9 @@ Copy the card source into `card/` at the monorepo root, build/verify it in
 place, commit it to the Resetrix repo (scoped to `card/` + this `.scratch/`
 entry), and configure one Netlify site that imports this GitHub repo with
 base directory `card` (its own `card/netlify.toml` runs `npm run build` →
-`dist/`). Attach the wildcard domain `*.resetrix.biz` to that site, add a DNS
-CNAME `*` → `<site>.netlify.app`, and verify wildcard HTTPS. The card app is
+`dist/`). Attach each employee subdomain (e.g. `vernonkoh.resetrix.biz`) to the
+site, add a DNS wildcard CNAME `*` → `<site>.netlify.app` so future subdomains
+need no DNS edits, and verify HTTPS. The card app is
 **hostname-driven**: it reads the subdomain (e.g. `vernonkoh`) to pick the
 person from `card/src/data/people.ts`. Point `resetrix.biz` Short.io links
 (e.g. `resetrix.biz/vernonkoh` → `vernonkoh.resetrix.biz`) as advertised by
@@ -45,9 +46,9 @@ the QR code, and verify HTTPS.
       `src/data/people.ts`; unknown subdomains fall back to the default person
 - [ ] `card/` is committed to the Resetrix repo and pushed to `origin`
 - [ ] New Netlify site imports this repo with base directory `card`,
-      publishing `card/dist`, serving the wildcard `*.resetrix.biz`, and
+      publishing `card/dist`, with the employee subdomain attached, and
       auto-deploys on push
-- [ ] DNS CNAME `*` → `<site>.netlify.app`; wildcard HTTPS valid for
-      `*.resetrix.biz`
+- [ ] DNS wildcard CNAME `*` → `<site>.netlify.app`; HTTPS valid for
+      `vernonkoh.resetrix.biz`
 - [ ] Short.io `resetrix.biz/vernonkoh` → `https://vernonkoh.resetrix.biz`
 - [ ] Card smoke test passes (see `card/scripts/setup-card-hosting.sh` Stage 6)

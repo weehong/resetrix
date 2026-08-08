@@ -13,7 +13,7 @@
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-ui: var(--font-body);
 
-  /* 霞鹜文楷 — loaded via lxgw-wenkai-webfont CDN */
+  /* 霞鹜文楷 — self-hosted under /fonts/lxgw-wenkai/ (in index.html) */
   --font-cjk: "LXGW WenKai", "霞鹜文楷", serif;
 
   --pad-x: clamp(1.25rem, 5vw, 2.5rem);

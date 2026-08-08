@@ -186,7 +186,7 @@ finish() {
 
 TOTAL_STAGES=6
 
-banner "*.resetrix.biz — Netlify + DNS go-live"
+banner "resetrix.biz employee cards — Netlify + DNS go-live"
 
 # ── Stage 1: preflight build ──────────────────────────────────────────────
 stage "Preflight — verify the site builds"
@@ -210,29 +210,31 @@ note "drag the card/dist folder onto https://app.netlify.com/drop"
 ask NETLIFY_SITE_URL "Paste the site's default URL (e.g. https://lucky-name-123.netlify.app):"
 write_env NETLIFY_SITE_URL "$NETLIFY_SITE_URL"
 
-# ── Stage 3: wildcard domain ──────────────────────────────────────────────
-stage "Netlify — attach the wildcard domain"
-say "This site serves EVERY employee subdomain, so attach a wildcard domain."
+# ── Stage 3: subdomain ────────────────────────────────────────────────────
+stage "Netlify — attach the employee subdomain"
+say "Netlify does NOT accept a wildcard '*.resetrix.biz', so attach each employee's"
+say "subdomain individually (vernonkoh now, mary next, ...). Each gets its own cert."
 step "In Netlify: Site configuration → Domain management → 'Add a domain'."
-step "Enter: *.resetrix.biz and confirm it (Netlify provisions wildcard SSL)."
+step "Enter: vernonkoh.resetrix.biz and confirm it under resetrix.biz."
 step "Netlify will show which DNS record it expects — keep that page open."
 pause "Press Enter once Netlify shows the expected DNS record"
 
 # ── Stage 4: DNS ──────────────────────────────────────────────────────────
 stage "DNS — wildcard CNAME"
-say "Add the wildcard DNS record at the provider that hosts resetrix.biz's DNS."
-note "Check your registrar/DNS dashboard (the provider that serves resetrix.biz)."
-step "Create a CNAME record: name '*' → value '$NETLIFY_SITE_URL' (without https://)."
-note "This makes vernonkoh.resetrix.biz, and any future employee subdomain, resolve."
-note "If your DNS is Netlify DNS for the apex domain, Netlify may auto-create it."
-step "Save the record. Propagation usually takes minutes, up to 24h."
-pause "Press Enter once the CNAME record is saved"
+say "Add a wildcard CNAME at the provider hosting resetrix.biz so future employees"
+say "resolve with NO further DNS changes. Point it at the Netlify assignable URL:"
+step "Create a CNAME record: name 'subdomain' (e.g. any) → value '$NETLIFY_SITE_URL'."
+note "Your DNS provider may not allow '*' for the name — use your provider's wildcard"
+note "syntax (often '*' or '@' + an empty/add record) for *.resetrix.biz."
+note "If your DNS is Netlify DNS for resetrix.biz, add the wildcard record there."
+step "Save it. Propagation usually takes minutes, up to 24h."
+pause "Press Enter once the DNS record is saved"
 
 # ── Stage 5: HTTPS ────────────────────────────────────────────────────────
 stage "HTTPS — verify the certificate"
 say "Netlify provisions a Let's Encrypt certificate once DNS resolves."
 step "In Netlify: Site configuration → Domain management → HTTPS → 'Verify DNS configuration'."
-step "Wait until a wildcard certificate shows as active for *.resetrix.biz."
+step "Wait until the certificate shows as active for vernonkoh.resetrix.biz."
 open_url "https://vernonkoh.resetrix.biz"
 if ! confirm "Does https://vernonkoh.resetrix.biz load the card with a valid lock icon?"; then
   warn "HTTPS not ready — wait for DNS/cert, then re-run this wizard (it remembers values)."

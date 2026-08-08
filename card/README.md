@@ -35,19 +35,25 @@ npm run generate-qr   # regenerate print-ready QR assets → public/qr/
    localized copy for `en` and `zh-CN`).
 2. Point `scripts/generate-qr.mjs` at their short link and run
    `npm run generate-qr` to produce print QR assets.
-3. Create the Short.io short link `resetrix.biz/<shortname>` → `<shortname>.resetrix.biz`.
-   No DNS change needed — the wildcard record already covers them.
+3. In the Netlify site, add their subdomain (e.g. `mary.resetrix.biz`) under
+   Domain management — the DNS wildcard CNAME already routes it, and Netlify
+   issues its cert automatically.
+4. Create the Short.io short link `resetrix.biz/<shortname>` → `<shortname>.resetrix.biz`.
 
 ## Going live (Netlify + DNS)
 
 Deploy configuration lives in `netlify.toml` (build `npm run build`,
 publish `dist`). The site deploys as its **own Netlify site**, separate from
-the main Resetrix marketing site, and serves every employee subdomain through
-a single wildcard domain.
+the main Resetrix marketing site.
+
+Netlify does **not** support a wildcard `*.resetrix.biz` domain entry, so you
+attach each employee's subdomain individually (`vernonkoh.resetrix.biz` now,
+`mary.resetrix.biz` next). A single DNS wildcard CNAME keeps future employees
+free of DNS changes — you only attach the new subdomain in the Netlify UI.
 
 Run the interactive wizard — it walks through Netlify site creation, attaching
-the wildcard domain `*.resetrix.biz`, the DNS CNAME `*` record, HTTPS
-verification, and a phone-based smoke checklist:
+the employee subdomain, the wildcard DNS CNAME, HTTPS verification, and a
+phone-based smoke checklist:
 
 ```bash
 ./scripts/setup-card-hosting.sh

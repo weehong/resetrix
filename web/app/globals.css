@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/*
+ * Class-based appearance switching. `:where()` keeps the selector at zero
+ * specificity so `dark:` utilities lose to any explicit override, exactly as
+ * an unprefixed utility would. Nothing sets `html.dark` yet — the site is
+ * light-only (ADR 0011) — but the variant is defined so Storybook's theme
+ * switcher and any future dark block work without touching components.
+ */
+@custom-variant dark (&:where(html.dark, html.dark *));
+
+/*
+ * The semantic bridge. Only tier-2 tokens cross into Tailwind, which is the
+ * whole point of the split: `bg-bg`, `text-ink` and `border-line` keep working
+ * when the underlying palette step changes, and a dark scheme becomes a
+ * variable swap rather than a `dark:` prefix on every element.
+ *
+ * `inline` matters here — it substitutes the var() reference into the utility
+ * instead of resolving it at build time, so utilities follow whichever :root
+ * block is currently in effect.
+ */
+@theme inline {
+	--color-bg: var(--bg);
+	--color-bg-soft: var(--bg-soft);
+	--color-bg-inset: var(--bg-inset);
+
+	--color-line: var(--line);
+	--color-line-strong: var(--line-strong);
+
+	--color-ink: var(--ink);
+	--color-ink-dim: var(--ink-dim);
+	--color-ink-faint: var(--ink-faint);
+
+	--color-accent: var(--accent);
+	--color-accent-text: var(--accent-text);
+	--color-accent-ink: var(--accent-ink);
+
+	--color-success: var(--success);
+	--color-warning: var(--warning);
+	--color-danger: var(--danger);
+	--color-status-ink: var(--status-ink);
+
+	--color-focus-ring: var(--focus-ring);
+
+	--font-sans: var(--typeface-body);
+	--font-display: var(--typeface-display);
+
+	--radius-token: var(--radius);
+	--radius-token-lg: var(--radius-lg);
+}
+
+@layer base {
+	body {
+		background-color: var(--bg);
+		color: var(--ink);
+		font-family: var(--typeface-body);
+	}
+
+	/*
+	 * Sora is a display face: tight tracking and sub-1 leading are what give it
+	 * the character the previous site had. Applying it here rather than in a
+	 * Heading component means raw <h1>–<h3> in prose get it too.
+	 */
+	h1,
+	h2,
+	h3 {
+		font-family: var(--typeface-display);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	/*
+	 * Tailwind v4's preflight sets `cursor: default` on buttons to match the UA
+	 * spec. Every button here is a real control, so the pointer belongs in the
+	 * base layer once rather than as a `cursor-pointer` utility on each call
+	 * site. Disabled controls keep the default arrow.
+	 */
+	button:not(:disabled),
+	[role="button"]:not([aria-disabled="true"]),
+	input[type="button"]:not(:disabled),
+	input[type="submit"]:not(:disabled),
+	input[type="reset"]:not(:disabled) {
+		cursor: pointer;
+	}
+
+	/*
+	 * One focus treatment for everything, drawn with an offset so it never sits
+	 * flush against an --accent fill (where it would drop to 2.96:1).
+	 */
+	:focus-visible {
+		outline: 2px solid var(--focus-ring);
+		outline-offset: 2px;
+	}
+
+	::selection {
+		background-color: var(--accent);
+		color: var(--accent-ink);
+	}
+}

@@ -21,7 +21,7 @@ export const NoAccessScreen = (): FunctionComponent => {
 	return (
 		<AuthScreen message={t("auth.noAccessMessage")} title={t("auth.noAccess")}>
 			<button
-				className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:cursor-pointer hover:bg-slate-50"
+				className="rounded-md border border-line bg-bg-soft px-3 py-1.5 text-sm font-medium text-ink hover:bg-bg"
 				type="button"
 				onClick={onLogoutClick}
 			>

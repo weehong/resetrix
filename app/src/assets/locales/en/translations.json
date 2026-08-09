@@ -20,6 +20,15 @@
 		"logIn": "Log in",
 		"tagline": "Sign in to continue to your workspace."
 	},
+	"nav": {
+		"activity": "Activity",
+		"dashboard": "Dashboard",
+		"projects": "Projects",
+		"settings": "Settings"
+	},
+	"placeholder": {
+		"subtitle": "This area is not built yet. It exists so navigation matches the intended information architecture."
+	},
 	"profile": {
 		"email": "Email",
 		"loadError": "We could not load your profile. Check your connection and try again.",
@@ -33,5 +42,17 @@
 		"subtitle": "Your identity in Resetrix and what you may do.",
 		"title": "Profile",
 		"userId": "User ID"
+	},
+	"shell": {
+		"closeSidebar": "Close sidebar",
+		"goToDocs": "Go to docs",
+		"openSidebar": "Open sidebar",
+		"yourProfile": "Your profile"
+	},
+	"appearance": {
+		"label": "Appearance",
+		"light": "Light",
+		"dark": "Dark",
+		"system": "System"
 	}
 }

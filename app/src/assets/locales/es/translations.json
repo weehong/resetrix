@@ -20,6 +20,15 @@
 		"logIn": "Iniciar sesión",
 		"tagline": "Inicia sesión para continuar a tu espacio de trabajo."
 	},
+	"nav": {
+		"activity": "Actividad",
+		"dashboard": "Panel",
+		"projects": "Proyectos",
+		"settings": "Configuración"
+	},
+	"placeholder": {
+		"subtitle": "Esta área aún no está construida. Existe para que la navegación coincida con la arquitectura de información prevista."
+	},
 	"profile": {
 		"email": "Correo electrónico",
 		"loadError": "No pudimos cargar tu perfil. Comprueba tu conexión e inténtalo de nuevo.",
@@ -33,5 +42,17 @@
 		"subtitle": "Tu identidad en Resetrix y lo que puedes hacer.",
 		"title": "Perfil",
 		"userId": "ID de usuario"
+	},
+	"shell": {
+		"closeSidebar": "Cerrar barra lateral",
+		"goToDocs": "Ir a la documentación",
+		"openSidebar": "Abrir barra lateral",
+		"yourProfile": "Tu perfil"
+	},
+	"appearance": {
+		"label": "Apariencia",
+		"light": "Claro",
+		"dark": "Oscuro",
+		"system": "Sistema"
 	}
 }

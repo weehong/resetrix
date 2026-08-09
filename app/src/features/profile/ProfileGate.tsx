@@ -39,8 +39,8 @@ export const ProfileGate = ({
 				: t("auth.sessionRejectedMessage");
 		return (
 			<AuthScreen message={detail} title={t("auth.sessionRejected")}>
-				<button
-					className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:cursor-pointer hover:bg-slate-50"
+			<button
+				className="rounded-md border border-line bg-bg-soft px-3 py-1.5 text-sm font-medium text-ink hover:bg-bg"
 					type="button"
 					onClick={() => {
 						void logout({
@@ -64,8 +64,8 @@ export const ProfileGate = ({
 				message={t("profile.loadError")}
 				title={t("profile.loadErrorTitle")}
 			>
-				<button
-					className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:cursor-pointer hover:bg-slate-50"
+			<button
+				className="rounded-md border border-line bg-bg-soft px-3 py-1.5 text-sm font-medium text-ink hover:bg-bg"
 					type="button"
 					onClick={() => void profileQuery.refetch()}
 				>

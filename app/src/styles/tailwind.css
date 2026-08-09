@@ -1,1 +1,33 @@
 @import "tailwindcss";
+@import "./tokens.css";
+
+@custom-variant dark (&:where(html.dark, html.dark *));
+
+@theme inline {
+	--color-bg: var(--bg);
+	--color-bg-soft: var(--bg-soft);
+	--color-ink: var(--ink);
+	--color-ink-dim: var(--ink-dim);
+	--color-line: var(--line);
+	--color-accent: var(--accent);
+	--color-accent-text: var(--accent-text);
+	--color-accent-ink: var(--accent-ink);
+	--color-danger: var(--danger);
+	--color-focus-ring: var(--focus-ring);
+}
+
+@layer base {
+	/*
+	 * Tailwind v4's preflight sets `cursor: default` on buttons to match the UA
+	 * spec. Every button in this app is a real control, so the pointer belongs
+	 * here once rather than as a `cursor-pointer` utility on each call site.
+	 * Disabled controls keep the default arrow.
+	 */
+	button:not(:disabled),
+	[role="button"]:not([aria-disabled="true"]),
+	input[type="button"]:not(:disabled),
+	input[type="submit"]:not(:disabled),
+	input[type="reset"]:not(:disabled) {
+		cursor: pointer;
+	}
+}

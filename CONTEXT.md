@@ -11,3 +11,7 @@ _Avoid_: Customer, End-user, Account, Client
 **Profile**:
 The User's product-facing identity as exposed by the API after authentication: the local User record plus the roles and permissions from the access token that the SPA needs to render the signed-in User.
 _Avoid_: Account, me-resource, session user
+
+**Appearance**:
+The User's preferred color scheme for the SPA: light, dark, or follow the system setting.
+_Avoid_: Theme, color mode, dark mode (as the preference name)

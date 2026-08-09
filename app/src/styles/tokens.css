@@ -1,0 +1,31 @@
+:root {
+	color-scheme: light;
+
+	--bg: #f4f7fb;
+	--bg-soft: #ffffff;
+	--ink: #0b1220;
+	--ink-dim: #5b657a;
+	--line: rgb(11 18 32 / 0.12);
+	--accent: #22d3ee;
+	--accent-text: #0e7490;
+	--accent-ink: #04202a;
+	--accent-glow: rgb(34 211 238 / 0.28);
+	--danger: #dc2626;
+	--focus-ring: #0e7490;
+}
+
+html.dark {
+	color-scheme: dark;
+
+	--bg: #05070f;
+	--bg-soft: #0a0f1e;
+	--ink: #e6ecf5;
+	--ink-dim: #8b96ab;
+	--line: rgb(139 150 171 / 0.22);
+	--accent: #22d3ee;
+	--accent-text: #67e8f9;
+	--accent-ink: #04202a;
+	--accent-glow: rgb(34 211 238 / 0.28);
+	--danger: #f87171;
+	--focus-ring: #67e8f9;
+}

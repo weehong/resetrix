@@ -14,11 +14,11 @@ export const AuthScreen = ({
 	title,
 }: AuthScreenProps): FunctionComponent => {
 	return (
-		<div className="flex h-screen w-screen flex-col items-center justify-center gap-3 bg-slate-50 px-6 text-center">
+		<div className="flex h-screen w-screen flex-col items-center justify-center gap-3 bg-bg px-6 text-center">
 			{title ? (
-				<p className="text-lg font-semibold text-slate-900">{title}</p>
+				<p className="text-lg font-semibold text-ink">{title}</p>
 			) : null}
-			<p className="max-w-md text-sm break-words text-slate-600">{message}</p>
+			<p className="max-w-md text-sm break-words text-ink-dim">{message}</p>
 			{children}
 		</div>
 	);

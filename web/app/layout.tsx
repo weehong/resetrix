@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import Script from "next/script";
 import Providers from "./providers";
-import { JsonLd } from "@/components/json-ld";
 import { isProductionEnv, siteConfig } from "@/lib/site-config";
-import { getOrganizationSchema, getWebSiteSchema } from "@/lib/structured-data";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -31,22 +29,6 @@ export const metadata: Metadata = {
 	keywords: [...siteConfig.keywords],
 	authors: [{ name: siteConfig.author }],
 	creator: siteConfig.creator,
-	alternates: {
-		canonical: "/",
-	},
-	openGraph: {
-		type: "website",
-		url: "/",
-		siteName: siteConfig.name,
-		title: siteConfig.name,
-		description: siteConfig.description,
-		locale: siteConfig.locale,
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: siteConfig.name,
-		description: siteConfig.description,
-	},
 	// Indexing is allowed in production only; non-production emits noindex,nofollow.
 	robots: isProductionEnv
 		? {
@@ -101,8 +83,6 @@ export default function RootLayout({
 			className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
 		>
 			<body className="flex min-h-full flex-col bg-surface text-ink">
-				<JsonLd data={getWebSiteSchema()} />
-				<JsonLd data={getOrganizationSchema()} />
 				<Providers>{children}</Providers>
 				<Script
 					id="resolve-appearance"

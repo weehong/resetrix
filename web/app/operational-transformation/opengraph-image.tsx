@@ -1,15 +1,13 @@
 import type { ImageResponse } from "next/og";
 import { createSocialImage, SOCIAL_IMAGE_SIZE } from "@/lib/social-image";
 
-// Generated social-share image (/opengraph-image), 1200x630.
-// next/og supports flexbox + a subset of CSS only.
-export const alt = "Resetrix connected operations for Singapore SMEs";
+export const alt = "Resetrix operational transformation for Singapore SMEs";
 export const size = SOCIAL_IMAGE_SIZE;
 export const contentType = "image/png";
 
 export default function OpengraphImage(): ImageResponse {
 	return createSocialImage(
-		"Connected operations",
-		"Fix workflow bottlenecks without replacing everything."
+		"Operational transformation",
+		"Make the operational drag visible before changing it."
 	);
 }

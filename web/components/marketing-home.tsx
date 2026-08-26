@@ -267,7 +267,7 @@ export function MarketingHome(): React.ReactElement {
 			`Systems involved: ${value("systems")}`,
 			`Target outcome: ${value("outcome")}`,
 		].join("\n");
-		window.location.href = `mailto:hello@resetrix.sg?subject=${encodeURIComponent("System Fit Diagnostic - Fit Call Request")}&body=${encodeURIComponent(body)}`;
+		window.location.href = `mailto:hello@resetrix.com?subject=${encodeURIComponent("System Fit Diagnostic - Fit Call Request")}&body=${encodeURIComponent(body)}`;
 	};
 
 	return (
@@ -952,7 +952,7 @@ export function MarketingHome(): React.ReactElement {
 							))}
 							<p className="form-note">
 								Submitting opens your email app with these details addressed to
-								hello@resetrix.sg.
+								hello@resetrix.com.
 							</p>
 							<button className="btn btn--primary field--full" type="submit">
 								Request a fit call <ArrowRight size={16} />
@@ -988,7 +988,7 @@ export function MarketingHome(): React.ReactElement {
 						</div>
 						<div>
 							<h4>Contact</h4>
-							<a href="mailto:hello@resetrix.sg">hello@resetrix.sg</a>
+							<a href="mailto:hello@resetrix.com">hello@resetrix.com</a>
 							<a href="#contact">Request a fit call</a>
 							<p>Singapore</p>
 						</div>

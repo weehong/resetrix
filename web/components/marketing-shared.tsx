@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { CloudSun, Moon, Sun } from "lucide-react";
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Appearance = "light" | "system" | "dark";
+
+const APPEARANCE_EVENT = "resetrix-appearance-change";
 
 const APPEARANCES = [
 	{ value: "light", label: "Use light appearance", Icon: Sun },
@@ -19,13 +21,33 @@ function applyAppearance(appearance: Appearance): void {
 	document.documentElement.classList.toggle("dark", isDark);
 	document.documentElement.dataset["appearance"] = appearance;
 	localStorage.setItem("appearance", appearance);
+	window.dispatchEvent(new Event(APPEARANCE_EVENT));
+}
+
+function getStoredAppearance(): Appearance {
+	const stored = localStorage.getItem("appearance");
+	return stored === "light" || stored === "dark" || stored === "system"
+		? stored
+		: "system";
+}
+
+function subscribeToAppearance(onStoreChange: () => void): () => void {
+	window.addEventListener("storage", onStoreChange);
+	window.addEventListener(APPEARANCE_EVENT, onStoreChange);
+	return () => {
+		window.removeEventListener("storage", onStoreChange);
+		window.removeEventListener(APPEARANCE_EVENT, onStoreChange);
+	};
 }
 
 export function ThemeSwitcher(): React.ReactElement {
-	const [appearance, setAppearance] = useState<Appearance>("system");
+	const appearance = useSyncExternalStore(
+		subscribeToAppearance,
+		getStoredAppearance,
+		() => "system"
+	);
 
 	const selectAppearance = (nextAppearance: Appearance): void => {
-		setAppearance(nextAppearance);
 		applyAppearance(nextAppearance);
 	};
 

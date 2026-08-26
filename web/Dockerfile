@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:1
 # Next.js standalone build (requires `output: "standalone"` in next.config.ts).
 
+ARG SITE_ORIGIN=https://resetrix.com
+ARG APP_ENVIRONMENT=production
+
 FROM node:22-alpine AS base
 
 # --- Install dependencies only when needed ---
@@ -12,6 +15,10 @@ RUN npm ci
 # --- Build the application ---
 FROM base AS builder
 WORKDIR /app
+ARG SITE_ORIGIN
+ARG APP_ENVIRONMENT
+ENV SITE_ORIGIN=$SITE_ORIGIN
+ENV APP_ENVIRONMENT=$APP_ENVIRONMENT
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -20,8 +27,12 @@ RUN npm run build
 # --- Production runner ---
 FROM base AS runner
 WORKDIR /app
+ARG SITE_ORIGIN
+ARG APP_ENVIRONMENT
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV SITE_ORIGIN=$SITE_ORIGIN
+ENV APP_ENVIRONMENT=$APP_ENVIRONMENT
 
 RUN addgroup --system --gid 1001 nodejs \
 	&& adduser --system --uid 1001 nextjs

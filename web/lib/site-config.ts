@@ -5,9 +5,38 @@
  * Shared by metadata, manifests, structured data and generated images.
  */
 
-const DEFAULT_URL = "http://localhost:3001";
+const DEFAULT_SITE_ORIGIN = "https://resetrix.com";
 
-const appEnvironment = process.env.NEXT_PUBLIC_APP_ENVIRONMENT ?? "development";
+function parseSiteOrigin(value: string): string {
+	let url: URL;
+	try {
+		url = new URL(value);
+	} catch {
+		throw new Error("SITE_ORIGIN must be a valid absolute URL");
+	}
+
+	if (
+		url.protocol !== "https:" ||
+		url.origin !== value ||
+		url.pathname !== "/" ||
+		url.search ||
+		url.hash
+	) {
+		throw new Error(
+			"SITE_ORIGIN must be an HTTPS origin with no trailing slash, path, query, or fragment"
+		);
+	}
+
+	return value;
+}
+
+/** Canonical production origin shared by every absolute SEO URL. */
+export const SITE_ORIGIN = parseSiteOrigin(
+	process.env.SITE_ORIGIN ?? DEFAULT_SITE_ORIGIN
+);
+
+const appEnvironment =
+	process.env.APP_ENVIRONMENT ?? process.env.NODE_ENV ?? "development";
 
 /**
  * Search-engine indexing is enabled **only in production**. In every other
@@ -26,7 +55,7 @@ export const siteConfig = {
 	description:
 		"Resetrix helps Singapore SMEs remove operational bottlenecks, connect existing systems and build focused software around the way their business works.",
 	/** Absolute canonical origin (no trailing slash). */
-	url: process.env.NEXT_PUBLIC_SITE_URL ?? DEFAULT_URL,
+	url: SITE_ORIGIN,
 	/** Open Graph locale. */
 	locale: "en_US",
 	/** Default keywords. */

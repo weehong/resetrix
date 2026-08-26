@@ -1,11 +1,9 @@
-// Type the environment variables this app reads so `process.env.X` dot-access
-// is allowed under `noPropertyAccessFromIndexSignature` and Next.js keeps
-// inlining the `NEXT_PUBLIC_` vars at build time.
+// Type the build-time environment variables used by server-rendered SEO output.
 declare namespace NodeJS {
 	interface ProcessEnv {
-		/** Absolute canonical site URL, e.g. https://example.com (no trailing slash). */
-		readonly NEXT_PUBLIC_SITE_URL?: string;
-		/** App environment label surfaced to the client. */
-		readonly NEXT_PUBLIC_APP_ENVIRONMENT?: string;
+		/** Absolute canonical HTTPS origin with no trailing slash. */
+		readonly SITE_ORIGIN?: string;
+		/** Set to preview or staging to block indexing outside production. */
+		readonly APP_ENVIRONMENT?: string;
 	}
 }

@@ -1,18 +1,15 @@
-import type { Metadata } from "next";
 import { MarketingHome } from "@/components/marketing-home";
-import { siteConfig } from "@/lib/site-config";
+import { JsonLd } from "@/components/json-ld";
+import { getRouteMetadata } from "@/lib/seo";
+import { getOrganizationSchema } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-	title: { absolute: "Resetrix | Connected operations for Singapore SMEs" },
-	description: siteConfig.description,
-	alternates: { canonical: "/" },
-	openGraph: {
-		title: "Resetrix | Connected operations for Singapore SMEs",
-		description: siteConfig.description,
-		url: "/",
-	},
-};
+export const metadata = getRouteMetadata("/");
 
 export default function Home(): React.ReactElement {
-	return <MarketingHome />;
+	return (
+		<>
+			<JsonLd data={getOrganizationSchema()} />
+			<MarketingHome />
+		</>
+	);
 }

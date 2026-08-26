@@ -73,16 +73,19 @@ Open [http://localhost:3001](http://localhost:3001) in your browser. Port
 
 ## Environment
 
-Create a local environment file when you need to override defaults:
+The canonical production origin is configured once at build time:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=http://localhost:3001
-NEXT_PUBLIC_APP_ENVIRONMENT=development
+SITE_ORIGIN=https://resetrix.com
+APP_ENVIRONMENT=development
 ```
 
-`NEXT_PUBLIC_SITE_URL` is used for canonical URLs, sitemap output, social
-metadata, and structured data. `NEXT_PUBLIC_APP_ENVIRONMENT` controls indexing:
-only `production` allows search engines to index the site.
+`SITE_ORIGIN` must be an HTTPS origin with no trailing slash. It is used for
+canonicals, sitemap output, social metadata, robots, and structured data. The
+repository-confirmed public origin `https://resetrix.com` is the default.
+`APP_ENVIRONMENT` controls indexing: only `production` allows search engines to
+index the site. Next production builds default to `production`; set this value
+explicitly to `preview` or `staging` for non-production deployments.
 
 ## Important Notes
 
@@ -91,7 +94,7 @@ only `production` allows search engines to index the site.
    images, and structured data stay consistent.
 
 2. Non-production deployments emit `noindex, nofollow` and block crawlers
-   through `robots.txt`. Set `NEXT_PUBLIC_APP_ENVIRONMENT=production` only for
+   through `robots.txt`. Set `APP_ENVIRONMENT=production` only for
    the canonical production deployment.
 
 3. The `@/*` path alias maps to the package root. Prefer imports such as
@@ -152,6 +155,7 @@ Build the production app:
 
 ```bash
 npm run build
+npm run verify:seo
 ```
 
 Start the production server:
@@ -186,6 +190,7 @@ A CI template is intentionally not included. A practical baseline gate is:
 npm run lint
 npm run test:unit:run
 npm run build
+npm run verify:seo
 ```
 
 Run `npm run test:e2e` in CI after Playwright browsers are installed and a web
@@ -214,6 +219,7 @@ Storybook is configured to discover stories and MDX files under `app/` and
 | --- | --- |
 | `npm run dev` | Start the local Next.js dev server on port 3001 |
 | `npm run build` | Build the production app |
+| `npm run verify:seo` | Validate prerendered HTML, crawl files, and structured data |
 | `npm run start` | Start the production server on port 3001 |
 | `npm run lint` | Run ESLint |
 | `npm run lint:fix` | Run ESLint with automatic fixes |

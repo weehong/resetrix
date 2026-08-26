@@ -6,8 +6,8 @@ import { Link } from "@/components/ui/link";
 // Next.js automatically injects <meta name="robots" content="noindex"> for
 // pages that return a 404 status.
 export const metadata: Metadata = {
-	title: "404 – Page not found",
-	description: "The page you are looking for does not exist.",
+	title: { absolute: "Page Not Found | Resetrix" },
+	description: null,
 };
 
 export default function NotFound(): React.ReactElement {

@@ -54,9 +54,8 @@ export const LevelIndependentOfSize: Story = {
 			<Heading level={2} size="display">
 				An h2 set at display size
 			</Heading>
-			<p className="max-w-prose leading-relaxed text-ink-dim">
-				Renders as an h2 in the outline while reading as the largest step on the
-				page.
+			<p className="max-w-prose leading-relaxed text-ink-soft">
+				Renders as an h2 in the outline while using the Fraunces display step.
 			</p>
 		</div>
 	),

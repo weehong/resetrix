@@ -6,39 +6,35 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4.5rem var(--pad-x) 2.75rem;
-  overflow: hidden;
+  padding: 5rem var(--pad-x) 2.5rem;
+  overflow-x: clip;
   background: var(--bg);
 }
 
 .page::before {
   content: "";
   position: absolute;
-  inset: -20% -10% auto;
-  height: 55%;
+  width: min(44rem, 125vw);
+  height: min(44rem, 125vw);
+  top: max(-22rem, -55vw);
+  left: calc(50% - min(22rem, 62.5vw));
+  border-radius: 9999px;
   background:
-    radial-gradient(
-      55% 70% at 50% 0%,
-      rgba(34, 211, 238, 0.16),
-      transparent 70%
-    ),
-    radial-gradient(
-      40% 50% at 80% 20%,
-      rgba(34, 211, 238, 0.06),
-      transparent 70%
-    );
+    radial-gradient(circle at 35% 65%, rgb(180 207 192 / 0.5), transparent 48%),
+    radial-gradient(circle at 68% 72%, rgb(217 222 123 / 0.18), transparent 45%);
   pointer-events: none;
   z-index: 0;
-  animation: glowPulse 8s ease-in-out infinite;
 }
 
 .page::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, transparent 60%, rgba(5, 7, 15, 0.85) 100%),
-    radial-gradient(ellipse 80% 50% at 50% 120%, rgba(34, 211, 238, 0.05), transparent);
+  width: 18rem;
+  height: 18rem;
+  right: -9rem;
+  bottom: -9rem;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
   pointer-events: none;
   z-index: 0;
 }
@@ -47,18 +43,22 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 24.5rem;
+  max-width: 28rem;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-  animation: riseIn 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  animation: riseIn 560ms var(--ease-organic) both;
 }
 
 .logoWrap {
   align-self: center;
   position: relative;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 6.5rem;
+  height: 6.5rem;
   display: grid;
   place-items: center;
 }
@@ -66,12 +66,10 @@
 .logoWrap::before {
   content: "";
   position: absolute;
-  inset: -10%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow), transparent 68%);
-  filter: blur(8px);
-  opacity: 0.9;
-  animation: logoAura 4.5s ease-in-out infinite;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: var(--aqua-200);
+  transform: rotate(-4deg);
 }
 
 .logo {
@@ -79,13 +77,11 @@
   width: 5.5rem;
   height: 5.5rem;
   object-fit: contain;
-  border-radius: 1.35rem;
-  background: linear-gradient(160deg, #0d1428 0%, #070b16 100%);
-  border: 1px solid rgba(34, 211, 238, 0.22);
+  border-radius: var(--radius-lg);
+  background: var(--forest-950);
+  border: 1px solid var(--line);
   padding: 0.55rem;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
-    0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  box-shadow: var(--shadow-md);
 }
 
 .identity {
@@ -98,10 +94,12 @@
 
 .name {
   font-family: var(--font-display);
-  font-size: clamp(1.55rem, 5.5vw, 1.9rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-size: clamp(1.75rem, 7vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.2;
+  font-variation-settings: "opsz" 36, "SOFT" 30;
+  text-wrap: balance;
   margin: 0.35rem 0 0;
   color: var(--ink);
 }
@@ -109,8 +107,8 @@
 .role {
   margin: 0;
   font-family: var(--font-ui, var(--font-body));
-  color: var(--accent);
-  font-size: 0.82rem;
+  color: var(--link);
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -125,7 +123,7 @@ html[lang="zh-CN"] .role {
   margin: 0.15rem 0 0;
   font-family: var(--font-ui, var(--font-body));
   color: var(--ink-dim);
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   font-weight: 500;
 }
 
@@ -134,10 +132,10 @@ html[lang="zh-CN"] .role {
   max-width: 18rem;
   font-family: var(--font-ui, var(--font-body));
   color: var(--ink-dim);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.45;
-  opacity: 0.95;
+  line-height: 1.6;
+  text-wrap: pretty;
 }
 
 html[lang="zh-CN"] .slogan {
@@ -146,11 +144,11 @@ html[lang="zh-CN"] .slogan {
 }
 
 .divider {
-  width: 2.5rem;
-  height: 1px;
+  width: 3rem;
+  height: 4px;
   margin: 0.15rem auto 0;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.7;
+  border-radius: 9999px;
+  background: var(--highlight);
 }
 
 .saveButton {
@@ -159,34 +157,28 @@ html[lang="zh-CN"] .slogan {
   justify-content: center;
   gap: 0.65rem;
   width: 100%;
-  min-height: 3.4rem;
+  min-height: 3.25rem;
   border: none;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-family: var(--font-ui, var(--font-display));
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  border-radius: var(--radius-md);
+  background: var(--cta);
+  color: var(--cta-ink);
+  font-family: var(--font-ui, var(--font-body));
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.004em;
   cursor: pointer;
   transition:
-    transform 160ms ease,
-    box-shadow 220ms ease,
-    filter 160ms ease;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-    0 12px 36px -10px var(--accent-glow);
+    background var(--duration-fast) ease,
+    box-shadow var(--duration-fast) ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .saveButton:hover {
-  filter: brightness(1.05);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-    0 16px 42px -8px rgba(34, 211, 238, 0.45);
+  background: var(--cta-hover);
 }
 
-.saveButton:active {
-  transform: scale(0.985);
+.saveButton:focus-visible {
+  outline-color: var(--focus-on-forest);
 }
 
 .saveButton svg {
@@ -198,12 +190,11 @@ html[lang="zh-CN"] .slogan {
 .secondaryRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.35rem;
-  padding: 0.35rem;
-  border-radius: calc(var(--radius) + 0.15rem);
-  background: rgba(10, 15, 30, 0.65);
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface-soft);
   border: 1px solid var(--line);
-  backdrop-filter: blur(10px);
 }
 
 .secondaryAction {
@@ -212,35 +203,29 @@ html[lang="zh-CN"] .slogan {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.85rem 0.2rem;
-  border-radius: var(--radius);
+  padding: 0.75rem 0.125rem;
+  border-radius: var(--radius-md);
   text-decoration: none;
   font-family: var(--font-ui, var(--font-body));
   font-size: 0.72rem;
   font-weight: 500;
-  color: var(--ink-dim);
-  min-height: 4.25rem;
+  color: var(--ink-muted);
+  min-height: 4rem;
   transition:
-    color 160ms ease,
-    background 160ms ease,
-    transform 160ms ease;
+    color var(--duration-fast) ease,
+    background var(--duration-fast) ease;
 }
 
 .secondaryAction:hover,
 .secondaryAction:focus-visible {
   color: var(--ink);
-  background: rgba(34, 211, 238, 0.08);
-  outline: none;
-}
-
-.secondaryAction:active {
-  transform: scale(0.97);
+  background: var(--aqua-200);
 }
 
 .secondaryAction svg {
   width: 1.3rem;
   height: 1.3rem;
-  color: var(--accent);
+  color: var(--link);
   stroke-width: 1.75;
 }
 
@@ -259,7 +244,7 @@ html[lang="zh-CN"] .slogan {
   gap: 0.75rem;
   align-items: baseline;
   padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(139, 150, 171, 0.12);
+  border-bottom: 1px solid var(--line);
 }
 
 .detailRow:last-child {
@@ -272,7 +257,7 @@ html[lang="zh-CN"] .slogan {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-dim);
+  color: var(--ink-muted);
 }
 
 html[lang="zh-CN"] .detailLabel {
@@ -292,13 +277,15 @@ html[lang="zh-CN"] .detailLabel {
   color: var(--ink);
   text-decoration: none;
   word-break: break-word;
-  transition: color 160ms ease;
+  transition: color var(--duration-fast) ease;
 }
 
 a.detailValue:hover,
 a.detailValue:focus-visible {
-  color: var(--accent);
-  outline: none;
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
 }
 
 .langToggle {
@@ -307,28 +294,28 @@ a.detailValue:focus-visible {
   right: max(0.85rem, env(safe-area-inset-right));
   z-index: 20;
   display: flex;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(10, 15, 30, 0.55);
+  border: 1px solid var(--control-line);
+  border-radius: 9999px;
+  background: var(--surface);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   overflow: hidden;
-  box-shadow: 0 8px 28px -18px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--shadow-sm);
 }
 
 .langOption {
   border: none;
   background: transparent;
-  color: var(--ink-dim);
+  color: var(--ink-muted);
   font-family: var(--font-ui, var(--font-body));
   font-size: 0.78rem;
   font-weight: 600;
   padding: 0.5rem 0.95rem;
-  min-height: 2.4rem;
+  min-height: 2.5rem;
   cursor: pointer;
   transition:
-    background 160ms ease,
-    color 160ms ease;
+    background var(--duration-fast) ease,
+    color var(--duration-fast) ease;
 }
 
 .langOption:hover {
@@ -336,8 +323,13 @@ a.detailValue:focus-visible {
 }
 
 .langOptionActive {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--accent-ink);
+}
+
+.langOptionActive:focus-visible {
+  outline-color: var(--forest-950);
+  outline-offset: -3px;
 }
 
 .footerMark {
@@ -346,16 +338,15 @@ a.detailValue:focus-visible {
   margin-top: 1.75rem;
   font-family: var(--font-display);
   font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: var(--ink-dim);
-  opacity: 0.55;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--ink-muted);
   text-align: center;
-  animation: riseIn 700ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: riseIn 700ms 120ms var(--ease-organic) both;
 }
 
 .footerDot {
-  color: var(--accent);
+  color: var(--link);
 }
 
 @keyframes riseIn {
@@ -369,30 +360,6 @@ a.detailValue:focus-visible {
   }
 }
 
-@keyframes glowPulse {
-  0%,
-  100% {
-    opacity: 0.85;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.03);
-  }
-}
-
-@keyframes logoAura {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 0.95;
-    transform: scale(1.05);
-  }
-}
-
 @media (min-width: 30rem) {
   .card {
     max-width: 26rem;
@@ -400,5 +367,44 @@ a.detailValue:focus-visible {
 
   .detailRow {
     grid-template-columns: 6rem 1fr;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    border: 1px solid var(--line);
+    box-shadow: none;
+  }
+
+  .page::before {
+    background:
+      radial-gradient(circle at 35% 65%, rgb(70 111 89 / 0.5), transparent 48%),
+      radial-gradient(circle at 68% 72%, rgb(193 176 40 / 0.12), transparent 45%);
+  }
+
+  .logoWrap::before {
+    background: rgb(171 212 199 / 0.14);
+  }
+
+  .secondaryAction:hover,
+  .secondaryAction:focus-visible {
+    background: rgb(171 212 199 / 0.1);
+  }
+}
+
+@media (max-width: 24rem) {
+  .page {
+    justify-content: flex-start;
+    padding-inline: 0.75rem;
+  }
+
+  .card {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .detailRow {
+    grid-template-columns: 4.75rem minmax(0, 1fr);
+    gap: 0.5rem;
   }
 }

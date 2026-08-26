@@ -1,210 +1,175 @@
-/*
- * Resetrix appearance tokens — see docs/adr/0011-web-appearance-tokens.md
- *
- * Two tiers, and the distinction matters:
- *
- *   Tier 1 (@theme static) — the raw palette. 99 oklch values, 9 families of
- *   11 steps. These are the *materials*. They generate utilities
- *   (`bg-primary-600`, `text-info-700`) and are reachable when you need a
- *   specific shade, but they carry no meaning on their own.
- *
- *   Tier 2 (:root) — the semantic layer. These are the *decisions*: what the
- *   page background is, what body text is, what "danger" looks like. Only
- *   these are bridged into Tailwind by app/globals.css, so components write
- *   `bg-bg text-ink`, never `bg-neutral-50 text-neutral-900`.
- *
- * Adding a dark scheme later means adding one `html.dark` block at the bottom
- * of tier 2. No component, and no tier 1 value, has to change.
- *
- * Contrast ratios in the comments are WCAG 2.1 against --bg (#f8f7f7) unless
- * stated otherwise. Measured, not estimated — keep them honest if you edit.
- */
-
-/* ---------------------------------------------------------------------------
- * Tier 1 — raw palette
- *
- * `static` (not plain `@theme`) guarantees every variable is emitted even when
- * no utility references it, because tier 2 reaches them through var() and
- * Tailwind's usage detection cannot see that.
- * ------------------------------------------------------------------------- */
-
+/* Botanical: photographed paint-chip anchors expanded into WCAG-aware ramps. */
 @theme static {
-	/* Crimson. No semantic role — see ADR 0011. Available as a raw scale. */
-	--color-primary-50: oklch(0.968 0.013 11.54);
-	--color-primary-100: oklch(0.939 0.026 11.87);
-	--color-primary-200: oklch(0.858 0.063 13.6);
-	--color-primary-300: oklch(0.76 0.115 15.4);
-	--color-primary-400: oklch(0.669 0.171 18.63);
-	--color-primary-500: oklch(0.612 0.208 22.24);
-	--color-primary-600: oklch(0.531 0.203 25.19);
-	--color-primary-700: oklch(0.469 0.178 24.94);
-	--color-primary-800: oklch(0.404 0.151 24.52);
-	--color-primary-900: oklch(0.346 0.127 24.04);
-	--color-primary-950: oklch(0.255 0.088 22.89);
+	--color-forest-50: oklch(0.975 0.0063 160.17);
+	--color-forest-100: oklch(0.95 0.0114 160.17);
+	--color-forest-200: oklch(0.879 0.0227 160.17);
+	--color-forest-300: oklch(0.83 0.0349 161.32);
+	--color-forest-400: oklch(0.74 0.0535 162.48);
+	--color-forest-500: oklch(0.665 0.0634 161.5);
+	--color-forest-600: oklch(0.585 0.0634 160.52);
+	--color-forest-700: oklch(0.505 0.059 159.54);
+	--color-forest-800: oklch(0.401 0.0488 158.56);
+	--color-forest-900: oklch(0.36 0.0444 158.56);
+	--color-forest-950: oklch(0.265 0.033 158.56);
 
-	/* Lime-green. Raw scale only. Never place adjacent to `success` — the two
-	 * are 1.04:1 apart (secondary-500 #63c742 vs success-600 #1bc762) and read
-	 * as the same colour. */
-	--color-secondary-50: oklch(0.975 0.018 137.8);
-	--color-secondary-100: oklch(0.966 0.026 136.32);
-	--color-secondary-200: oklch(0.921 0.06 137.68);
-	--color-secondary-300: oklch(0.864 0.104 137.91);
-	--color-secondary-400: oklch(0.806 0.149 138.34);
-	--color-secondary-500: oklch(0.742 0.194 138.95);
-	--color-secondary-600: oklch(0.667 0.18 138.95);
-	--color-secondary-700: oklch(0.589 0.157 138.94);
-	--color-secondary-800: oklch(0.506 0.133 138.86);
-	--color-secondary-900: oklch(0.435 0.112 138.78);
-	--color-secondary-950: oklch(0.317 0.077 138.44);
+	--color-stone-50: oklch(0.975 0.0135 116.58);
+	--color-stone-100: oklch(0.95 0.0165 116.58);
+	--color-stone-200: oklch(0.889 0.0259 116.58);
+	--color-stone-300: oklch(0.83 0.03 116.58);
+	--color-stone-400: oklch(0.75 0.03 116.58);
+	--color-stone-500: oklch(0.665 0.0285 116.58);
+	--color-stone-600: oklch(0.585 0.027 116.58);
+	--color-stone-700: oklch(0.505 0.0255 116.58);
+	--color-stone-800: oklch(0.43 0.0234 116.58);
+	--color-stone-900: oklch(0.36 0.021 116.58);
+	--color-stone-950: oklch(0.265 0.0174 116.58);
 
-	/* Muted teal. Sits near the brand cyan in hue but at half its chroma —
-	 * tertiary-400 is #80c9cc, not #22d3ee. Supporting surfaces, not brand. */
-	--color-tertiary-50: oklch(0.981 0.007 208.78);
-	--color-tertiary-100: oklch(0.963 0.014 196.93);
-	--color-tertiary-200: oklch(0.914 0.031 201.71);
-	--color-tertiary-300: oklch(0.854 0.052 199.29);
-	--color-tertiary-400: oklch(0.789 0.073 199.11);
-	--color-tertiary-500: oklch(0.715 0.094 198.83);
-	--color-tertiary-600: oklch(0.64 0.086 199.19);
-	--color-tertiary-700: oklch(0.564 0.075 199.96);
-	--color-tertiary-800: oklch(0.488 0.064 198.12);
-	--color-tertiary-900: oklch(0.416 0.053 198.87);
-	--color-tertiary-950: oklch(0.306 0.037 201.01);
+	--color-gold-50: oklch(0.975 0.061 103.84);
+	--color-gold-100: oklch(0.95 0.1046 103.84);
+	--color-gold-200: oklch(0.898 0.1624 103.84);
+	--color-gold-300: oklch(0.836 0.1663 102.16);
+	--color-gold-400: oklch(0.75 0.1462 102.16);
+	--color-gold-500: oklch(0.665 0.1296 102.16);
+	--color-gold-600: oklch(0.585 0.1141 102.16);
+	--color-gold-700: oklch(0.505 0.0985 102.16);
+	--color-gold-800: oklch(0.43 0.0839 102.16);
+	--color-gold-900: oklch(0.36 0.07038 102.16);
+	--color-gold-950: oklch(0.265 0.052 102.16);
 
-	/* Steel blue. Was `color-4` in the source palette. */
-	--color-info-50: oklch(0.977 0.005 228.82);
-	--color-info-100: oklch(0.954 0.01 238.51);
-	--color-info-200: oklch(0.891 0.024 236);
-	--color-info-300: oklch(0.814 0.041 236.75);
-	--color-info-400: oklch(0.729 0.061 236.25);
-	--color-info-500: oklch(0.625 0.083 238.05);
-	--color-info-600: oklch(0.56 0.078 237.98);
-	--color-info-700: oklch(0.493 0.067 237.54);
-	--color-info-800: oklch(0.425 0.057 238.11);
-	--color-info-900: oklch(0.368 0.047 236.38);
-	--color-info-950: oklch(0.274 0.032 235.06);
+	--color-chartreuse-50: oklch(0.975 0.043 111.22);
+	--color-chartreuse-100: oklch(0.95 0.0737 111.22);
+	--color-chartreuse-200: oklch(0.895 0.1081 111.22);
+	--color-chartreuse-300: oklch(0.876 0.1229 111.22);
+	--color-chartreuse-400: oklch(0.75 0.1204 111.22);
+	--color-chartreuse-500: oklch(0.665 0.11304 111.22);
+	--color-chartreuse-600: oklch(0.585 0.1044 111.22);
+	--color-chartreuse-700: oklch(0.505 0.0958 111.22);
+	--color-chartreuse-800: oklch(0.43 0.086 111.22);
+	--color-chartreuse-900: oklch(0.36 0.0739 111.22);
+	--color-chartreuse-950: oklch(0.265 0.0547 111.22);
 
-	/* Indigo. Was `color-5` in the source palette. Reserved for charts and
-	 * data visualisation, where a series needs a colour that means nothing. */
-	--color-data-50: oklch(0.975 0.006 255.47);
-	--color-data-100: oklch(0.947 0.014 258.35);
-	--color-data-200: oklch(0.877 0.033 256.77);
-	--color-data-300: oklch(0.791 0.058 255.91);
-	--color-data-400: oklch(0.692 0.087 256.95);
-	--color-data-500: oklch(0.578 0.124 257.24);
-	--color-data-600: oklch(0.513 0.116 256.94);
-	--color-data-700: oklch(0.453 0.102 257.59);
-	--color-data-800: oklch(0.393 0.086 257.19);
-	--color-data-900: oklch(0.328 0.068 257.27);
-	--color-data-950: oklch(0.254 0.047 256.64);
+	--color-aqua-50: oklch(0.975 0.0085 173.85);
+	--color-aqua-100: oklch(0.95 0.0153 173.85);
+	--color-aqua-200: oklch(0.895 0.0289 173.85);
+	--color-aqua-300: oklch(0.837 0.0468 173.85);
+	--color-aqua-400: oklch(0.75 0.0681 173.85);
+	--color-aqua-500: oklch(0.665 0.0851 173.85);
+	--color-aqua-600: oklch(0.585 0.0851 173.85);
+	--color-aqua-700: oklch(0.505 0.0791 173.85);
+	--color-aqua-800: oklch(0.43 0.0698 173.85);
+	--color-aqua-900: oklch(0.36 0.05958 173.85);
+	--color-aqua-950: oklch(0.265 0.0443 173.85);
 
-	/* Warm greys — hue ~17°, faintly red. Overrides Tailwind's own `neutral`.
-	 * The warmth is what keeps the page from reading clinical under a cold
-	 * accent; at chroma 0.001 it is a tint, not a colour. */
-	--color-neutral-50: oklch(0.977 0.001 17.18);
-	--color-neutral-100: oklch(0.953 0.001 17.18);
-	--color-neutral-200: oklch(0.891 0.003 17.22);
-	--color-neutral-300: oklch(0.81 0.007 17.3);
-	--color-neutral-400: oklch(0.717 0.011 9.64);
-	--color-neutral-500: oklch(0.643 0.013 11.18);
-	--color-neutral-600: oklch(0.538 0.014 11.29);
-	--color-neutral-700: oklch(0.476 0.012 9.87);
-	--color-neutral-800: oklch(0.412 0.009 17.54);
-	--color-neutral-900: oklch(0.355 0.009 6.07);
-	--color-neutral-950: oklch(0.265 0.006 0.52);
+	--color-success-50: oklch(0.975 0.0135 148);
+	--color-success-100: oklch(0.95 0.0243 148);
+	--color-success-200: oklch(0.895 0.0459 148);
+	--color-success-300: oklch(0.83 0.0743 148);
+	--color-success-400: oklch(0.75 0.108 148);
+	--color-success-500: oklch(0.665 0.135 148);
+	--color-success-600: oklch(0.585 0.135 148);
+	--color-success-700: oklch(0.505 0.1256 148);
+	--color-success-800: oklch(0.43 0.1107 148);
+	--color-success-900: oklch(0.36 0.0945 148);
+	--color-success-950: oklch(0.265 0.0702 148);
 
-	--color-success-50: oklch(0.983 0.016 160.64);
-	--color-success-100: oklch(0.97 0.031 160.24);
-	--color-success-200: oklch(0.93 0.071 159.14);
-	--color-success-300: oklch(0.884 0.119 157.43);
-	--color-success-400: oklch(0.844 0.166 154.62);
-	--color-success-500: oklch(0.817 0.197 152.3);
-	--color-success-600: oklch(0.728 0.192 150.55);
-	--color-success-700: oklch(0.642 0.169 150.55);
-	--color-success-800: oklch(0.55 0.143 150.99);
-	--color-success-900: oklch(0.47 0.121 151.01);
-	--color-success-950: oklch(0.341 0.084 151.78);
+	--color-warning-50: oklch(0.975 0.0168 70);
+	--color-warning-100: oklch(0.95 0.034 70);
+	--color-warning-200: oklch(0.895 0.0741 70);
+	--color-warning-300: oklch(0.83 0.1255 70);
+	--color-warning-400: oklch(0.75 0.1274 70);
+	--color-warning-500: oklch(0.665 0.1196 70);
+	--color-warning-600: oklch(0.585 0.1105 70);
+	--color-warning-700: oklch(0.505 0.1014 70);
+	--color-warning-800: oklch(0.43 0.0868 70);
+	--color-warning-900: oklch(0.36 0.0728 70);
+	--color-warning-950: oklch(0.265 0.0538 70);
 
-	--color-warning-50: oklch(0.985 0.012 91.52);
-	--color-warning-100: oklch(0.973 0.025 91.61);
-	--color-warning-200: oklch(0.935 0.055 91.42);
-	--color-warning-300: oklch(0.891 0.094 92.41);
-	--color-warning-400: oklch(0.845 0.129 91.35);
-	--color-warning-500: oklch(0.809 0.148 89.6);
-	--color-warning-600: oklch(0.713 0.14 87.88);
-	--color-warning-700: oklch(0.628 0.123 87.57);
-	--color-warning-800: oklch(0.539 0.105 87.82);
-	--color-warning-900: oklch(0.462 0.089 88.16);
-	--color-warning-950: oklch(0.337 0.062 88.88);
+	--color-error-50: oklch(0.975 0.0114 30);
+	--color-error-100: oklch(0.95 0.0233 30);
+	--color-error-200: oklch(0.895 0.0493 30);
+	--color-error-300: oklch(0.83 0.0798 30);
+	--color-error-400: oklch(0.75 0.116 30);
+	--color-error-500: oklch(0.665 0.145 30);
+	--color-error-600: oklch(0.585 0.145 30);
+	--color-error-700: oklch(0.505 0.1348 30);
+	--color-error-800: oklch(0.43 0.1189 30);
+	--color-error-900: oklch(0.36 0.1015 30);
+	--color-error-950: oklch(0.265 0.0754 30);
 
-	/* Orange-red, not crimson. error-600 (#c76219) and primary-600 (#c71a26)
-	 * are only 1.44:1 apart — never rely on hue alone to tell them apart. */
-	--color-error-50: oklch(0.977 0.01 58.22);
-	--color-error-100: oklch(0.957 0.02 58.07);
-	--color-error-200: oklch(0.9 0.047 57.8);
-	--color-error-300: oklch(0.829 0.083 57.32);
-	--color-error-400: oklch(0.756 0.122 54.88);
-	--color-error-500: oklch(0.702 0.15 52.7);
-	--color-error-600: oklch(0.607 0.15 50.11);
-	--color-error-700: oklch(0.536 0.132 49.98);
-	--color-error-800: oklch(0.463 0.111 50.92);
-	--color-error-900: oklch(0.396 0.093 50.59);
-	--color-error-950: oklch(0.291 0.064 51.56);
+	--color-info-50: oklch(0.975 0.0105 248);
+	--color-info-100: oklch(0.95 0.0189 248);
+	--color-info-200: oklch(0.895 0.0357 248);
+	--color-info-300: oklch(0.83 0.0578 248);
+	--color-info-400: oklch(0.75 0.084 248);
+	--color-info-500: oklch(0.665 0.105 248);
+	--color-info-600: oklch(0.585 0.105 248);
+	--color-info-700: oklch(0.505 0.0977 248);
+	--color-info-800: oklch(0.43 0.0861 248);
+	--color-info-900: oklch(0.36 0.0735 248);
+	--color-info-950: oklch(0.265 0.0546 248);
 }
-
-/* ---------------------------------------------------------------------------
- * Tier 2 — semantic layer
- * ------------------------------------------------------------------------- */
 
 :root {
 	color-scheme: light;
+	--surface-base: var(--color-stone-50);
+	--surface-raised: #ffffff;
+	--surface-band: var(--color-forest-50);
+	--surface-chip: var(--color-stone-200);
+	--surface-invert: var(--color-forest-800);
+	--text-primary: var(--color-forest-950);
+	--text-secondary: var(--color-stone-800);
+	--text-muted: var(--color-stone-700);
+	--text-link: var(--color-aqua-800);
+	--text-on-invert: var(--color-stone-50);
+	--cta-fill: var(--color-forest-800);
+	--cta-fill-hover: var(--color-forest-900);
+	--cta-label: var(--color-stone-50);
+	--accent-fill: var(--color-gold-300);
+	--accent-label: var(--color-forest-950);
+	--highlight: var(--color-chartreuse-300);
+	--line-hairline: var(--color-stone-200);
+	--line-control: var(--color-stone-600);
+	--focus-ring: var(--color-forest-800);
+	--quiet-chip: var(--color-aqua-200);
+	--radius-xs: 6px;
+	--radius-sm: 10px;
+	--radius-md: 14px;
+	--radius-lg: 20px;
+	--radius-xl: 28px;
+	--radius-2xl: 40px;
+	--shadow-xs: 0 1px 2px rgb(23 42 31 / 0.05);
+	--shadow-sm: 0 2px 4px rgb(23 42 31 / 0.05), 0 4px 12px rgb(23 42 31 / 0.05);
+	--shadow-md: 0 4px 8px rgb(23 42 31 / 0.06), 0 12px 28px rgb(23 42 31 / 0.07);
+	--duration-fast: 200ms;
+	--duration-base: 320ms;
+	--duration-slow: 560ms;
+	--duration-slower: 840ms;
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-organic: cubic-bezier(0.34, 0.9, 0.32, 1);
+	--pad-x: clamp(1.5rem, 4vw, 4rem);
+}
 
-	/* Surfaces. --bg is the page, --bg-soft lifts off it (cards, panels). */
-	--bg: var(--color-neutral-50); /* #f8f7f7 */
-	--bg-soft: #ffffff;
-	--bg-inset: var(--color-neutral-100); /* wells, code blocks */
-
-	/* Hairline vs. interactive boundary. --line is decorative at 1.30:1;
-	 * anything a user can operate needs --line-strong to clear WCAG 1.4.11. */
-	--line: var(--color-neutral-200); /* #dddada  1.30 — dividers, card edges */
-	--line-strong: var(
-		--color-neutral-500
-	); /* #958a8b  3.12 — inputs, controls */
-
-	/* Text, darkest to lightest. All three clear AA on --bg; --ink-faint only
-	 * does so at 16px and up, so prefer --ink-dim for anything smaller. */
-	--ink: var(--color-neutral-900); /* #403a3b 10.41 AAA */
-	--ink-dim: var(--color-neutral-700); /* #635a5b  6.25 AA  */
-	--ink-faint: var(--color-neutral-600); /* #766b6c  4.80 AA @16px+ */
-
-	/* Brand. #22d3ee is held verbatim, outside the scales, so web/, app/ and
-	 * card/ share one cyan. It is a fill colour and cannot carry text at
-	 * 1.69:1 — that is what --accent-text exists for. */
-	--accent: #22d3ee; /* fills, glow, rules */
-	--accent-text: #0e7490; /* 5.01 AA — links, interactive text */
-	--accent-ink: #04202a; /* 9.33 AAA — text on an --accent fill */
-	--accent-glow: rgb(34 211 238 / 0.28);
-
-	/* Status. Each is dual-purpose: AA as text on --bg, and AA under white as
-	 * a solid fill. Ratios below are (on --bg / under white). */
-	--success: var(--color-success-900); /* #0d6d35  6.03 / 6.45 */
-	--warning: var(--color-warning-800); /* #886a10  4.77 / 5.10 */
-	--danger: var(--color-error-700); /* #a85215  5.06 / 5.41 */
-	--status-ink: #ffffff; /* text on any status fill */
-
-	/* Focus. Sits on --bg at 5.01:1. On an --accent fill it drops to 2.96, so
-	 * always draw it with an offset ring rather than flush against the fill. */
-	--focus-ring: var(--accent-text);
-
-	/* Geometry. --pad-x is the page gutter, carried over from the previous
-	 * marketing site so section rhythm stays recognisable. */
-	--pad-x: clamp(1.25rem, 6vw, 7rem);
-	--radius: 0.75rem;
-	--radius-lg: 1.25rem;
-
-	/* Typefaces. next/font/google publishes --font-sora and --font-inter from
-	 * app/layout.tsx; each already includes a metric-matched fallback. */
-	--typeface-display: var(--font-sora), "Sora", system-ui, sans-serif;
-	--typeface-body:
-		var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+html.dark {
+	color-scheme: dark;
+	--surface-base: var(--color-forest-950);
+	--surface-raised: var(--color-forest-900);
+	--surface-band: var(--color-forest-900);
+	--surface-chip: var(--color-forest-900);
+	--surface-invert: var(--color-stone-100);
+	--text-primary: var(--color-stone-100);
+	--text-secondary: var(--color-stone-300);
+	--text-muted: var(--color-stone-400);
+	--text-link: var(--color-aqua-300);
+	--text-on-invert: var(--color-forest-950);
+	--cta-fill: var(--color-forest-300);
+	--cta-fill-hover: var(--color-forest-200);
+	--cta-label: var(--color-forest-950);
+	--highlight: var(--color-chartreuse-400);
+	--line-hairline: rgb(237 240 228 / 0.1);
+	--line-control: rgb(237 240 228 / 0.3);
+	--focus-ring: var(--color-gold-300);
+	--quiet-chip: rgb(171 212 199 / 0.14);
+	--shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+	--shadow-sm: 0 2px 6px rgb(0 0 0 / 0.4);
+	--shadow-md: 0 6px 20px rgb(0 0 0 / 0.45);
 }

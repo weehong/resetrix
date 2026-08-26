@@ -12,12 +12,9 @@ export type LinkProps = {
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">;
 
 const TONES = {
-	// --accent-text, not --accent. The brand cyan is 1.69:1 on the page
-	// background and is unreadable as text; this is its AA-safe counterpart at
-	// 5.01:1. Getting this wrong is the single easiest way to break the theme.
 	accent:
-		"text-accent-text underline underline-offset-[0.2em] hover:decoration-2",
-	quiet: "text-inherit no-underline hover:text-accent-text",
+		"text-ink-link underline decoration-[1.5px] underline-offset-4 hover:decoration-2",
+	quiet: "text-inherit no-underline hover:text-ink-link",
 } as const;
 
 function isExternal(href: string): boolean {
@@ -38,7 +35,7 @@ export function Link({
 	className,
 	...props
 }: LinkProps): React.ReactElement {
-	const classes = cn("rounded-xs transition-colors", TONES[tone], className);
+	const classes = cn("rounded-[6px] transition-colors", TONES[tone], className);
 
 	if (isExternal(href)) {
 		return (

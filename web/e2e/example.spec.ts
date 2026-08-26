@@ -1,20 +1,18 @@
 import { test, expect } from "@playwright/test";
 
-test("home page renders the site name as its h1", async ({ page }) => {
+test("home page renders the Resetrix value proposition", async ({ page }) => {
 	// baseURL is set via `use.baseURL` in playwright.config.ts
 	await page.goto("/");
-	await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+	await expect(page.getByRole("heading", { level: 1 })).toContainText(
+		"Software that fits"
+	);
 });
 
-test("the page paints the light token surface, not a default white", async ({
-	page,
-}) => {
+test("the page paints the Botanical light surface", async ({ page }) => {
 	await page.goto("/");
-	// --bg resolves to neutral-50 (#f8f7f7). A regression in the token bridge
-	// shows up here as rgb(255, 255, 255) or a transparent body.
 	await expect(page.locator("body")).toHaveCSS(
 		"background-color",
-		"rgb(248, 247, 247)"
+		"rgb(246, 248, 238)"
 	);
 });
 
@@ -24,4 +22,13 @@ test("body copy is set in Inter, not a system fallback", async ({ page }) => {
 		.locator("body")
 		.evaluate((el) => getComputedStyle(el).fontFamily);
 	expect(family).toMatch(/Inter/i);
+});
+
+test("appearance choice persists across a reload", async ({ page }) => {
+	await page.goto("/");
+	await page.getByRole("radio", { name: "Dark" }).click();
+	await expect(page.locator("html")).toHaveClass(/dark/);
+	await page.reload();
+	await expect(page.locator("html")).toHaveClass(/dark/);
+	await expect(page.getByRole("radio", { name: "Dark" })).toBeChecked();
 });

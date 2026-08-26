@@ -1,20 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
+import Script from "next/script";
 import Providers from "./providers";
 import { JsonLd } from "@/components/json-ld";
 import { isProductionEnv, siteConfig } from "@/lib/site-config";
 import { getOrganizationSchema, getWebSiteSchema } from "@/lib/structured-data";
 import "./globals.css";
 
-// Both are variable fonts, so omitting `weight` ships one file per family
-// covering the whole axis — cheaper than pinning the 600/700/800 and 400/500/600
-// sets the previous site loaded from the Google CDN, and with no third-party
-// request at all. app/tokens.css composes these into --typeface-display and
-// --typeface-body; nothing outside that file should reference them directly.
-const sora = Sora({
-	variable: "--font-sora",
+const fraunces = Fraunces({
+	variable: "--font-fraunces",
 	subsets: ["latin"],
 	display: "swap",
+	axes: ["opsz", "SOFT"],
 });
 
 const inter = Inter({
@@ -49,7 +46,6 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: siteConfig.name,
 		description: siteConfig.description,
-		creator: siteConfig.twitterHandle,
 	},
 	// Indexing is allowed in production only; non-production emits noindex,nofollow.
 	robots: isProductionEnv
@@ -78,12 +74,20 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
-	// Light-only for now (ADR 0011). When a dark scheme lands, restore the
-	// prefers-color-scheme pair here and add the matching `html.dark` block to
-	// app/tokens.css — siteConfig.themeColor.dark already holds the value.
-	colorScheme: "light",
-	themeColor: siteConfig.themeColor.light,
+	colorScheme: "light dark",
+	themeColor: [
+		{
+			media: "(prefers-color-scheme: light)",
+			color: siteConfig.themeColor.light,
+		},
+		{
+			media: "(prefers-color-scheme: dark)",
+			color: siteConfig.themeColor.dark,
+		},
+	],
 };
+
+const appearanceScript = `(function(){try{var p=localStorage.getItem("appearance");var a=p==="light"||p==="dark"||p==="system"?p:"system";var d=a==="dark"||(a==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d);document.documentElement.dataset.appearance=a}catch(e){var d=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d);document.documentElement.dataset.appearance="system"}})();`;
 
 export default function RootLayout({
 	children,
@@ -93,12 +97,18 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={`${sora.variable} ${inter.variable} h-full antialiased`}
+			suppressHydrationWarning
+			className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
 		>
-			<body className="min-h-full flex flex-col bg-bg text-ink">
+			<body className="flex min-h-full flex-col bg-surface text-ink">
 				<JsonLd data={getWebSiteSchema()} />
 				<JsonLd data={getOrganizationSchema()} />
 				<Providers>{children}</Providers>
+				<Script
+					id="resolve-appearance"
+					strategy="beforeInteractive"
+					dangerouslySetInnerHTML={{ __html: appearanceScript }}
+				/>
 			</body>
 		</html>
 	);

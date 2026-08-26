@@ -23,18 +23,12 @@ export const External: Story = {
 	},
 };
 
-/**
- * The distinction this component exists to enforce. `--accent` is the brand
- * cyan and is 1.69:1 on the page background; `--accent-text` is its AA-safe
- * counterpart at 5.01:1 and is what links actually use.
- */
-export const WhyNotTheBrandCyan: Story = {
-	name: "accent-text vs accent",
+export const BotanicalLinkContrast: Story = {
+	name: "Botanical link contrast",
 	render: () => (
 		<p className="max-w-prose leading-relaxed text-ink">
-			A correct <Link href="/">link in body copy</Link> against{" "}
-			<span className="text-accent">text set in the raw brand cyan</span>, which
-			is unreadable at this size and should never appear as type.
+			The <Link href="/">aqua-800 link</Link> clears AAA on the light page
+			ground and switches to aqua-300 on the dark forest ground.
 		</p>
 	),
 };

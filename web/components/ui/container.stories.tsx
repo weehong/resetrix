@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Ruler = ({ label }: { label: string }): React.ReactElement => (
-	<div className="rounded-(--radius) bg-accent/15 py-8 text-center text-sm text-ink-dim">
+	<div className="rounded-[14px] bg-surface-band py-8 text-center text-sm text-ink-soft">
 		{label}
 	</div>
 );
@@ -47,7 +47,7 @@ export const Widths: Story = {
  */
 export const Gutter: Story = {
 	render: () => (
-		<div className="bg-bg-inset py-8">
+		<div className="bg-surface-band py-8">
 			<Container>
 				<Ruler label="--pad-x · clamp(1.25rem, 6vw, 7rem)" />
 			</Container>

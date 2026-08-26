@@ -81,13 +81,13 @@ const Sidebar = ({
 	const displayName = profile.name ?? profile.email;
 
 	return (
-		<div className="relative flex grow flex-col gap-y-5 overflow-y-auto border-r border-line bg-bg px-6">
+		<div className="relative flex grow flex-col gap-y-5 overflow-y-auto border-r border-hairline bg-surface-band px-6">
 			<div className="relative flex h-16 shrink-0 items-center justify-between gap-4">
-				<span className="truncate text-lg font-semibold text-ink">
+				<span className="font-display truncate text-xl font-semibold text-ink">
 					{t("landing.brand")}
 				</span>
 				<a
-					className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink-dim hover:text-ink"
+					className="inline-flex shrink-0 items-center gap-1.5 rounded-[10px] px-2 py-1.5 text-sm font-medium text-ink-link transition-colors duration-200 hover:bg-chip hover:text-aqua-700 dark:hover:text-aqua-200"
 					href="#"
 					onClick={(event) => {
 						event.preventDefault();
@@ -107,20 +107,20 @@ const Sidebar = ({
 									<li key={item.to}>
 										<Link
 											to={item.to}
-											className={classNames(
-												current
-													? "bg-bg-soft text-ink"
-													: "text-ink-dim hover:bg-bg-soft hover:text-ink",
-												"group flex items-center gap-x-3 rounded-md px-3 py-2.5 text-sm font-semibold"
+										className={classNames(
+											current
+												? "border-accent bg-surface-raised text-ink shadow-xs"
+												: "border-transparent text-ink-muted hover:bg-chip hover:text-ink",
+											"group flex items-center gap-x-3 rounded-[10px] border-l-2 px-3 py-2.5 text-sm font-semibold transition-colors duration-200"
 											)}
 											onClick={onNavigate}
 										>
 											<item.icon
 												aria-hidden="true"
-												className={classNames(
-													current
-														? "text-ink"
-														: "text-ink-dim group-hover:text-ink",
+											className={classNames(
+												current
+													? "text-ink"
+													: "text-ink-muted group-hover:text-ink",
 													"size-5 shrink-0"
 												)}
 											/>
@@ -132,12 +132,12 @@ const Sidebar = ({
 						</ul>
 					</li>
 					{showProfileFooter ? (
-						<li className="-mx-6 mt-auto border-t border-line">
+						<li className="-mx-6 mt-auto border-t border-hairline">
 							<div className="flex items-center gap-x-3 px-6 py-4">
 								<AppearanceSwitcher />
 								<span
 									aria-hidden="true"
-									className="flex size-8 shrink-0 items-center justify-center rounded-full border border-line bg-bg-soft text-xs font-semibold text-ink-dim"
+									className="flex size-8 shrink-0 items-center justify-center rounded-full bg-chip text-xs font-semibold text-chip-ink ring-2 ring-surface-raised"
 								>
 									{profileInitials(profile)}
 								</span>
@@ -150,7 +150,7 @@ const Sidebar = ({
 								</span>
 								<button
 									aria-label={t("auth.logOut")}
-									className="shrink-0 rounded-md p-2 text-ink-dim hover:text-ink"
+									className="shrink-0 rounded-full p-2 text-ink-muted transition-colors duration-200 hover:bg-chip hover:text-ink"
 									title={t("auth.logOut")}
 									type="button"
 									onClick={onLogoutClick}
@@ -209,7 +209,7 @@ const AuthenticatedShell = (): FunctionComponent => {
 			>
 				<DialogBackdrop
 					transition
-					className="fixed inset-0 bg-black/70 transition-opacity duration-300 ease-linear data-closed:opacity-0"
+					className="fixed inset-0 bg-forest-950/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
 				/>
 
 				<div className="fixed inset-0 flex">
@@ -220,14 +220,14 @@ const AuthenticatedShell = (): FunctionComponent => {
 						<TransitionChild>
 							<div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
 								<button
-									className="-m-2.5 p-2.5"
+									className="-m-2.5 rounded-full bg-forest-900 p-2.5 text-stone-100 transition-colors duration-200 hover:bg-forest-800"
 									type="button"
 									onClick={closeSidebar}
 								>
 									<span className="sr-only">{t("shell.closeSidebar")}</span>
 									<XMarkIcon
 										aria-hidden="true"
-										className="size-6 text-white"
+										className="size-6"
 									/>
 								</button>
 							</div>
@@ -247,9 +247,9 @@ const AuthenticatedShell = (): FunctionComponent => {
 				<Sidebar showProfileFooter profile={profile} />
 			</div>
 
-			<div className="sticky top-0 z-40 flex items-center gap-x-6 border-b border-line bg-bg px-4 py-4 shadow-xs sm:px-6 lg:hidden">
+			<div className="sticky top-0 z-40 flex items-center gap-x-6 border-b border-hairline bg-surface-raised px-4 py-4 shadow-xs sm:px-6 lg:hidden">
 				<button
-					className="-m-2.5 p-2.5 text-ink-dim hover:text-ink"
+					className="-m-2.5 rounded-full p-2.5 text-ink-muted transition-colors duration-200 hover:bg-chip hover:text-ink"
 					type="button"
 					onClick={() => {
 						setSidebarOpen(true);
@@ -258,20 +258,20 @@ const AuthenticatedShell = (): FunctionComponent => {
 					<span className="sr-only">{t("shell.openSidebar")}</span>
 					<Bars3Icon aria-hidden="true" className="size-6" />
 				</button>
-				<div className="flex-1 text-sm/6 font-semibold text-ink">
+				<div className="min-w-0 flex-1 truncate text-sm/6 font-semibold text-ink">
 					{mobileTitle}
 				</div>
 				<div className="flex items-center gap-3">
 					<AppearanceSwitcher />
 					<span
 						aria-hidden="true"
-						className="flex size-8 items-center justify-center rounded-full border border-line bg-bg-soft text-xs font-semibold text-ink-dim"
+						className="hidden size-8 items-center justify-center rounded-full bg-chip text-xs font-semibold text-chip-ink ring-2 ring-surface-raised sm:flex"
 					>
 						{profileInitials(profile)}
 					</span>
 					<button
 						aria-label={t("auth.logOut")}
-						className="rounded-md p-2 text-ink-dim hover:text-ink"
+						className="rounded-full p-2 text-ink-muted transition-colors duration-200 hover:bg-chip hover:text-ink"
 						title={t("auth.logOut")}
 						type="button"
 						onClick={onLogoutClick}
@@ -284,7 +284,7 @@ const AuthenticatedShell = (): FunctionComponent => {
 				</div>
 			</div>
 
-			<main className="lg:pl-72">
+			<main className="min-h-screen bg-surface lg:pl-72">
 				<Outlet />
 			</main>
 		</div>

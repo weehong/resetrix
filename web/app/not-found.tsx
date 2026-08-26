@@ -19,7 +19,7 @@ export default function NotFound(): React.ReactElement {
 			<Heading level={1} size="xl">
 				404
 			</Heading>
-			<p className="text-ink-dim">
+			<p className="text-ink-soft">
 				The page you are looking for does not exist.
 			</p>
 			<Link href="/">Go back home</Link>

@@ -11,10 +11,14 @@ export const PlaceholderPage = ({
 	const { t } = useTranslation();
 
 	return (
-		<div className="flex w-full flex-1 flex-col items-center bg-bg px-6 py-10">
-			<div className="w-full max-w-2xl rounded-xl border border-line bg-bg-soft p-8 shadow-sm">
-				<h1 className="text-2xl font-semibold text-ink">{t(titleKey)}</h1>
-				<p className="mt-1 text-sm text-ink-dim">{t("placeholder.subtitle")}</p>
+		<div className="flex min-h-screen w-full flex-1 flex-col items-center bg-surface px-6 py-16 md:px-10">
+			<div className="w-full max-w-2xl rounded-[20px] bg-surface-raised p-8 shadow-sm dark:border dark:border-hairline dark:shadow-none">
+				<h1 className="font-display text-3xl leading-tight font-semibold text-ink">
+					{t(titleKey)}
+				</h1>
+				<p className="mt-2 text-sm text-ink-soft">
+					{t("placeholder.subtitle")}
+				</p>
 			</div>
 		</div>
 	);

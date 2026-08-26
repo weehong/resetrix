@@ -7,20 +7,20 @@ import { siteConfig } from "../lib/site-config";
 // Server Components, prefer E2E tests (see ./e2e). Reference:
 // https://nextjs.org/docs/app/guides/testing/vitest
 
-// Asserting against siteConfig rather than a copy literal: the heading is the
-// site name by definition, so rebranding should not break the test.
-test("Home page renders the site name as its h1", () => {
+test("Home page presents the Resetrix value proposition as its h1", () => {
 	render(<Home />);
-	expect(
-		screen.getByRole("heading", { level: 1, name: siteConfig.name })
-	).toBeDefined();
+	expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+		/software that fits the way your business works/i
+	);
 });
 
-test("Home page links out with the external-link safety attributes", () => {
+test("Home page exposes the documented Resetrix services", () => {
 	render(<Home />);
-	const external = screen.getByRole("link", {
-		name: /next\.js documentation/i,
-	});
-	expect(external.getAttribute("target")).toBe("_blank");
-	expect(external.getAttribute("rel")).toContain("noopener");
+	expect(
+		screen.getByRole("heading", { name: /digital transformation/i })
+	).toBeDefined();
+	expect(
+		screen.getByRole("heading", { name: /software customization/i })
+	).toBeDefined();
+	expect(siteConfig.name).toBe("Resetrix");
 });

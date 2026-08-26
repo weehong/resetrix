@@ -13,7 +13,7 @@ test("Button defaults to type=button so it cannot submit a form by accident", ()
 	expect(screen.getByRole("button").getAttribute("type")).toBe("button");
 });
 
-test("accent Button pairs the cyan fill with dark ink, never white", () => {
+test("accent Button pairs Botanical gold with forest ink", () => {
 	render(<Button variant="accent">Go</Button>);
 	const className = screen.getByRole("button").className;
 	expect(className).toContain("bg-accent");
@@ -30,8 +30,8 @@ test("Heading renders the requested level independently of the visual size", () 
 	expect(screen.getByRole("heading", { level: 2 })).toBeDefined();
 });
 
-test("internal links use accent-text rather than the raw brand accent", () => {
+test("internal links use the accessible Botanical link semantic", () => {
 	render(<Link href="/about">About</Link>);
 	const className = screen.getByRole("link").className;
-	expect(className).toContain("text-accent-text");
+	expect(className).toContain("text-ink-link");
 });

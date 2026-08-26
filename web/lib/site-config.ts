@@ -2,7 +2,7 @@
  * Central SEO / site configuration. Single source of truth imported by the
  * metadata, robots, sitemap, manifest, OG-image and structured-data modules.
  *
- * Edit these values to brand the boilerplate.
+ * Shared by metadata, manifests, structured data and generated images.
  */
 
 const DEFAULT_URL = "http://localhost:3001";
@@ -19,39 +19,36 @@ export const isProductionEnv: boolean = appEnvironment === "production";
 
 export const siteConfig = {
 	/** Full brand / site name — used as the default <title> and OG site name. */
-	name: "Next.js Boilerplate",
+	name: "Resetrix",
 	/** Short name for the web app manifest (home-screen label). */
-	shortName: "Next App",
+	shortName: "Resetrix",
 	/** Default meta description. */
 	description:
-		"A production-ready Next.js boilerplate with batteries-included tooling and full SEO support.",
+		"Resetrix helps SMEs rethink operations, build software around their business, and move forward with practical digital guidance.",
 	/** Absolute canonical origin (no trailing slash). */
 	url: process.env.NEXT_PUBLIC_SITE_URL ?? DEFAULT_URL,
 	/** Open Graph locale. */
 	locale: "en_US",
-	/** Twitter/X handle for `twitter:creator` / `twitter:site`. */
-	twitterHandle: "@nextjs",
 	/** Default keywords. */
-	keywords: ["Next.js", "React", "TypeScript", "boilerplate", "SEO"],
+	keywords: [
+		"digital transformation",
+		"custom software",
+		"digital consultancy",
+		"SME software",
+		"Resetrix",
+	],
 	/** Author / creator attribution. */
-	author: "Next.js Boilerplate",
-	creator: "Next.js Boilerplate",
+	author: "Resetrix",
+	creator: "Resetrix",
 	/** Alt text for the default OG/Twitter image. */
-	ogImageAlt: "Next.js Boilerplate",
-	/**
-	 * theme-color values, kept in sync with `--bg` in app/tokens.css.
-	 *
-	 * `light` is the resolved value of `--bg` (neutral-50). `dark` is not used
-	 * by the site yet — it is the ADR 0010 dark surface, held here so the
-	 * generated icon and OG images have a brand-correct dark ground, and so the
-	 * value is already right when a dark scheme lands.
-	 */
+	ogImageAlt: "Resetrix: Re-think. Re-work. Re-focus.",
+	/** Browser chrome colors matching the Botanical page grounds. */
 	themeColor: {
-		light: "#f8f7f7",
-		dark: "#05070f",
+		light: "#f6f8ee",
+		dark: "#172a1f",
 	},
-	/** Brand accent, verbatim across web/, app/ and card/ (ADR 0011). */
-	accentColor: "#22d3ee",
+	/** Botanical signal accent. */
+	accentColor: "#dfcc28",
 } as const;
 
 export type SiteConfig = typeof siteConfig;

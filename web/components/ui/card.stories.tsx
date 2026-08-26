@@ -14,8 +14,7 @@ export const Raised: Story = {
 		<Card className="max-w-sm">
 			<CardTitle>Raised</CardTitle>
 			<CardBody>
-				Sits on --bg-soft and lifts off the page. The default, and what most
-				content should use.
+				A white surface in light appearance and a forest-900 surface in dark.
 			</CardBody>
 		</Card>
 	),
@@ -26,8 +25,7 @@ export const Inset: Story = {
 		<Card tone="inset" className="max-w-sm">
 			<CardTitle>Inset</CardTitle>
 			<CardBody>
-				Recedes into the page on --bg-inset. For wells, asides and anything that
-				should read as secondary.
+				Uses the alternating Botanical band for quieter supporting content.
 			</CardBody>
 		</Card>
 	),
@@ -39,8 +37,7 @@ export const Accented: Story = {
 		<Card accent className="max-w-sm">
 			<CardTitle>Accented</CardTitle>
 			<CardBody>
-				A cyan rule along the top edge. This is one of the few places the raw
-				brand accent is used as a fill, which is all it is safe for.
+				A gold signal along the top edge marks the one card that needs emphasis.
 			</CardBody>
 		</Card>
 	),

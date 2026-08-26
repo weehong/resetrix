@@ -3,9 +3,9 @@ import { cn } from "@/lib/cn";
 type ContainerWidth = "narrow" | "default" | "wide" | "full";
 
 const WIDTHS: Record<ContainerWidth, string> = {
-	narrow: "max-w-2xl", // long-form reading measure
-	default: "max-w-5xl",
-	wide: "max-w-7xl",
+	narrow: "max-w-[680px]",
+	default: "max-w-[1200px]",
+	wide: "max-w-[1400px]",
 	full: "max-w-none",
 };
 
@@ -16,12 +16,7 @@ export type ContainerProps = {
 	children?: React.ReactNode;
 };
 
-/**
- * Horizontal rhythm for the page. The gutter comes from `--pad-x`
- * (`clamp(1.25rem, 6vw, 7rem)`), carried over from the previous marketing site
- * so section edges line up the way they used to, rather than from a fixed
- * Tailwind padding step that would not scale with the viewport.
- */
+/** Botanical page widths with 24, 40 and 64px responsive gutters. */
 export function Container({
 	width = "default",
 	as: Tag = "div",
@@ -30,7 +25,11 @@ export function Container({
 }: ContainerProps): React.ReactElement {
 	return (
 		<Tag
-			className={cn("mx-auto w-full px-(--pad-x)", WIDTHS[width], className)}
+			className={cn(
+				"mx-auto w-full px-6 md:px-10 lg:px-16",
+				WIDTHS[width],
+				className
+			)}
 		>
 			{children}
 		</Tag>

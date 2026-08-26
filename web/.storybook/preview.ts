@@ -16,12 +16,8 @@ const preview: Preview = {
 	},
 
 	decorators: [
-		// The `dark` variant is defined in app/globals.css as
-		// `&:where(html.dark, html.dark *)`, so light is the *absence* of a class,
-		// not a `.light` class. Mapping light to "" is what makes the switcher
-		// agree with the CSS. The site is light-only today (ADR 0011) — the dark
-		// entry is here so the switcher keeps working the moment a dark block is
-		// added to app/tokens.css.
+		// Match the production class strategy so both Botanical appearances can be
+		// reviewed against the same semantic component tokens.
 		withThemeByClassName({
 			themes: {
 				light: "",

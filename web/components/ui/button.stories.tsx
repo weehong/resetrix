@@ -46,21 +46,12 @@ export const Disabled: Story = {
 	args: { disabled: true },
 };
 
-/**
- * The accent fill is the one variant where the ink choice is not obvious, so
- * it is worth being able to see the mistake next to the correct version.
- */
 export const AccentInkContrast: Story = {
-	name: "Why accent-ink is dark",
+	name: "Botanical accent pairing",
 	render: () => (
 		<div className="flex flex-wrap items-center gap-3">
-			<Button variant="accent">accent-ink · 9.33 AAA</Button>
-			<button
-				type="button"
-				className="inline-flex h-11 items-center justify-center rounded-(--radius) bg-accent px-5 font-medium text-white"
-			>
-				white · 1.81 FAIL
-			</button>
+			<Button variant="accent">Gold signal</Button>
+			<Button variant="solid">Forest structure</Button>
 		</div>
 	),
 };

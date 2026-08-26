@@ -19,7 +19,7 @@ export const AppearanceSwitcher = (): FunctionComponent => {
 	return (
 		<div
 			aria-label={t("appearance.label")}
-			className="inline-flex rounded-md border border-line bg-bg-soft p-0.5"
+			className="inline-flex rounded-[14px] border border-control bg-surface-raised p-1 dark:border-hairline"
 			role="group"
 		>
 			{ORDER.map((option) => {
@@ -29,7 +29,7 @@ export const AppearanceSwitcher = (): FunctionComponent => {
 					<button
 						key={option}
 						aria-pressed={active}
-						className={`inline-flex items-center justify-center rounded px-2 py-1.5 text-xs font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring ${active ? "bg-bg text-ink shadow-xs" : "text-ink-dim hover:text-ink"}`}
+						className={`inline-flex size-10 items-center justify-center rounded-[10px] text-xs font-medium transition-colors duration-200 ${active ? "bg-accent text-accent-ink shadow-xs" : "text-ink-muted hover:bg-surface-band hover:text-ink"}`}
 						title={t(`appearance.${option}`)}
 						type="button"
 						onClick={() => {

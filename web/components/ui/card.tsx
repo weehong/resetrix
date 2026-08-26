@@ -2,11 +2,10 @@ import { cn } from "@/lib/cn";
 
 export type CardProps = {
 	/**
-	 * `raised` lifts off the page on `--bg-soft`; `inset` recedes into it on
-	 * `--bg-inset`. Both read as "not the page", in opposite directions.
+	 * `raised` lifts from the page; `inset` uses the alternating Botanical band.
 	 */
 	tone?: "raised" | "inset";
-	/** Draws a cyan rule along the top edge. For the one card that matters. */
+	/** Draws the Botanical gold signal rule for one emphasized card. */
 	accent?: boolean;
 	as?: "div" | "article" | "li" | "section";
 	className?: string;
@@ -14,15 +13,12 @@ export type CardProps = {
 };
 
 const TONES = {
-	raised: "bg-bg-soft border-line",
-	inset: "bg-bg-inset border-transparent",
+	raised:
+		"bg-surface-raised border-transparent shadow-(--shadow-sm) dark:border-hairline dark:shadow-none",
+	inset: "bg-surface-band border-transparent",
 } as const;
 
-/**
- * A surface. The border is `--line` at 1.30:1 — deliberately faint, and
- * decorative rather than informative, so the tone change carries the
- * separation and the border only sharpens the edge.
- */
+/** A Botanical surface separated primarily by its ground step. */
 export function Card({
 	tone = "raised",
 	accent = false,
@@ -33,10 +29,10 @@ export function Card({
 	return (
 		<Tag
 			className={cn(
-				"relative overflow-hidden rounded-(--radius-lg) border p-6",
+				"relative overflow-hidden rounded-[20px] border p-8",
 				TONES[tone],
 				accent &&
-					"before:absolute before:inset-x-0 before:top-0 before:h-0.5 before:bg-accent",
+					"before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-accent",
 				className
 			)}
 		>
@@ -57,7 +53,7 @@ export function CardTitle({
 	return (
 		<h3
 			className={cn(
-				"font-display text-lg font-semibold tracking-[-0.01em] text-ink",
+				"font-display text-[clamp(1.25rem,2vw,1.5rem)] font-semibold leading-[1.3] tracking-[-0.008em] text-ink",
 				className
 			)}
 		>
@@ -76,7 +72,12 @@ export function CardBody({
 	children,
 }: CardBodyProps): React.ReactElement {
 	return (
-		<p className={cn("mt-2 leading-relaxed text-ink-dim", className)}>
+		<p
+			className={cn(
+				"mt-3 text-[0.9375rem] leading-[1.6] text-ink-soft",
+				className
+			)}
+		>
 			{children}
 		</p>
 	);

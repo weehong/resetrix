@@ -15,9 +15,10 @@ export default function AppleIcon(): ImageResponse {
 				alignItems: "center",
 				justifyContent: "center",
 				background: siteConfig.themeColor.dark,
-				color: siteConfig.themeColor.light,
+				color: siteConfig.accentColor,
 				fontSize: 110,
 				fontWeight: 700,
+				borderRadius: 36,
 			}}
 		>
 			{siteConfig.shortName.charAt(0)}

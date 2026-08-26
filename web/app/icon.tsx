@@ -15,10 +15,10 @@ export default function Icon(): ImageResponse {
 				alignItems: "center",
 				justifyContent: "center",
 				background: siteConfig.themeColor.dark,
-				color: siteConfig.themeColor.light,
+				color: siteConfig.accentColor,
 				fontSize: 22,
 				fontWeight: 700,
-				borderRadius: 6,
+				borderRadius: 8,
 			}}
 		>
 			{siteConfig.shortName.charAt(0)}

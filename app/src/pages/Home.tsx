@@ -33,12 +33,12 @@ export const Home = (): FunctionComponent => {
 
 	const renderChips = (values: Array<string>): React.ReactNode => {
 		if (values.length === 0) {
-			return <li className="text-sm text-ink-dim">—</li>;
+			return <li className="text-sm text-ink-muted">—</li>;
 		}
 		return values.map((value) => (
 			<li
 				key={value}
-				className="rounded-full border border-line bg-bg px-3 py-1 text-xs font-medium text-ink-dim"
+				className="rounded-full bg-chip px-3 py-1 text-[0.8125rem] font-medium text-chip-ink"
 			>
 				{value}
 			</li>
@@ -46,17 +46,17 @@ export const Home = (): FunctionComponent => {
 	};
 
 	return (
-		<div className="flex w-full flex-1 flex-col items-center bg-bg px-6 py-10">
-			<div className="w-full max-w-2xl rounded-xl border border-line bg-bg-soft p-8 shadow-sm">
-				<h1 className="text-2xl font-semibold text-ink">
+		<div className="flex min-h-screen w-full flex-1 flex-col items-center bg-surface px-6 py-16 md:px-10">
+			<div className="w-full max-w-2xl rounded-[20px] bg-surface-raised p-8 shadow-sm dark:border dark:border-hairline dark:shadow-none">
+				<h1 className="font-display text-3xl leading-tight font-semibold text-ink">
 					{t("profile.title")}
 				</h1>
-				<p className="mt-1 text-sm text-ink-dim">{t("profile.subtitle")}</p>
+				<p className="mt-2 text-sm text-ink-soft">{t("profile.subtitle")}</p>
 
 				<dl className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
 					{fields.map((field) => (
 						<div key={field.label}>
-							<dt className="text-xs font-medium tracking-wide text-ink-dim uppercase">
+							<dt className="font-mono text-xs font-medium tracking-[0.16em] text-ink-muted uppercase">
 								{field.label}
 							</dt>
 							<dd className="mt-1 text-sm break-words text-ink">
@@ -67,7 +67,7 @@ export const Home = (): FunctionComponent => {
 				</dl>
 
 				<div className="mt-8">
-					<h2 className="text-xs font-medium tracking-wide text-ink-dim uppercase">
+					<h2 className="font-mono text-xs font-medium tracking-[0.16em] text-ink-muted uppercase">
 						{t("profile.roles")}
 					</h2>
 					<ul className="mt-2 flex flex-wrap gap-2">
@@ -76,7 +76,7 @@ export const Home = (): FunctionComponent => {
 				</div>
 
 				<div className="mt-6">
-					<h2 className="text-xs font-medium tracking-wide text-ink-dim uppercase">
+					<h2 className="font-mono text-xs font-medium tracking-[0.16em] text-ink-muted uppercase">
 						{t("profile.permissions")}
 					</h2>
 					<ul className="mt-2 flex flex-wrap gap-2">
@@ -86,7 +86,7 @@ export const Home = (): FunctionComponent => {
 			</div>
 
 			<button
-				className="mt-6 text-sm text-accent-text hover:underline"
+				className="mt-8 rounded-[10px] px-3 py-2 text-sm font-medium text-ink-link underline decoration-[1.5px] underline-offset-4 transition-colors duration-200 hover:text-aqua-700 dark:hover:text-aqua-200"
 				type="button"
 				onClick={onTranslateButtonClick}
 			>

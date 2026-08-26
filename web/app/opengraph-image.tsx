@@ -15,24 +15,47 @@ export default function OpengraphImage(): ImageResponse {
 				height: "100%",
 				display: "flex",
 				flexDirection: "column",
-				justifyContent: "center",
+				justifyContent: "space-between",
 				padding: "80px",
 				background: siteConfig.themeColor.dark,
-				color: siteConfig.themeColor.light,
+				color: "#edf0e4",
 			}}
 		>
-			<div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.1 }}>
-				{siteConfig.name}
-			</div>
 			<div
 				style={{
-					marginTop: 24,
-					fontSize: 32,
-					opacity: 0.8,
-					maxWidth: 900,
+					display: "flex",
+					alignItems: "center",
+					fontSize: 28,
+					fontWeight: 600,
 				}}
 			>
-				{siteConfig.description}
+				{siteConfig.name}
+				<span style={{ color: siteConfig.accentColor }}>.</span>
+			</div>
+			<div style={{ display: "flex", flexDirection: "column" }}>
+				<div
+					style={{
+						fontSize: 76,
+						fontWeight: 700,
+						lineHeight: 1.08,
+						maxWidth: 940,
+					}}
+				>
+					Software that fits the way your business works.
+				</div>
+				<div style={{ display: "flex", marginTop: 42, gap: 12 }}>
+					{["#8db6a1", "#abd4c7", "#d9de7b", "#dfcc28"].map((color) => (
+						<div
+							key={color}
+							style={{
+								width: 100,
+								height: 12,
+								borderRadius: 999,
+								background: color,
+							}}
+						/>
+					))}
+				</div>
 			</div>
 		</div>,
 		{ ...size }

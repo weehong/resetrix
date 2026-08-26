@@ -78,6 +78,9 @@ The canonical production origin is configured once at build time:
 ```bash
 SITE_ORIGIN=https://resetrix.com
 APP_ENVIRONMENT=development
+MAILJET_API_KEY=replace-with-mailjet-api-key
+MAILJET_SECRET_KEY=replace-with-mailjet-secret-key
+MAILJET_FROM_EMAIL=hello@resetrix.com
 ```
 
 `SITE_ORIGIN` must be an HTTPS origin with no trailing slash. It is used for
@@ -86,6 +89,11 @@ repository-confirmed public origin `https://resetrix.com` is the default.
 `APP_ENVIRONMENT` controls indexing: only `production` allows search engines to
 index the site. Next production builds default to `production`; set this value
 explicitly to `preview` or `staging` for non-production deployments.
+
+The contact form sends mail through the Mailjet API using `MAILJET_API_KEY` and
+`MAILJET_SECRET_KEY`. `MAILJET_FROM_EMAIL` must be a sender verified in Mailjet.
+Contact emails are always delivered to `hello@resetrix.com`, with the visitor's
+work email set as the reply-to address.
 
 ## Important Notes
 
@@ -148,6 +156,14 @@ npm run test:e2e:report
 ```
 
 ## Preparing for Deployment
+
+### Vercel
+
+Import this repository as a new Vercel project and set its Root Directory to
+`web`. Vercel detects Next.js, and `vercel.json` records that framework preset.
+Set `SITE_ORIGIN=https://resetrix.com` and `APP_ENVIRONMENT=production` for the
+Production environment. Keep `APP_ENVIRONMENT=preview` for Preview deployments
+so they remain non-indexable.
 
 ### Without Docker
 

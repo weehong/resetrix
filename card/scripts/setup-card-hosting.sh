@@ -186,7 +186,7 @@ finish() {
 
 TOTAL_STAGES=6
 
-banner "resetrix.biz employee cards — Netlify + DNS go-live"
+banner "resetrix.biz employee cards — Vercel + DNS go-live"
 
 # ── Stage 1: preflight build ──────────────────────────────────────────────
 stage "Preflight — verify the site builds"
@@ -198,43 +198,41 @@ if ! confirm "Build and tests are green?"; then
   exit 1
 fi
 
-# ── Stage 2: Netlify site ─────────────────────────────────────────────────
-stage "Netlify — create the site"
-say "Create a NEW Netlify site for the card (separate from the main Resetrix site)."
-open_url "https://app.netlify.com/start"
-step "Choose 'Import an existing project' and connect the Git host that holds this repo."
-step "When asked for the base directory, set it to: card"
-step "Build command and publish directory come from card/netlify.toml (npm run build / dist)."
-note "No repo connected yet? Use Netlify Drop instead: run 'npm run build', then"
-note "drag the card/dist folder onto https://app.netlify.com/drop"
-ask NETLIFY_SITE_URL "Paste the site's default URL (e.g. https://lucky-name-123.netlify.app):"
-write_env NETLIFY_SITE_URL "$NETLIFY_SITE_URL"
+# ── Stage 2: Vercel project ───────────────────────────────────────────────
+stage "Vercel — create the project"
+say "Create a NEW Vercel project for the card (separate from the main Resetrix site)."
+open_url "https://vercel.com/new"
+step "Import the Git repository that contains this project."
+step "Set Root Directory to: card"
+step "Vercel reads card/vercel.json (Vite, npm run build, dist)."
+ask VERCEL_PROJECT_URL "Paste the default URL (e.g. https://resetrix-card.vercel.app):"
+write_env VERCEL_PROJECT_URL "$VERCEL_PROJECT_URL"
 
-# ── Stage 3: subdomain ────────────────────────────────────────────────────
-stage "Netlify — attach the employee subdomain"
-say "Netlify does NOT accept a wildcard '*.resetrix.biz', so attach each employee's"
-say "subdomain individually (vernonkoh now, mary next, ...). Each gets its own cert."
-step "In Netlify: Site configuration → Domain management → 'Add a domain'."
-step "Enter: vernonkoh.resetrix.biz and confirm it under resetrix.biz."
-step "Netlify will show which DNS record it expects — keep that page open."
-pause "Press Enter once Netlify shows the expected DNS record"
+# ── Stage 3: wildcard domain ──────────────────────────────────────────────
+stage "Vercel — add the wildcard domain"
+say "The simplest ongoing setup assigns *.resetrix.biz to this one card project."
+step "In Vercel: card project → Settings → Domains → Add Domain."
+step "Enter: *.resetrix.biz"
+warn "Vercel requires its nameservers to verify wildcard domains."
+step "Copy every existing resetrix.biz DNS record before changing nameservers."
+step "Keep Vercel's displayed nameservers open for the next stage."
+pause "Press Enter once Vercel shows the required nameservers"
 
 # ── Stage 4: DNS ──────────────────────────────────────────────────────────
-stage "DNS — wildcard CNAME"
-say "Add a wildcard CNAME at the provider hosting resetrix.biz so future employees"
-say "resolve with NO further DNS changes. Point it at the Netlify assignable URL:"
-step "Create a CNAME record: name 'subdomain' (e.g. any) → value '$NETLIFY_SITE_URL'."
-note "Your DNS provider may not allow '*' for the name — use your provider's wildcard"
-note "syntax (often '*' or '@' + an empty/add record) for *.resetrix.biz."
-note "If your DNS is Netlify DNS for resetrix.biz, add the wildcard record there."
-step "Save it. Propagation usually takes minutes, up to 24h."
-pause "Press Enter once the DNS record is saved"
+stage "DNS — use Vercel nameservers"
+say "At the resetrix.biz registrar, replace the authoritative nameservers with"
+say "the values Vercel displayed, then recreate every existing DNS record in Vercel."
+warn "Missing records can interrupt resetrix.biz web or email service."
+note "If nameservers cannot move, cancel the wildcard and add each employee"
+note "subdomain individually, using the CNAME value shown by Vercel."
+step "Save the DNS changes. Propagation usually takes minutes, up to 48h."
+pause "Press Enter once DNS is saved and existing records are present in Vercel"
 
 # ── Stage 5: HTTPS ────────────────────────────────────────────────────────
 stage "HTTPS — verify the certificate"
-say "Netlify provisions a Let's Encrypt certificate once DNS resolves."
-step "In Netlify: Site configuration → Domain management → HTTPS → 'Verify DNS configuration'."
-step "Wait until the certificate shows as active for vernonkoh.resetrix.biz."
+say "Vercel provisions a certificate after domain and DNS verification succeeds."
+step "In Vercel: card project → Settings → Domains."
+step "Wait until *.resetrix.biz shows Valid Configuration."
 open_url "https://vernonkoh.resetrix.biz"
 if ! confirm "Does https://vernonkoh.resetrix.biz load the card with a valid lock icon?"; then
   warn "HTTPS not ready — wait for DNS/cert, then re-run this wizard (it remembers values)."

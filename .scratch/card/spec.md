@@ -7,7 +7,7 @@ Status: in-progress
 Vernon's physical business card carries a QR code that must open a mobile-first
 digital business card. The card is a standalone Vite/React app (originally in
 `Business/card/`) served per-person on a `*.resetrix.biz` subdomain
-(`vernonkoh.resetrix.biz`, `mary.resetrix.biz`, ...) deployed to Netlify. The
+(`vernonkoh.resetrix.biz`, `mary.resetrix.biz`, ...) deployed to Vercel. The
 card source lives inside this monorepo so it can be versioned with Resetrix and
 reused as a per-person template as more people onboard.
 
@@ -15,11 +15,12 @@ reused as a per-person template as more people onboard.
 
 Copy the card source into `card/` at the monorepo root, build/verify it in
 place, commit it to the Resetrix repo (scoped to `card/` + this `.scratch/`
-entry), and configure one Netlify site that imports this GitHub repo with
-base directory `card` (its own `card/netlify.toml` runs `npm run build` →
-`dist/`). Attach each employee subdomain (e.g. `vernonkoh.resetrix.biz`) to the
-site, add a DNS wildcard CNAME `*` → `<site>.netlify.app` so future subdomains
-need no DNS edits, and verify HTTPS. The card app is
+entry), and configure one Vercel project that imports this GitHub repo with
+Root Directory `card` (its own `card/vercel.json` runs `npm run build` and
+serves `dist/`). Add `*.resetrix.biz` to the project and use Vercel nameservers
+so future employee subdomains need no hosting or DNS edits, then verify HTTPS.
+If nameservers cannot move, attach employee subdomains individually using the
+CNAME values Vercel provides. The card app is
 **hostname-driven**: it reads the subdomain (e.g. `vernonkoh`) to pick the
 person from `card/src/data/people.ts`. Point `resetrix.biz` Short.io links
 (e.g. `resetrix.biz/vernonkoh` → `vernonkoh.resetrix.biz`) as advertised by
@@ -45,10 +46,11 @@ the QR code, and verify HTTPS.
 - [ ] Card is hostname-driven: `vernonkoh.resetrix.biz` renders Vernon from
       `src/data/people.ts`; unknown subdomains fall back to the default person
 - [ ] `card/` is committed to the Resetrix repo and pushed to `origin`
-- [ ] New Netlify site imports this repo with base directory `card`,
+- [ ] New Vercel project imports this repo with Root Directory `card`,
       publishing `card/dist`, with the employee subdomain attached, and
       auto-deploys on push
-- [ ] DNS wildcard CNAME `*` → `<site>.netlify.app`; HTTPS valid for
+- [ ] Vercel wildcard domain `*.resetrix.biz` and nameservers configured (or
+      the employee subdomain and its CNAME configured); HTTPS valid for
       `vernonkoh.resetrix.biz`
 - [ ] Short.io `resetrix.biz/vernonkoh` → `https://vernonkoh.resetrix.biz`
 - [ ] Card smoke test passes (see `card/scripts/setup-card-hosting.sh` Stage 6)

@@ -223,6 +223,9 @@ function OperationalIllustration({
 export function MarketingHome(): React.ReactElement {
 	const [scrolled, setScrolled] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [contactStatus, setContactStatus] = useState<
+		"idle" | "submitting" | "success" | "error"
+	>("idle");
 
 	useEffect(() => {
 		const handleScroll = (): void => {
@@ -247,27 +250,27 @@ export function MarketingHome(): React.ReactElement {
 		document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
 	};
 
-	const submitContact = (event: FormEvent<HTMLFormElement>): void => {
+	const submitContact = async (
+		event: FormEvent<HTMLFormElement>
+	): Promise<void> => {
 		event.preventDefault();
-		const form = new FormData(event.currentTarget);
-		const value = (name: string): string => {
-			const entry = form.get(name);
-			return typeof entry === "string" ? entry : "";
-		};
-		const body = [
-			`Name: ${value("name")}`,
-			`Company: ${value("company")}`,
-			`Role: ${value("role")}`,
-			`Email: ${value("email")}`,
-			`Team size: ${value("team-size")}`,
-			`Timeframe: ${value("timeframe")}`,
-			"",
-			`Workflow causing friction: ${value("workflow")}`,
-			`Impact today: ${value("impact")}`,
-			`Systems involved: ${value("systems")}`,
-			`Target outcome: ${value("outcome")}`,
-		].join("\n");
-		window.location.href = `mailto:hello@resetrix.com?subject=${encodeURIComponent("System Fit Diagnostic - Fit Call Request")}&body=${encodeURIComponent(body)}`;
+		const formElement = event.currentTarget;
+		setContactStatus("submitting");
+
+		try {
+			const response = await fetch("/api/contact", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(Object.fromEntries(new FormData(formElement))),
+			});
+			if (!response.ok) {
+				throw new Error("Contact request failed");
+			}
+			formElement.reset();
+			setContactStatus("success");
+		} catch {
+			setContactStatus("error");
+		}
 	};
 
 	return (
@@ -951,11 +954,28 @@ export function MarketingHome(): React.ReactElement {
 								</div>
 							))}
 							<p className="form-note">
-								Submitting opens your email app with these details addressed to
-								hello@resetrix.com.
+								Your details will be sent securely to hello@resetrix.com.
 							</p>
-							<button className="btn btn--primary field--full" type="submit">
-								Request a fit call <ArrowRight size={16} />
+							<p
+								className={`form-status form-status--${contactStatus}`}
+								role="status"
+								aria-live="polite"
+							>
+								{contactStatus === "success"
+									? "Thanks. Your enquiry has been sent, and we will be in touch within one business day."
+									: contactStatus === "error"
+										? "We could not send your enquiry. Please try again or email hello@resetrix.com."
+										: ""}
+							</p>
+							<button
+								className="btn btn--primary field--full"
+								type="submit"
+								disabled={contactStatus === "submitting"}
+							>
+								{contactStatus === "submitting"
+									? "Sending..."
+									: "Request a fit call"} {" "}
+								<ArrowRight size={16} />
 							</button>
 						</form>
 					</div>

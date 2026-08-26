@@ -35,25 +35,26 @@ npm run generate-qr   # regenerate print-ready QR assets → public/qr/
    localized copy for `en` and `zh-CN`).
 2. Point `scripts/generate-qr.mjs` at their short link and run
    `npm run generate-qr` to produce print QR assets.
-3. In the Netlify site, add their subdomain (e.g. `mary.resetrix.biz`) under
-   Domain management — the DNS wildcard CNAME already routes it, and Netlify
-   issues its cert automatically.
+3. If the Vercel project uses `*.resetrix.biz`, no hosting or DNS change is
+   needed. Otherwise, add their subdomain (e.g. `mary.resetrix.biz`) under the
+   project's Domains settings; Vercel issues its certificate automatically.
 4. Create the Short.io short link `resetrix.biz/<shortname>` → `<shortname>.resetrix.biz`.
 
-## Going live (Netlify + DNS)
+## Going live (Vercel + DNS)
 
-Deploy configuration lives in `netlify.toml` (build `npm run build`,
-publish `dist`). The site deploys as its **own Netlify site**, separate from
-the main Resetrix marketing site.
+Deploy configuration lives in `vercel.json` (Vite build `npm run build`, output
+`dist`, plus cache and security headers). The site deploys as its **own Vercel
+project**, separate from the main Resetrix marketing site. Set the project's
+Root Directory to `card` when importing this monorepo.
 
-Netlify does **not** support a wildcard `*.resetrix.biz` domain entry, so you
-attach each employee's subdomain individually (`vernonkoh.resetrix.biz` now,
-`mary.resetrix.biz` next). A single DNS wildcard CNAME keeps future employees
-free of DNS changes — you only attach the new subdomain in the Netlify UI.
+The preferred setup adds `*.resetrix.biz` to the card project once, but Vercel
+requires the `resetrix.biz` nameservers to be managed by Vercel for wildcard
+domain verification. Copy every existing DNS record before changing
+nameservers. If DNS must remain with another provider, add each employee
+subdomain to Vercel individually and create the CNAME value Vercel displays.
 
-Run the interactive wizard — it walks through Netlify site creation, attaching
-the employee subdomain, the wildcard DNS CNAME, HTTPS verification, and a
-phone-based smoke checklist:
+Run the interactive wizard — it walks through Vercel project creation, domain
+setup, HTTPS verification, and a phone-based smoke checklist:
 
 ```bash
 ./scripts/setup-card-hosting.sh

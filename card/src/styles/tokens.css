@@ -1,26 +1,92 @@
 :root {
-  --bg: #05070f;
-  --bg-soft: #0a0f1e;
-  --ink: #e6ecf5;
-  --ink-dim: #8b96ab;
-  --line: rgba(139, 150, 171, 0.22);
-  --accent: #22d3ee;
-  --accent-ink: #04202a;
-  --accent-glow: rgba(34, 211, 238, 0.28);
+  color-scheme: light dark;
 
-  /* Match Resetrix web (English) */
-  --font-display: "Sora", "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --forest-50: #f3f8f5;
+  --forest-100: #e8f1ec;
+  --forest-200: #cbdcd2;
+  --forest-300: #b4cfc0;
+  --forest-400: #8db6a1;
+  --forest-700: #466f59;
+  --forest-800: #30503e;
+  --forest-900: #284434;
+  --forest-950: #172a1f;
+  --stone-50: #f6f8ee;
+  --stone-100: #edf0e4;
+  --stone-200: #d9ddca;
+  --stone-300: #c6cab4;
+  --stone-400: #acb19b;
+  --stone-600: #7a7e6c;
+  --stone-700: #636756;
+  --stone-800: #4f5243;
+  --gold-200: #f0e24f;
+  --gold-300: #dfcc28;
+  --chartreuse-300: #d9de7b;
+  --chartreuse-400: #b1b555;
+  --aqua-200: #cae3db;
+  --aqua-300: #abd4c7;
+  --aqua-800: #1b5c4d;
+
+  --bg: var(--stone-50);
+  --surface: #ffffff;
+  --surface-soft: var(--forest-50);
+  --ink: var(--forest-950);
+  --ink-dim: var(--stone-800);
+  --ink-muted: var(--stone-700);
+  --line: var(--stone-200);
+  --control-line: var(--stone-600);
+  --link: var(--aqua-800);
+  --cta: var(--forest-800);
+  --cta-hover: var(--forest-900);
+  --cta-ink: var(--stone-50);
+  --accent-fill: var(--gold-300);
+  --accent-ink: var(--forest-950);
+  --highlight: var(--chartreuse-300);
+  --focus-ring: var(--forest-800);
+  --focus-on-forest: var(--gold-300);
+  --shadow-sm: 0 2px 4px rgb(23 42 31 / 0.05), 0 4px 12px rgb(23 42 31 / 0.05);
+  --shadow-md: 0 4px 8px rgb(23 42 31 / 0.06), 0 12px 28px rgb(23 42 31 / 0.07);
+
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-ui: var(--font-body);
 
   /* 霞鹜文楷 — self-hosted under /fonts/lxgw-wenkai/ (in index.html) */
   --font-cjk: "LXGW WenKai", "霞鹜文楷", serif;
 
   --pad-x: clamp(1.25rem, 5vw, 2.5rem);
-  --radius: 1.25rem;
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 40px;
+  --duration-fast: 200ms;
+  --duration-base: 320ms;
+  --ease-organic: cubic-bezier(0.34, 0.9, 0.32, 1);
 }
 
-/* Chinese locale: WenKai for UI copy; Latin name keeps Sora via .name.
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--forest-950);
+    --surface: var(--forest-900);
+    --surface-soft: rgb(237 240 228 / 0.07);
+    --ink: var(--stone-100);
+    --ink-dim: var(--stone-300);
+    --ink-muted: var(--stone-400);
+    --line: rgb(237 240 228 / 0.1);
+    --control-line: rgb(237 240 228 / 0.3);
+    --link: var(--aqua-300);
+    --cta: var(--forest-300);
+    --cta-hover: var(--forest-200);
+    --cta-ink: var(--forest-950);
+    --highlight: var(--chartreuse-400);
+    --focus-ring: var(--gold-300);
+    --shadow-sm: 0 2px 6px rgb(37 38 29 / 0.4);
+    --shadow-md: 0 6px 20px rgb(37 38 29 / 0.45);
+  }
+}
+
+/* Chinese locale: WenKai for UI copy; the Latin name keeps Fraunces via .name.
    Slightly larger root size — CJK glyphs read better a step up from Latin. */
 html[lang="zh-CN"] {
   --font-body: var(--font-cjk);

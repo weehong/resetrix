@@ -1,0 +1,175 @@
+/* Botanical: photographed paint-chip anchors expanded into WCAG-aware ramps. */
+@theme static {
+	--color-forest-50: oklch(0.975 0.0063 160.17);
+	--color-forest-100: oklch(0.95 0.0114 160.17);
+	--color-forest-200: oklch(0.879 0.0227 160.17);
+	--color-forest-300: oklch(0.83 0.0349 161.32);
+	--color-forest-400: oklch(0.74 0.0535 162.48);
+	--color-forest-500: oklch(0.665 0.0634 161.5);
+	--color-forest-600: oklch(0.585 0.0634 160.52);
+	--color-forest-700: oklch(0.505 0.059 159.54);
+	--color-forest-800: oklch(0.401 0.0488 158.56);
+	--color-forest-900: oklch(0.36 0.0444 158.56);
+	--color-forest-950: oklch(0.265 0.033 158.56);
+
+	--color-stone-50: oklch(0.975 0.0135 116.58);
+	--color-stone-100: oklch(0.95 0.0165 116.58);
+	--color-stone-200: oklch(0.889 0.0259 116.58);
+	--color-stone-300: oklch(0.83 0.03 116.58);
+	--color-stone-400: oklch(0.75 0.03 116.58);
+	--color-stone-500: oklch(0.665 0.0285 116.58);
+	--color-stone-600: oklch(0.585 0.027 116.58);
+	--color-stone-700: oklch(0.505 0.0255 116.58);
+	--color-stone-800: oklch(0.43 0.0234 116.58);
+	--color-stone-900: oklch(0.36 0.021 116.58);
+	--color-stone-950: oklch(0.265 0.0174 116.58);
+
+	--color-gold-50: oklch(0.975 0.061 103.84);
+	--color-gold-100: oklch(0.95 0.1046 103.84);
+	--color-gold-200: oklch(0.898 0.1624 103.84);
+	--color-gold-300: oklch(0.836 0.1663 102.16);
+	--color-gold-400: oklch(0.75 0.1462 102.16);
+	--color-gold-500: oklch(0.665 0.1296 102.16);
+	--color-gold-600: oklch(0.585 0.1141 102.16);
+	--color-gold-700: oklch(0.505 0.0985 102.16);
+	--color-gold-800: oklch(0.43 0.0839 102.16);
+	--color-gold-900: oklch(0.36 0.07038 102.16);
+	--color-gold-950: oklch(0.265 0.052 102.16);
+
+	--color-chartreuse-50: oklch(0.975 0.043 111.22);
+	--color-chartreuse-100: oklch(0.95 0.0737 111.22);
+	--color-chartreuse-200: oklch(0.895 0.1081 111.22);
+	--color-chartreuse-300: oklch(0.876 0.1229 111.22);
+	--color-chartreuse-400: oklch(0.75 0.1204 111.22);
+	--color-chartreuse-500: oklch(0.665 0.11304 111.22);
+	--color-chartreuse-600: oklch(0.585 0.1044 111.22);
+	--color-chartreuse-700: oklch(0.505 0.0958 111.22);
+	--color-chartreuse-800: oklch(0.43 0.086 111.22);
+	--color-chartreuse-900: oklch(0.36 0.0739 111.22);
+	--color-chartreuse-950: oklch(0.265 0.0547 111.22);
+
+	--color-aqua-50: oklch(0.975 0.0085 173.85);
+	--color-aqua-100: oklch(0.95 0.0153 173.85);
+	--color-aqua-200: oklch(0.895 0.0289 173.85);
+	--color-aqua-300: oklch(0.837 0.0468 173.85);
+	--color-aqua-400: oklch(0.75 0.0681 173.85);
+	--color-aqua-500: oklch(0.665 0.0851 173.85);
+	--color-aqua-600: oklch(0.585 0.0851 173.85);
+	--color-aqua-700: oklch(0.505 0.0791 173.85);
+	--color-aqua-800: oklch(0.43 0.0698 173.85);
+	--color-aqua-900: oklch(0.36 0.05958 173.85);
+	--color-aqua-950: oklch(0.265 0.0443 173.85);
+
+	--color-success-50: oklch(0.975 0.0135 148);
+	--color-success-100: oklch(0.95 0.0243 148);
+	--color-success-200: oklch(0.895 0.0459 148);
+	--color-success-300: oklch(0.83 0.0743 148);
+	--color-success-400: oklch(0.75 0.108 148);
+	--color-success-500: oklch(0.665 0.135 148);
+	--color-success-600: oklch(0.585 0.135 148);
+	--color-success-700: oklch(0.505 0.1256 148);
+	--color-success-800: oklch(0.43 0.1107 148);
+	--color-success-900: oklch(0.36 0.0945 148);
+	--color-success-950: oklch(0.265 0.0702 148);
+
+	--color-warning-50: oklch(0.975 0.0168 70);
+	--color-warning-100: oklch(0.95 0.034 70);
+	--color-warning-200: oklch(0.895 0.0741 70);
+	--color-warning-300: oklch(0.83 0.1255 70);
+	--color-warning-400: oklch(0.75 0.1274 70);
+	--color-warning-500: oklch(0.665 0.1196 70);
+	--color-warning-600: oklch(0.585 0.1105 70);
+	--color-warning-700: oklch(0.505 0.1014 70);
+	--color-warning-800: oklch(0.43 0.0868 70);
+	--color-warning-900: oklch(0.36 0.0728 70);
+	--color-warning-950: oklch(0.265 0.0538 70);
+
+	--color-error-50: oklch(0.975 0.0114 30);
+	--color-error-100: oklch(0.95 0.0233 30);
+	--color-error-200: oklch(0.895 0.0493 30);
+	--color-error-300: oklch(0.83 0.0798 30);
+	--color-error-400: oklch(0.75 0.116 30);
+	--color-error-500: oklch(0.665 0.145 30);
+	--color-error-600: oklch(0.585 0.145 30);
+	--color-error-700: oklch(0.505 0.1348 30);
+	--color-error-800: oklch(0.43 0.1189 30);
+	--color-error-900: oklch(0.36 0.1015 30);
+	--color-error-950: oklch(0.265 0.0754 30);
+
+	--color-info-50: oklch(0.975 0.0105 248);
+	--color-info-100: oklch(0.95 0.0189 248);
+	--color-info-200: oklch(0.895 0.0357 248);
+	--color-info-300: oklch(0.83 0.0578 248);
+	--color-info-400: oklch(0.75 0.084 248);
+	--color-info-500: oklch(0.665 0.105 248);
+	--color-info-600: oklch(0.585 0.105 248);
+	--color-info-700: oklch(0.505 0.0977 248);
+	--color-info-800: oklch(0.43 0.0861 248);
+	--color-info-900: oklch(0.36 0.0735 248);
+	--color-info-950: oklch(0.265 0.0546 248);
+}
+
+:root {
+	color-scheme: light;
+	--surface-base: var(--color-stone-50);
+	--surface-raised: #ffffff;
+	--surface-band: var(--color-forest-50);
+	--surface-chip: var(--color-stone-200);
+	--surface-invert: var(--color-forest-800);
+	--text-primary: var(--color-forest-950);
+	--text-secondary: var(--color-stone-800);
+	--text-muted: var(--color-stone-700);
+	--text-link: var(--color-aqua-800);
+	--text-on-invert: var(--color-stone-50);
+	--cta-fill: var(--color-forest-800);
+	--cta-fill-hover: var(--color-forest-900);
+	--cta-label: var(--color-stone-50);
+	--accent-fill: var(--color-gold-300);
+	--accent-label: var(--color-forest-950);
+	--highlight: var(--color-chartreuse-300);
+	--line-hairline: var(--color-stone-200);
+	--line-control: var(--color-stone-600);
+	--focus-ring: var(--color-forest-800);
+	--quiet-chip: var(--color-aqua-200);
+	--radius-xs: 6px;
+	--radius-sm: 10px;
+	--radius-md: 14px;
+	--radius-lg: 20px;
+	--radius-xl: 28px;
+	--radius-2xl: 40px;
+	--shadow-xs: 0 1px 2px rgb(23 42 31 / 0.05);
+	--shadow-sm: 0 2px 4px rgb(23 42 31 / 0.05), 0 4px 12px rgb(23 42 31 / 0.05);
+	--shadow-md: 0 4px 8px rgb(23 42 31 / 0.06), 0 12px 28px rgb(23 42 31 / 0.07);
+	--duration-fast: 200ms;
+	--duration-base: 320ms;
+	--duration-slow: 560ms;
+	--duration-slower: 840ms;
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-organic: cubic-bezier(0.34, 0.9, 0.32, 1);
+	--pad-x: clamp(1.5rem, 4vw, 4rem);
+}
+
+html.dark {
+	color-scheme: dark;
+	--surface-base: var(--color-forest-950);
+	--surface-raised: var(--color-forest-900);
+	--surface-band: var(--color-forest-900);
+	--surface-chip: var(--color-forest-900);
+	--surface-invert: var(--color-stone-100);
+	--text-primary: var(--color-stone-100);
+	--text-secondary: var(--color-stone-300);
+	--text-muted: var(--color-stone-400);
+	--text-link: var(--color-aqua-300);
+	--text-on-invert: var(--color-forest-950);
+	--cta-fill: var(--color-forest-300);
+	--cta-fill-hover: var(--color-forest-200);
+	--cta-label: var(--color-forest-950);
+	--highlight: var(--color-chartreuse-400);
+	--line-hairline: rgb(237 240 228 / 0.1);
+	--line-control: rgb(237 240 228 / 0.3);
+	--focus-ring: var(--color-gold-300);
+	--quiet-chip: rgb(171 212 199 / 0.14);
+	--shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+	--shadow-sm: 0 2px 6px rgb(0 0 0 / 0.4);
+	--shadow-md: 0 6px 20px rgb(0 0 0 / 0.45);
+}

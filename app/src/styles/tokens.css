@@ -1,0 +1,138 @@
+@theme {
+	--color-forest-50: #f3f8f5;
+	--color-forest-100: #e8f1ec;
+	--color-forest-200: #cbdcd2;
+	--color-forest-300: #b4cfc0;
+	--color-forest-400: #8db6a1;
+	--color-forest-500: #70a087;
+	--color-forest-600: #59886f;
+	--color-forest-700: #466f59;
+	--color-forest-800: #30503e;
+	--color-forest-900: #284434;
+	--color-forest-950: #172a1f;
+
+	--color-stone-50: #f6f8ee;
+	--color-stone-100: #edf0e4;
+	--color-stone-200: #d9ddca;
+	--color-stone-300: #c6cab4;
+	--color-stone-400: #acb19b;
+	--color-stone-500: #929683;
+	--color-stone-600: #7a7e6c;
+	--color-stone-700: #636756;
+	--color-stone-800: #4f5243;
+	--color-stone-900: #3c3f32;
+	--color-stone-950: #25261d;
+
+	--color-gold-50: #fdfaca;
+	--color-gold-100: #faf39f;
+	--color-gold-200: #f0e24f;
+	--color-gold-300: #dfcc28;
+	--color-gold-400: #c1b028;
+	--color-gold-500: #a49621;
+	--color-gold-600: #897e1a;
+	--color-gold-700: #706613;
+	--color-gold-800: #59510d;
+	--color-gold-900: #453e08;
+	--color-gold-950: #2a2603;
+
+	--color-chartreuse-50: #f7fad9;
+	--color-chartreuse-100: #f0f4bb;
+	--color-chartreuse-200: #dfe48e;
+	--color-chartreuse-300: #d9de7b;
+	--color-chartreuse-400: #b1b555;
+	--color-chartreuse-500: #969a40;
+	--color-chartreuse-600: #7e8130;
+	--color-chartreuse-700: #67691f;
+	--color-chartreuse-800: #525410;
+	--color-chartreuse-900: #3f4008;
+	--color-chartreuse-950: #262703;
+
+	--color-aqua-50: #f1f9f6;
+	--color-aqua-100: #e5f2ee;
+	--color-aqua-200: #cae3db;
+	--color-aqua-300: #abd4c7;
+	--color-aqua-400: #80bcaa;
+	--color-aqua-500: #56a590;
+	--color-aqua-600: #3c8c78;
+	--color-aqua-700: #297361;
+	--color-aqua-800: #1b5c4d;
+	--color-aqua-900: #12473b;
+	--color-aqua-950: #072c23;
+}
+
+:root {
+	color-scheme: light;
+
+	--surface-base: var(--color-stone-50);
+	--surface-raised: #ffffff;
+	--surface-band: var(--color-forest-50);
+	--surface-chip: var(--color-stone-200);
+	--surface-invert: var(--color-forest-800);
+	--text-primary: var(--color-forest-950);
+	--text-secondary: var(--color-stone-800);
+	--text-muted: var(--color-stone-700);
+	--text-link: var(--color-aqua-800);
+	--text-on-invert: var(--color-stone-50);
+	--cta-fill: var(--color-forest-800);
+	--cta-fill-hover: var(--color-forest-900);
+	--cta-label: var(--color-stone-50);
+	--accent-fill: var(--color-gold-300);
+	--accent-fill-hover: var(--color-gold-200);
+	--accent-label: var(--color-forest-950);
+	--highlight: var(--color-chartreuse-300);
+	--line-hairline: var(--color-stone-200);
+	--line-control: var(--color-stone-600);
+	--focus-ring: var(--color-forest-800);
+	--quiet-chip: var(--color-aqua-200);
+	--quiet-chip-label: var(--color-forest-950);
+	--secondary-fill: #ffffff;
+	--secondary-fill-hover: var(--color-stone-50);
+	--secondary-label: var(--color-forest-950);
+	--secondary-line: var(--color-stone-300);
+
+	--radius-xs: 6px;
+	--radius-sm: 10px;
+	--radius-md: 14px;
+	--radius-lg: 20px;
+	--radius-xl: 28px;
+	--radius-2xl: 40px;
+	--elevation-xs: 0 1px 2px rgb(23 42 31 / 0.05);
+	--elevation-sm: 0 2px 4px rgb(23 42 31 / 0.05),
+		0 4px 12px rgb(23 42 31 / 0.05);
+	--elevation-md: 0 4px 8px rgb(23 42 31 / 0.06),
+		0 12px 28px rgb(23 42 31 / 0.07);
+	--duration-fast: 200ms;
+	--duration-base: 320ms;
+	--ease-organic: cubic-bezier(0.34, 0.9, 0.32, 1);
+}
+
+html.dark {
+	color-scheme: dark;
+
+	--surface-base: var(--color-forest-950);
+	--surface-raised: var(--color-forest-900);
+	--surface-band: var(--color-forest-900);
+	--surface-chip: var(--color-forest-900);
+	--surface-invert: var(--color-stone-100);
+	--text-primary: var(--color-stone-100);
+	--text-secondary: var(--color-stone-300);
+	--text-muted: var(--color-stone-400);
+	--text-link: var(--color-aqua-300);
+	--text-on-invert: var(--color-forest-950);
+	--cta-fill: var(--color-forest-300);
+	--cta-fill-hover: var(--color-forest-200);
+	--cta-label: var(--color-forest-950);
+	--highlight: var(--color-chartreuse-400);
+	--line-hairline: rgb(237 240 228 / 0.1);
+	--line-control: rgb(237 240 228 / 0.3);
+	--focus-ring: var(--color-gold-300);
+	--quiet-chip: rgb(171 212 199 / 0.14);
+	--quiet-chip-label: var(--color-aqua-300);
+	--secondary-fill: rgb(237 240 228 / 0.07);
+	--secondary-fill-hover: rgb(237 240 228 / 0.13);
+	--secondary-label: var(--color-stone-100);
+	--secondary-line: rgb(237 240 228 / 0.16);
+	--elevation-xs: 0 1px 2px rgb(7 44 35 / 0.4);
+	--elevation-sm: 0 2px 6px rgb(7 44 35 / 0.4);
+	--elevation-md: 0 6px 20px rgb(7 44 35 / 0.45);
+}

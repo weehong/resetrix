@@ -1,1 +1,116 @@
 @import "tailwindcss";
+@import "./tokens.css";
+
+@custom-variant dark (&:where(html.dark, html.dark *));
+
+@theme inline {
+	--color-surface: var(--surface-base);
+	--color-surface-raised: var(--surface-raised);
+	--color-surface-band: var(--surface-band);
+	--color-surface-chip: var(--surface-chip);
+	--color-surface-invert: var(--surface-invert);
+	--color-ink: var(--text-primary);
+	--color-ink-soft: var(--text-secondary);
+	--color-ink-muted: var(--text-muted);
+	--color-ink-link: var(--text-link);
+	--color-ink-invert: var(--text-on-invert);
+	--color-cta: var(--cta-fill);
+	--color-cta-hover: var(--cta-fill-hover);
+	--color-cta-label: var(--cta-label);
+	--color-accent: var(--accent-fill);
+	--color-accent-hover: var(--accent-fill-hover);
+	--color-accent-ink: var(--accent-label);
+	--color-highlight: var(--highlight);
+	--color-hairline: var(--line-hairline);
+	--color-control: var(--line-control);
+	--color-ring: var(--focus-ring);
+	--color-chip: var(--quiet-chip);
+	--color-chip-ink: var(--quiet-chip-label);
+	--color-secondary: var(--secondary-fill);
+	--color-secondary-hover: var(--secondary-fill-hover);
+	--color-secondary-ink: var(--secondary-label);
+	--color-secondary-line: var(--secondary-line);
+	--font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+	--font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+	--shadow-xs: var(--elevation-xs);
+	--shadow-sm: var(--elevation-sm);
+	--shadow-md: var(--elevation-md);
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	body {
+		min-width: 320px;
+		min-height: 100vh;
+		background-color: var(--color-surface);
+		color: var(--color-ink);
+		font-family: var(--font-sans);
+		line-height: 1.72;
+	}
+
+	#root {
+		min-height: 100vh;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-display);
+		text-wrap: balance;
+	}
+
+	h1 {
+		font-variation-settings: "opsz" 48, "SOFT" 30;
+	}
+
+	h2 {
+		font-variation-settings: "opsz" 36, "SOFT" 30;
+	}
+
+	h3 {
+		font-variation-settings: "opsz" 24;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	button:not(:disabled),
+	[role="button"]:not([aria-disabled="true"]),
+	input[type="button"]:not(:disabled),
+	input[type="submit"]:not(:disabled),
+	input[type="reset"]:not(:disabled) {
+		cursor: pointer;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-ring);
+		outline-offset: 3px;
+		border-radius: inherit;
+	}
+
+	::selection {
+		background: var(--color-gold-300);
+		color: var(--color-forest-950);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

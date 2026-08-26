@@ -3,8 +3,8 @@
     "saveContact": "保存联系人",
     "call": "拨打电话",
     "email": "发邮件",
-    "website": "公司网站",
-    "maps": "地图导航"
+    "whatsapp": "WhatsApp",
+    "linkedin": "LinkedIn"
   },
   "labels": {
     "phone": "电话",

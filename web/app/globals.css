@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@custom-variant dark (&:where(html.dark, html.dark *));
+
+@theme inline {
+	--color-surface: var(--surface-base);
+	--color-surface-raised: var(--surface-raised);
+	--color-surface-band: var(--surface-band);
+	--color-surface-chip: var(--surface-chip);
+	--color-surface-invert: var(--surface-invert);
+	--color-ink: var(--text-primary);
+	--color-ink-soft: var(--text-secondary);
+	--color-ink-muted: var(--text-muted);
+	--color-ink-link: var(--text-link);
+	--color-ink-invert: var(--text-on-invert);
+	--color-cta: var(--cta-fill);
+	--color-cta-hover: var(--cta-fill-hover);
+	--color-cta-label: var(--cta-label);
+	--color-accent: var(--accent-fill);
+	--color-accent-ink: var(--accent-label);
+	--color-highlight: var(--highlight);
+	--color-hairline: var(--line-hairline);
+	--color-control: var(--line-control);
+	--color-ring: var(--focus-ring);
+	--color-chip: var(--quiet-chip);
+	--font-display: var(--typeface-display);
+	--font-sans: var(--typeface-body);
+	--font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	body {
+		background-color: var(--surface-base);
+		color: var(--text-primary);
+		font-family: var(--typeface-body);
+		line-height: 1.72;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--typeface-display);
+		font-variation-settings: "SOFT" 30;
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	button:not(:disabled),
+	[role="button"]:not([aria-disabled="true"]) {
+		cursor: pointer;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--focus-ring);
+		outline-offset: 3px;
+		border-radius: inherit;
+	}
+
+	::selection {
+		background-color: var(--color-gold-300);
+		color: var(--color-forest-950);
+	}
+}
+
+@keyframes botanical-rise {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.hero-reveal {
+	animation: botanical-rise var(--duration-slower) var(--ease-organic) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

@@ -1,2 +1,4 @@
 [build]
-  publish = "web"
+  base = "web"
+  command = "npm run build"
+  publish = ".next"

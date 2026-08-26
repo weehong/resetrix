@@ -11,15 +11,15 @@ import { auth0Env } from "@/features/auth/env";
  * `error` / `error_description` (not `code`). Read those from the URL so we
  * can show the reason even before the SDK surfaces `useAuth0().error`.
  */
-function readAuth0CallbackError(searchStr: string): string | null {
-	const params = new URLSearchParams(
-		searchStr.startsWith("?") ? searchStr.slice(1) : searchStr
+function readAuth0CallbackError(searchString: string): string | null {
+	const parameters = new URLSearchParams(
+		searchString.startsWith("?") ? searchString.slice(1) : searchString
 	);
-	const description = params.get("error_description");
+	const description = parameters.get("error_description");
 	if (description) {
 		return description;
 	}
-	return params.get("error");
+	return parameters.get("error");
 }
 
 /**
@@ -34,14 +34,14 @@ export const CallbackPage = (): FunctionComponent => {
 	const { t } = useTranslation();
 	const { error, isAuthenticated, isLoading, logout } = useAuth0();
 	const navigate = useNavigate();
-	const searchStr = useLocation({ select: (location) => location.searchStr });
+	const searchString = useLocation({ select: (location) => location.searchStr });
 	const hasAuthResponse = useMemo(
-		() => searchStr.includes("code=") && searchStr.includes("state="),
-		[searchStr]
+		() => searchString.includes("code=") && searchString.includes("state="),
+		[searchString]
 	);
 	const urlError = useMemo(
-		() => readAuth0CallbackError(searchStr),
-		[searchStr]
+		() => readAuth0CallbackError(searchString),
+		[searchString]
 	);
 	const failureMessage = urlError ?? error?.message ?? null;
 
@@ -66,13 +66,13 @@ export const CallbackPage = (): FunctionComponent => {
 			<AuthScreen message={failureMessage} title={t("auth.signInFailed")}>
 				<div className="flex flex-wrap items-center justify-center gap-2">
 					<Link
-						className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100"
+						className="inline-flex h-11 items-center rounded-[14px] bg-cta px-6 text-sm font-medium text-cta-label shadow-xs transition-colors duration-200 hover:bg-cta-hover"
 						to="/"
 					>
 						{t("auth.backToSignIn")}
 					</Link>
 					<button
-						className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:cursor-pointer hover:bg-slate-50"
+						className="h-11 rounded-[14px] border border-secondary-line bg-secondary px-6 text-sm font-medium text-secondary-ink shadow-xs transition-colors duration-200 hover:bg-secondary-hover"
 						type="button"
 						onClick={() => {
 							void logout({

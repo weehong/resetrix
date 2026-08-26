@@ -24,24 +24,25 @@ export const siteConfig = {
 	shortName: "Resetrix",
 	/** Default meta description. */
 	description:
-		"Resetrix helps SMEs rethink operations, build software around their business, and move forward with practical digital guidance.",
+		"Resetrix helps Singapore SMEs remove operational bottlenecks, connect existing systems and build focused software around the way their business works.",
 	/** Absolute canonical origin (no trailing slash). */
 	url: process.env.NEXT_PUBLIC_SITE_URL ?? DEFAULT_URL,
 	/** Open Graph locale. */
 	locale: "en_US",
 	/** Default keywords. */
 	keywords: [
-		"digital transformation",
-		"custom software",
-		"digital consultancy",
-		"SME software",
+		"digital transformation Singapore",
+		"custom software Singapore",
+		"workflow automation",
+		"SME systems integration",
+		"operational transformation",
 		"Resetrix",
 	],
 	/** Author / creator attribution. */
 	author: "Resetrix",
 	creator: "Resetrix",
 	/** Alt text for the default OG/Twitter image. */
-	ogImageAlt: "Resetrix: Re-think. Re-work. Re-focus.",
+	ogImageAlt: "Resetrix: Connected operations for Singapore SMEs",
 	/** Browser chrome colors matching the Botanical page grounds. */
 	themeColor: {
 		light: "#f6f8ee",

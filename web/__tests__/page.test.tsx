@@ -10,17 +10,17 @@ import { siteConfig } from "../lib/site-config";
 test("Home page presents the Resetrix value proposition as its h1", () => {
 	render(<Home />);
 	expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-		/software that fits the way your business works/i
+		/does your software fit the way your business actually works/i
 	);
 });
 
 test("Home page exposes the documented Resetrix services", () => {
 	render(<Home />);
 	expect(
-		screen.getByRole("heading", { name: /digital transformation/i })
+		screen.getByRole("heading", { name: /transform the operation/i })
 	).toBeDefined();
 	expect(
-		screen.getByRole("heading", { name: /software customization/i })
+		screen.getByRole("heading", { name: /make your software fit/i })
 	).toBeDefined();
 	expect(siteConfig.name).toBe("Resetrix");
 });

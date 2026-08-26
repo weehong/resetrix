@@ -6,11 +6,13 @@ import { siteConfig } from "@/lib/site-config";
 // `generateSitemaps`).
 export default function sitemap(): MetadataRoute.Sitemap {
 	return [
-		{
-			url: siteConfig.url,
-			lastModified: new Date(),
-			changeFrequency: "monthly",
-			priority: 1,
-		},
-	];
+		["", 1],
+		["/operational-transformation", 0.8],
+		["/software-customisation", 0.8],
+	].map(([path, priority]) => ({
+		url: `${siteConfig.url}${path}`,
+		lastModified: new Date(),
+		changeFrequency: "monthly" as const,
+		priority: Number(priority),
+	}));
 }

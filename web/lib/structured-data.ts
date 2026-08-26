@@ -20,5 +20,10 @@ export function getOrganizationSchema(): WithContext<Organization> {
 		name: siteConfig.name,
 		url: siteConfig.url,
 		logo: `${siteConfig.url}/icon`,
+		email: "hello@resetrix.sg",
+		address: {
+			"@type": "PostalAddress",
+			addressCountry: "SG",
+		},
 	};
 }

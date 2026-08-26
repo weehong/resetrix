@@ -16,6 +16,7 @@ export interface Person {
   phoneTel: string;
   email: string;
   website: string;
+  linkedin: string;
   addressQuery: string;
   vcardFilename: string;
   copy: Record<Locale, PersonCopy>;
@@ -34,6 +35,7 @@ export const people: Record<string, Person> = {
     phoneTel: "+6587148614",
     email: "vernonkoh@resetrix.com",
     website: "https://resetrix.com",
+    linkedin: "https://www.linkedin.com/in/vernonweehong/",
     addressQuery:
       "60 Paya Lebar Road #06-28 Paya Lebar Square Singapore 409051",
     vcardFilename: "Vernon-Wee-Hong-KOH.vcf",

@@ -30,7 +30,7 @@ describe("buildVcard", () => {
     expect(vcard).toContain("ORG:RESETRIX PTE. LTD.");
     expect(vcard).toContain("TITLE:Founder");
     expect(vcard).toContain("TEL;TYPE=CELL,VOICE:+6587148614");
-    expect(vcard).toContain("EMAIL;TYPE=INTERNET,WORK:vernonkoh@resetrix.com");
+    expect(vcard).toContain("EMAIL;TYPE=INTERNET,WORK:hello@resetrix.sg");
     expect(vcard).toContain("URL:https://resetrix.com");
     expect(vcard).toContain(
       "ADR;TYPE=WORK:;;60 Paya Lebar Road\\, #06-28 Paya Lebar Square\\, Singapore 409051;;;;",

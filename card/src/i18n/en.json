@@ -4,13 +4,30 @@
     "call": "Call",
     "email": "Email",
     "whatsapp": "WhatsApp",
-    "linkedin": "LinkedIn"
+    "linkedin": "LinkedIn",
+    "website": "Website",
+    "directions": "Directions",
+    "messageMe": "Message me",
+    "connect": "Connect",
+    "officeAddress": "Office address",
+    "shareCard": "Share card",
+    "linkCopied": "Link copied",
+    "showQr": "Show QR code",
+    "hideQr": "Hide QR code",
+    "qrAlt": "QR code for this digital business card",
+    "qrHelp": "Scan to open this digital business card."
   },
   "labels": {
     "phone": "Phone",
     "email": "Email",
     "website": "Website",
     "address": "Address"
+  },
+  "profile": {
+    "tagsLabel": "Location and industry",
+    "location": "Singapore",
+    "industry": "Software house",
+    "footer": "Resetrix Pte. Ltd. · Singapore"
   },
   "language": {
     "label": "Language",

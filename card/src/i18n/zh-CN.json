@@ -4,13 +4,30 @@
     "call": "拨打电话",
     "email": "发邮件",
     "whatsapp": "WhatsApp",
-    "linkedin": "LinkedIn"
+    "linkedin": "LinkedIn",
+    "website": "网站",
+    "directions": "路线",
+    "messageMe": "给我留言",
+    "connect": "建立联系",
+    "officeAddress": "办公室地址",
+    "shareCard": "分享名片",
+    "linkCopied": "链接已复制",
+    "showQr": "显示二维码",
+    "hideQr": "隐藏二维码",
+    "qrAlt": "此电子名片的二维码",
+    "qrHelp": "扫描二维码打开此电子名片。"
   },
   "labels": {
     "phone": "电话",
     "email": "邮箱",
     "website": "网站",
     "address": "地址"
+  },
+  "profile": {
+    "tagsLabel": "地点与行业",
+    "location": "新加坡",
+    "industry": "软件开发公司",
+    "footer": "润思创科 Resetrix Pte. Ltd. · 新加坡"
   },
   "language": {
     "label": "语言",

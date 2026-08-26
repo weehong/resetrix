@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import Script from "next/script";
 import Providers from "./providers";
 import { isProductionEnv, siteConfig } from "@/lib/site-config";
+import "./tokens.css";
 import "./globals.css";
 
 const fraunces = Fraunces({

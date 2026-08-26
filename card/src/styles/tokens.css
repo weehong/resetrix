@@ -49,6 +49,7 @@
   --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-ui: var(--font-body);
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
   /* 霞鹜文楷 — self-hosted under /fonts/lxgw-wenkai/ (in index.html) */
   --font-cjk: "LXGW WenKai", "霞鹜文楷", serif;
@@ -86,10 +87,8 @@
   }
 }
 
-/* Chinese locale: WenKai for UI copy; the Latin name keeps Fraunces via .name.
-   Slightly larger root size — CJK glyphs read better a step up from Latin. */
+/* Chinese locale: WenKai for UI copy; the Latin name keeps Fraunces via .name. */
 html[lang="zh-CN"] {
   --font-body: var(--font-cjk);
   --font-ui: var(--font-cjk);
-  font-size: 112.5%;
 }

@@ -19,6 +19,7 @@ import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { FunctionComponent, Heroicon } from "@/common/types";
+import { BrandLogo } from "@/components/BrandLogo";
 import { AppearanceSwitcher } from "@/features/appearance";
 import { auth0Env } from "@/features/auth/env";
 import { RequireAuth } from "@/features/auth/RequireAuth";
@@ -83,9 +84,10 @@ const Sidebar = ({
 	return (
 		<div className="relative flex grow flex-col gap-y-5 overflow-y-auto border-r border-hairline bg-surface-band px-6">
 			<div className="relative flex h-16 shrink-0 items-center justify-between gap-4">
-				<span className="font-display truncate text-xl font-semibold text-ink">
-					{t("landing.brand")}
-				</span>
+				<BrandLogo
+					className="h-auto w-32 shrink-0"
+					label={t("landing.brand")}
+				/>
 				<a
 					className="inline-flex shrink-0 items-center gap-1.5 rounded-[10px] px-2 py-1.5 text-sm font-medium text-ink-link transition-colors duration-200 hover:bg-chip hover:text-aqua-700 dark:hover:text-aqua-200"
 					href="#"

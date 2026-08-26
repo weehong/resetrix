@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import type { FunctionComponent } from "@/common/types";
+import { BrandLogo } from "@/components/BrandLogo";
 import { AppearanceSwitcher } from "@/features/appearance";
 import { AuthScreen } from "@/features/auth/AuthScreen";
 
@@ -41,8 +42,11 @@ export const Landing = (): FunctionComponent => {
 			/>
 			<div className="relative flex w-full max-w-2xl flex-col items-center rounded-[40px] bg-surface-raised px-6 py-16 shadow-sm dark:border dark:border-hairline dark:shadow-none sm:px-12">
 				<div className="mb-6 h-1 w-12 rounded-full bg-accent" />
-				<h1 className="font-display text-5xl leading-[1.08] font-semibold tracking-[-0.02em] text-ink [font-variation-settings:'opsz'_60,'SOFT'_30] sm:text-6xl">
-					{t("landing.brand")}
+				<h1>
+					<BrandLogo
+						className="h-auto w-full max-w-md"
+						label={t("landing.brand")}
+					/>
 				</h1>
 				<p className="mt-5 max-w-[56ch] text-lg text-ink-soft">
 					{t("landing.tagline")}

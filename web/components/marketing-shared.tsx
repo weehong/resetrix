@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { CloudSun, Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 
@@ -82,13 +83,14 @@ export function Brand({
 }): React.ReactElement {
 	return (
 		<Link className="brand" href={href} aria-label="Resetrix home">
-			<span className="brand-mark" aria-hidden="true">
-				R
-			</span>
-			<span className="brand-wordmark">
-				<span>Resetrix</span>
-				<small>Operations, reset</small>
-			</span>
+			<Image
+				unoptimized
+				className="brand-logo"
+				src="/brand/resetrix-wordmark.svg"
+				alt="Resetrix"
+				width={252}
+				height={44}
+			/>
 		</Link>
 	);
 }

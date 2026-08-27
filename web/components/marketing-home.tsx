@@ -86,7 +86,7 @@ const OFFERS = [
 		copy: "Find the workflow that is costing you time, visibility or capacity, and get a practical plan to fix it.",
 		timeline: "10 business days",
 		focus: "One key workflow",
-		investment: "S$2,800 + GST",
+		investment: "S$2,800",
 		featured: true,
 		items: [
 			"Current workflow and systems map",
@@ -103,7 +103,7 @@ const OFFERS = [
 		copy: "Fix one operational bottleneck without committing to a multi-year transformation programme.",
 		timeline: "Up to 90 days",
 		focus: "One workflow + KPI",
-		investment: "S$18k-45k + GST",
+		investment: "S$18k-45k",
 		featured: false,
 		items: [
 			"Focused build or configuration",
@@ -120,7 +120,7 @@ const OFFERS = [
 		copy: "Connect the systems, data and workflows your business depends on without replacing everything at once.",
 		timeline: "8-12 week modules",
 		focus: "Multi-team operations",
-		investment: "From S$60k + GST",
+		investment: "From S$60k",
 		featured: false,
 		items: [
 			"Multi-system integration and data model",

@@ -330,7 +330,7 @@ export function ServicePathPage({
 								</p>
 								<p>
 									<span>Investment</span>
-									<b>S$2,800 + GST</b>
+									<b>S$2,800</b>
 								</p>
 							</div>
 						</div>

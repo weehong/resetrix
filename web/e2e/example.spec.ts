@@ -8,6 +8,40 @@ test("home page renders the Resetrix value proposition", async ({ page }) => {
 	);
 });
 
+test("home page remains usable on a phone", async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 667 });
+	await page.goto("/");
+
+	const heading = page.getByRole("heading", { level: 1 });
+	const headingSize = await heading.evaluate((element) =>
+		Number.parseFloat(getComputedStyle(element).fontSize)
+	);
+	expect(headingSize).toBeLessThanOrEqual(52);
+	expect(
+		await page.evaluate(() => document.documentElement.scrollWidth)
+	).toBeLessThanOrEqual(390);
+
+	await page.getByRole("button", { name: "Open menu" }).click();
+	const fitCall = page
+		.locator(".mobile-menu")
+		.getByRole("link", { name: "Book a fit call" });
+	await fitCall.scrollIntoViewIfNeeded();
+	await expect(fitCall).toBeInViewport();
+});
+
+test("tablet widths use the responsive navigation and content grids", async ({
+	page,
+}) => {
+	await page.setViewportSize({ width: 820, height: 1180 });
+	await page.goto("/");
+
+	await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
+	const offerWidth = await page.locator(".offer").first().evaluate((element) =>
+		element.getBoundingClientRect().width
+	);
+	expect(offerWidth).toBeGreaterThan(700);
+});
+
 test("page indexing follows the deployment environment", async ({ page }) => {
 	await page.goto("/");
 	const expected =

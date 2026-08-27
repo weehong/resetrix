@@ -74,6 +74,19 @@ export function MarketingNav(): React.ReactElement {
 		};
 	}, [menuOpen]);
 
+	useEffect(() => {
+		const desktopQuery = window.matchMedia("(min-width: 1024px)");
+		const closeAtDesktop = (event: MediaQueryListEvent): void => {
+			if (event.matches) {
+				setMenuOpen(false);
+			}
+		};
+		desktopQuery.addEventListener("change", closeAtDesktop);
+		return (): void => {
+			desktopQuery.removeEventListener("change", closeAtDesktop);
+		};
+	}, []);
+
 	const closeMenu = (): void => {
 		setMenuOpen(false);
 	};

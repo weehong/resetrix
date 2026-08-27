@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import Script from "next/script";
-import Providers from "./providers";
-import { isProductionEnv, siteConfig } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 import "./tokens.css";
 import "./globals.css";
 
@@ -10,7 +9,7 @@ const fraunces = Fraunces({
 	variable: "--font-fraunces",
 	subsets: ["latin"],
 	display: "swap",
-	axes: ["opsz", "SOFT"],
+	weight: ["600", "700"],
 });
 
 const inter = Inter({
@@ -30,20 +29,6 @@ export const metadata: Metadata = {
 	keywords: [...siteConfig.keywords],
 	authors: [{ name: siteConfig.author }],
 	creator: siteConfig.creator,
-	// Indexing is allowed in production only; non-production emits noindex,nofollow.
-	robots: isProductionEnv
-		? {
-				index: true,
-				follow: true,
-				googleBot: {
-					index: true,
-					follow: true,
-					"max-image-preview": "large",
-					"max-snippet": -1,
-					"max-video-preview": -1,
-				},
-			}
-		: { index: false, follow: false },
 	manifest: "/manifest.webmanifest",
 	appleWebApp: {
 		capable: true,
@@ -84,7 +69,7 @@ export default function RootLayout({
 			className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
 		>
 			<body className="flex min-h-full flex-col bg-surface text-ink">
-				<Providers>{children}</Providers>
+				{children}
 				<Script
 					id="resolve-appearance"
 					strategy="beforeInteractive"

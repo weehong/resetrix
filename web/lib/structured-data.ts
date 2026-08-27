@@ -8,7 +8,7 @@ export function getOrganizationSchema(): WithContext<Organization> {
 		"@type": "Organization",
 		name: siteConfig.name,
 		url: `${siteConfig.url}/`,
-		logo: `${siteConfig.url}/icon`,
+		logo: `${siteConfig.url}/brand/resetrix-wordmark.svg`,
 		email: "hello@resetrix.com",
 		description:
 			"Resetrix helps Singapore SMEs improve connected operations by addressing workflow and software-fit bottlenecks.",

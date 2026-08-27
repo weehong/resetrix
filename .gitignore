@@ -29,7 +29,9 @@ blob-report/
 
 # Editor / OS
 .idea/
+.vercel/
 .DS_Store
+*:Zone.Identifier
 *.suo
 *.ntvs*
 *.njsproj
@@ -41,6 +43,7 @@ blob-report/
 review.md
 .agents/
 skills-lock.json
+repomix-output.xml
 
 # TypeScript
 *.tsbuildinfo

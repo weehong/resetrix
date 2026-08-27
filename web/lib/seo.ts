@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { isProductionEnv, siteConfig, SITE_ORIGIN } from "@/lib/site-config";
+import routeSeoEntries from "@/lib/seo-routes.json";
 
-export const PUBLIC_ROUTE_PATHS = [
-	"/",
-	"/operational-transformation",
-	"/software-customisation",
-] as const;
+export type PublicRoutePath =
+	"/" | "/operational-transformation" | "/software-customisation";
 
-export type PublicRoutePath = (typeof PUBLIC_ROUTE_PATHS)[number];
+export const PUBLIC_ROUTE_PATHS: ReadonlyArray<PublicRoutePath> =
+	routeSeoEntries.map((route) => route.path as PublicRoutePath);
 
 type RouteSeo = {
 	readonly title: string;
@@ -22,50 +21,24 @@ type RouteSeo = {
 	readonly indexable: true;
 };
 
-export const ROUTE_SEO: Readonly<Record<PublicRoutePath, RouteSeo>> = {
-	"/": {
-		title: "Connected Operations for Singapore SMEs | Resetrix",
-		description:
-			"Fix manual hand-offs, disconnected data and workflow bottlenecks. Resetrix helps Singapore SMEs improve operations without replacing everything.",
-		canonicalPath: "/",
-		openGraph: {
-			title: "Connected Operations for Singapore SMEs | Resetrix",
-			description:
-				"Fix manual hand-offs, disconnected data and workflow bottlenecks. Resetrix helps Singapore SMEs improve operations without replacing everything.",
-			imagePath: "/opengraph-image",
-			imageAlt: "Resetrix connected operations for Singapore SMEs",
-		},
-		indexable: true,
-	},
-	"/operational-transformation": {
-		title: "Operational Transformation for SMEs in Singapore | Resetrix",
-		description:
-			"Map the workflow holding growth back and choose the least-complex change to improve capacity, visibility and reliability.",
-		canonicalPath: "/operational-transformation",
-		openGraph: {
-			title: "Operational Transformation for SMEs in Singapore | Resetrix",
-			description:
-				"Map the workflow holding growth back and choose the least-complex change to improve capacity, visibility and reliability.",
-			imagePath: "/operational-transformation/opengraph-image",
-			imageAlt: "Resetrix operational transformation for Singapore SMEs",
-		},
-		indexable: true,
-	},
-	"/software-customisation": {
-		title: "Software Customisation & Integration for SMEs | Resetrix",
-		description:
-			"Keep the tools that work and close the gaps that do not. Resetrix customises and connects business software for Singapore SMEs.",
-		canonicalPath: "/software-customisation",
-		openGraph: {
-			title: "Software Customisation & Integration for SMEs | Resetrix",
-			description:
-				"Keep the tools that work and close the gaps that do not. Resetrix customises and connects business software for Singapore SMEs.",
-			imagePath: "/software-customisation/opengraph-image",
-			imageAlt: "Resetrix software customisation and integration for SMEs",
-		},
-		indexable: true,
-	},
-};
+export const ROUTE_SEO: Readonly<Record<PublicRoutePath, RouteSeo>> =
+	Object.fromEntries(
+		routeSeoEntries.map((route) => [
+			route.path,
+			{
+				title: route.title,
+				description: route.description,
+				canonicalPath: route.path,
+				openGraph: {
+					title: route.title,
+					description: route.description,
+					imagePath: route.imagePath,
+					imageAlt: route.imageAlt,
+				},
+				indexable: true,
+			},
+		])
+	) as Record<PublicRoutePath, RouteSeo>;
 
 export function absoluteUrl(path: string): string {
 	return `${SITE_ORIGIN}${path === "/" ? "" : path}`;
@@ -81,7 +54,19 @@ export function getRouteMetadata(path: PublicRoutePath): Metadata {
 		title: { absolute: route.title },
 		description: route.description,
 		alternates: { canonical },
-		robots: { index: robots, follow: robots },
+		robots: robots
+			? {
+					index: true,
+					follow: true,
+					googleBot: {
+						index: true,
+						follow: true,
+						"max-image-preview": "large",
+						"max-snippet": -1,
+						"max-video-preview": -1,
+					},
+				}
+			: { index: false, follow: false },
 		openGraph: {
 			type: "website",
 			siteName: siteConfig.name,
@@ -95,7 +80,7 @@ export function getRouteMetadata(path: PublicRoutePath): Metadata {
 			card: "summary_large_image",
 			title: route.openGraph.title,
 			description: route.openGraph.description,
-			images: [image],
+			images: [{ url: image, alt: route.openGraph.imageAlt }],
 		},
 	};
 }

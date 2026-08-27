@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function NotFound(): React.ReactElement {
 	return (
 		<Container
+			as="main"
 			width="narrow"
 			className="flex flex-1 flex-col items-center justify-center gap-4 py-24 text-center"
 		>

@@ -163,15 +163,16 @@ Import this repository as a new Vercel project and set its Root Directory to
 `web`. Vercel detects Next.js, and `vercel.json` records that framework preset.
 Set `SITE_ORIGIN=https://resetrix.com` and `APP_ENVIRONMENT=production` for the
 Production environment. Keep `APP_ENVIRONMENT=preview` for Preview deployments
-so they remain non-indexable.
+so they remain non-indexable. Vercel runs `npm run build:vercel`, which executes
+the SEO artifact gate only for production deployments.
 
 ### Without Docker
 
-Build the production app:
+Build the production app with the canonical SEO configuration and verify the
+generated metadata:
 
 ```bash
-npm run build
-npm run verify:seo
+npm run build:seo
 ```
 
 Start the production server:
@@ -205,12 +206,17 @@ A CI template is intentionally not included. A practical baseline gate is:
 ```bash
 npm run lint
 npm run test:unit:run
-npm run build
-npm run verify:seo
+npm run build:seo
 ```
 
 Run `npm run test:e2e` in CI after Playwright browsers are installed and a web
 server can be started by the Playwright config.
+
+Run the same browser checks against a fresh production build with:
+
+```bash
+npm run test:e2e:production
+```
 
 ## Storybook
 
@@ -231,24 +237,25 @@ Storybook is configured to discover stories and MDX files under `app/` and
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the local Next.js dev server on port 3001 |
-| `npm run build` | Build the production app |
-| `npm run verify:seo` | Validate prerendered HTML, crawl files, and structured data |
-| `npm run start` | Start the production server on port 3001 |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Run ESLint with automatic fixes |
-| `npm run format` | Format source, test, and config files |
-| `npm run test` | Run Vitest and Playwright |
-| `npm run test:unit` | Run Vitest in watch mode |
-| `npm run test:unit:run` | Run Vitest once |
-| `npm run test:unit:coverage` | Run Vitest with coverage |
-| `npm run test:e2e` | Run Playwright tests |
-| `npm run test:e2e:report` | Open the Playwright HTML report |
-| `npm run storybook` | Start Storybook on port 6006 |
-| `npm run storybook:build` | Build Storybook |
-| `npm run setup` | Install Playwright browsers |
+| Command                      | Description                                                      |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `npm run dev`                | Start the local Next.js dev server on port 3001                  |
+| `npm run build`              | Build the production app                                         |
+| `npm run build:seo`          | Build with production SEO settings and verify generated metadata |
+| `npm run verify:seo`         | Validate prerendered HTML, crawl files, and structured data      |
+| `npm run start`              | Start the production server on port 3001                         |
+| `npm run lint`               | Run ESLint                                                       |
+| `npm run lint:fix`           | Run ESLint with automatic fixes                                  |
+| `npm run format`             | Format source, test, and config files                            |
+| `npm run test`               | Run Vitest and Playwright                                        |
+| `npm run test:unit`          | Run Vitest in watch mode                                         |
+| `npm run test:unit:run`      | Run Vitest once                                                  |
+| `npm run test:unit:coverage` | Run Vitest with coverage                                         |
+| `npm run test:e2e`           | Run Playwright tests                                             |
+| `npm run test:e2e:report`    | Open the Playwright HTML report                                  |
+| `npm run storybook`          | Start Storybook on port 6006                                     |
+| `npm run storybook:build`    | Build Storybook                                                  |
+| `npm run setup`              | Install Playwright browsers                                      |
 
 ## Project Structure
 
@@ -261,12 +268,6 @@ e2e/                 playwright end-to-end tests
 .storybook/          storybook configuration
 docs/                local reference documents
 ```
-
-## Scaffold Prompt
-
-Use `SCAFFOLD.md` when you want an AI coding agent to recreate this boilerplate
-in a new empty directory. The prompt documents the parameters, conventions, file
-manifest, setup steps, verification gates, and initial commit message.
 
 ## Installed Packages
 

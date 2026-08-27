@@ -1,0 +1,29 @@
+[
+	{
+		"path": "/",
+		"file": "index.html",
+		"title": "Connected Operations for Singapore SMEs | Resetrix",
+		"description": "Fix manual hand-offs, disconnected data and workflow bottlenecks. Resetrix helps Singapore SMEs improve operations without replacing everything.",
+		"imagePath": "/opengraph-image",
+		"imageAlt": "Resetrix connected operations for Singapore SMEs",
+		"h1": "Does your software fit"
+	},
+	{
+		"path": "/operational-transformation",
+		"file": "operational-transformation.html",
+		"title": "Operational Transformation for SMEs in Singapore | Resetrix",
+		"description": "Map the workflow holding growth back and choose the least-complex change to improve capacity, visibility and reliability.",
+		"imagePath": "/operational-transformation/opengraph-image",
+		"imageAlt": "Resetrix operational transformation for Singapore SMEs",
+		"h1": "Fix the operational bottleneck"
+	},
+	{
+		"path": "/software-customisation",
+		"file": "software-customisation.html",
+		"title": "Software Customisation & Integration for SMEs | Resetrix",
+		"description": "Keep the tools that work and close the gaps that do not. Resetrix customises and connects business software for Singapore SMEs.",
+		"imagePath": "/software-customisation/opengraph-image",
+		"imageAlt": "Resetrix software customisation and integration for SMEs",
+		"h1": "Keep the tools that work"
+	}
+]

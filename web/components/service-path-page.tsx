@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Link2, PlugZap, Settings2 } from "lucide-react";
 import type { ReactNode } from "react";
-import { Brand, ThemeSwitcher } from "@/components/marketing-shared";
+import { Brand } from "@/components/brand";
+import { ThemeSwitcher } from "@/components/marketing-shared";
 
 export type PathType = "transformation" | "customisation";
 

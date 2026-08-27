@@ -1,4 +1,13 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs"
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"framework": "nextjs",
+	"buildCommand": "npm run build:vercel",
+	"redirects": [
+		{
+			"source": "/:path*",
+			"has": [{ "type": "host", "value": "www.resetrix.com" }],
+			"destination": "https://resetrix.com/:path*",
+			"permanent": true
+		}
+	]
 }

@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const isProductionTest = process.env["E2E_PRODUCTION"] === "true";
+
 /**
  * See https://playwright.dev/docs/test-configuration
  * and https://nextjs.org/docs/app/guides/testing/playwright
@@ -40,11 +42,13 @@ export default defineConfig({
 		},
 	],
 
-	/* Run your local dev server before starting the tests */
+	/* Run either the dev server or a freshly verified production build. */
 	webServer: {
-		command: "npm run dev",
+		command: isProductionTest
+			? "npm run build:seo && npm run start:standalone:test"
+			: "npm run dev",
 		url: "http://localhost:3001",
-		reuseExistingServer: !process.env["CI"],
+		reuseExistingServer: !process.env["CI"] && !isProductionTest,
 		timeout: 120 * 1000,
 	},
 });

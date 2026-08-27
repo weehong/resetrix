@@ -14,7 +14,6 @@
 	--ring: var(--focus-ring);
 	--cta: var(--cta-fill);
 	--cta-hover: var(--cta-fill-hover);
-	--cta-label: var(--cta-label);
 	--accent: var(--accent-fill);
 	--accent-ink: var(--accent-label);
 }

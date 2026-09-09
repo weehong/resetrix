@@ -9,12 +9,12 @@
 		"h1": "Does your software fit"
 	},
 	{
-		"path": "/operational-transformation",
-		"file": "operational-transformation.html",
-		"title": "Operational Transformation for SMEs in Singapore | Resetrix",
-		"description": "Map the workflow holding growth back and choose the least-complex change to improve capacity, visibility and reliability.",
-		"imagePath": "/operational-transformation/opengraph-image",
-		"imageAlt": "Resetrix operational transformation for Singapore SMEs",
+		"path": "/workflow-digitalisation",
+		"file": "workflow-digitalisation.html",
+		"title": "Workflow Digitalisation for SMEs in Singapore | Resetrix",
+		"description": "Move paper, spreadsheet and chat-based operations onto a system that fits. Resetrix maps the workflow holding growth back and digitalises it with the least-complex change.",
+		"imagePath": "/workflow-digitalisation/opengraph-image",
+		"imageAlt": "Resetrix workflow digitalisation for Singapore SMEs",
 		"h1": "Fix the operational bottleneck"
 	},
 	{

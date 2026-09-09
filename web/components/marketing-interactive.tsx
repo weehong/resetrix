@@ -97,7 +97,7 @@ export function MarketingNav(): React.ReactElement {
 				<nav className="container nav" aria-label="Primary navigation">
 					<Brand href="#top" />
 					<div className="nav-links">
-						<Link href="/operational-transformation">Transform operations</Link>
+						<Link href="/workflow-digitalisation">Digitalise operations</Link>
 						<Link href="/software-customisation">Customise software</Link>
 						<a href="#method">Method</a>
 						<a href="#faq">FAQ</a>
@@ -126,8 +126,8 @@ export function MarketingNav(): React.ReactElement {
 				aria-hidden={!menuOpen}
 				inert={!menuOpen}
 			>
-				<Link href="/operational-transformation" onClick={closeMenu}>
-					Transform operations
+				<Link href="/workflow-digitalisation" onClick={closeMenu}>
+					Digitalise operations
 				</Link>
 				<Link href="/software-customisation" onClick={closeMenu}>
 					Customise software

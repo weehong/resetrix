@@ -6,14 +6,21 @@ import {
 	ChevronRight,
 	CircleDot,
 	Database,
+	DraftingCompass,
 	FlaskConical,
+	Handshake,
+	HardHat,
 	Layers3,
 	Network,
 	Plus,
 	Settings2,
+	ShieldCheck,
 	TimerReset,
+	Truck,
 	UsersRound,
+	Warehouse,
 	Workflow,
+	Wrench,
 	Zap,
 } from "lucide-react";
 import { Brand } from "@/components/brand";
@@ -22,6 +29,7 @@ import {
 	MarketingNav,
 	Reveal,
 } from "@/components/marketing-interactive";
+import { CTA_QUALIFIER } from "@/lib/site-config";
 
 const PAINS = [
 	{
@@ -79,6 +87,47 @@ const DECISIONS = [
 	},
 ] as const;
 
+const INDUSTRIES = [
+	{
+		Icon: Truck,
+		title: "Logistics",
+		copy: "Job sheets, delivery orders and proof of delivery still travel by paper, photo and WhatsApp.",
+	},
+	{
+		Icon: HardHat,
+		title: "Construction subcontractors",
+		copy: "Site progress, claims, variation orders and manpower are tracked in spreadsheets nobody trusts.",
+	},
+	{
+		Icon: Warehouse,
+		title: "Warehousing",
+		copy: "Stock counts, inbound and outbound records are re-keyed between the floor and the office.",
+	},
+	{
+		Icon: Wrench,
+		title: "Field services",
+		copy: "Scheduling, service reports and invoicing depend on technicians calling the office.",
+	},
+] as const;
+
+const APPROACH = [
+	{
+		Icon: DraftingCompass,
+		title: "We diagnose and design",
+		copy: "A specialised team of workflow architects maps the problem and designs the exact blueprint before anything is built.",
+	},
+	{
+		Icon: Handshake,
+		title: "We act as main contractor on large builds",
+		copy: "For large-scale implementations we are your dedicated project manager, drawing on our network of specialised development partners.",
+	},
+	{
+		Icon: ShieldCheck,
+		title: "We own the delivery",
+		copy: "Quality, security and final delivery stay with Resetrix, whoever writes the code. One accountable partner, no hand-offs to chase.",
+	},
+] as const;
+
 const OFFERS = [
 	{
 		kicker: "01 / Decide",
@@ -100,7 +149,7 @@ const OFFERS = [
 	{
 		kicker: "02 / Improve",
 		title: "90-Day Workflow Sprint",
-		copy: "Fix one operational bottleneck without committing to a multi-year transformation programme.",
+		copy: "Fix one operational bottleneck without committing to a multi-year system overhaul.",
 		timeline: "Up to 90 days",
 		focus: "One workflow + KPI",
 		investment: "S$18k-45k",
@@ -147,8 +196,12 @@ const FAQS = [
 		"A good Sprint has one operational bottleneck, a business owner, a measurable baseline and a willing group of users. It is not designed for an undefined feature backlog or a complete ERP replacement.",
 	],
 	[
+		"Who actually does the build?",
+		"Resetrix is a small team of workflow architects. We diagnose, design the blueprint and build focused work ourselves. For large-scale implementations we act as your main contractor and dedicated project manager, bringing in specialised development partners from our network while we own the quality, security and final delivery.",
+	],
+	[
 		"Do you support the system after launch?",
-		"Yes. Transformation Care covers maintenance, support triage, adoption reviews, security upkeep and a planned improvement roadmap.",
+		"Yes. Operational Care covers maintenance, support triage, adoption reviews, security upkeep and a planned improvement roadmap for the system we delivered.",
 	],
 ] as const;
 
@@ -203,6 +256,7 @@ export function MarketingHome(): React.ReactElement {
 									See how we decide <ChevronRight size={17} />
 								</a>
 							</div>
+							<p className="cta-qualifier">{CTA_QUALIFIER}</p>
 							<div className="hero-proof">
 								<span className="proof-node">
 									<CircleDot size={16} />
@@ -275,15 +329,16 @@ export function MarketingHome(): React.ReactElement {
 							</p>
 						</Reveal>
 						<div className="path-grid">
-							<Link className="path-card" href="/operational-transformation">
+							<Link className="path-card" href="/workflow-digitalisation">
 								<span className="path-number">01</span>
 								<span className="path-icon">
 									<Workflow size={25} />
 								</span>
-								<h3>Transform the operation</h3>
+								<h3>Digitalise the operation</h3>
 								<p>
-									Your team relies on spreadsheets, chat and manual hand-offs,
-									and you need to identify what is holding growth back.
+									Your team still runs on paper, spreadsheets, chat and manual
+									hand-offs, and you need to identify what is holding growth
+									back.
 								</p>
 								<span className="path-link">
 									Map the operation <ArrowRight size={16} />
@@ -309,6 +364,43 @@ export function MarketingHome(): React.ReactElement {
 						</div>
 						<p className="path-note">
 							Both paths lead to the same first step: a System Fit Diagnostic.
+						</p>
+					</div>
+				</section>
+
+				<section
+					id="industries"
+					className="section section--tight"
+					aria-labelledby="industries-title"
+				>
+					<div className="container">
+						<Reveal>
+							<div className="section-heading section-heading--split">
+								<div>
+									<p className="eyebrow">Who we help</p>
+									<h2 id="industries-title" className="display-lg">
+										Built for traditional operations still running on{" "}
+										<span className="highlight">paper and spreadsheets.</span>
+									</h2>
+								</div>
+								<p className="body-lg">
+									We work with established Singapore businesses whose manual
+									paperwork has become the constraint on growth.
+								</p>
+							</div>
+						</Reveal>
+						<div className="industry-grid">
+							{INDUSTRIES.map(({ Icon, title, copy }) => (
+								<article className="pain-card industry-card" key={title}>
+									<Icon size={23} />
+									<h3>{title}</h3>
+									<p>{copy}</p>
+								</article>
+							))}
+						</div>
+						<p className="path-note">
+							Not on the list? If your operation runs on manual books, we
+							probably understand it.
 						</p>
 					</div>
 				</section>
@@ -384,6 +476,51 @@ export function MarketingHome(): React.ReactElement {
 				</section>
 
 				<section
+					id="approach"
+					className="section section--tight"
+					aria-labelledby="approach-title"
+				>
+					<div className="container decision-grid">
+						<div>
+							<div className="approach-list">
+								{APPROACH.map(({ Icon, title, copy }) => (
+									<div className="decision-row" key={title}>
+										<span className="decision-icon">
+											<Icon size={21} />
+										</span>
+										<div>
+											<h3>{title}</h3>
+											<p>{copy}</p>
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+						<Reveal>
+							<div className="decision-statement">
+								<p className="eyebrow">Our approach</p>
+								<h2 id="approach-title" className="display-lg">
+									A boutique team of{" "}
+									<span className="highlight">workflow architects.</span>
+								</h2>
+								<p>
+									Resetrix is a specialised five-person team. We diagnose the
+									problem and design the exact blueprint. For large-scale
+									implementations, we act as your dedicated project manager,
+									leveraging our network of specialised development partners
+									while strictly owning the quality, security and final
+									delivery.
+								</p>
+								<p>
+									You get boutique-level strategic attention without the
+									overhead of a large agency.
+								</p>
+							</div>
+						</Reveal>
+					</div>
+				</section>
+
+				<section
 					id="offers"
 					className="section surface-band"
 					aria-labelledby="offers-title"
@@ -397,9 +534,8 @@ export function MarketingHome(): React.ReactElement {
 									<span className="highlight">confidence.</span>
 								</h2>
 								<p className="body-lg">
-									You do not need to commit to a large transformation programme
-									on day one. Start with the amount of change your business can
-									absorb.
+									You do not need to commit to a large system overhaul on day
+									one. Start with the amount of change your business can absorb.
 								</p>
 							</div>
 						</Reveal>
@@ -557,15 +693,17 @@ export function MarketingHome(): React.ReactElement {
 							/>
 						</div>
 						<div>
-							<p className="eyebrow">Launch is not the finish line.</p>
+							<p className="eyebrow">
+								Operational Care. Launch is not the finish line.
+							</p>
 							<h2 className="display-lg">
 								Keep the workflow secure,{" "}
 								<span className="highlight">adopted</span> and improving.
 							</h2>
 							<p className="body-lg section-copy">
-								Software does not transform an SME on its own. Your team needs
-								ownership, practical support and a regular view of whether the
-								new way of working is holding up.
+								Software does not digitalise an operation on its own. Your team
+								needs ownership, practical support and a regular view of whether
+								the new way of working is holding up.
 							</p>
 							<div className="review-list">
 								<div>
@@ -661,6 +799,9 @@ export function MarketingHome(): React.ReactElement {
 								you whether an Operational Clarity Diagnostic is the right next
 								step.
 							</p>
+							<p className="cta-qualifier cta-qualifier--contact">
+								{CTA_QUALIFIER}
+							</p>
 							<div className="contact-facts">
 								<div>
 									<CircleDot size={18} />
@@ -692,15 +833,15 @@ export function MarketingHome(): React.ReactElement {
 						<div>
 							<h4>Method</h4>
 							<a href="#method">How we decide</a>
+							<a href="#approach">Our approach</a>
 							<a href="#offers">Offer stack</a>
-							<a href="#care">Transformation Care</a>
+							<a href="#care">Operational Care</a>
 						</div>
 						<div>
 							<h4>Capabilities</h4>
-							<Link href="/operational-transformation">
-								Transform operations
-							</Link>
+							<Link href="/workflow-digitalisation">Digitalise operations</Link>
 							<Link href="/software-customisation">Customise software</Link>
+							<a href="#industries">Who we help</a>
 							<a href="#contact">Operational Diagnostic</a>
 						</div>
 						<div>
@@ -712,7 +853,7 @@ export function MarketingHome(): React.ReactElement {
 					</div>
 					<div className="footer-bottom">
 						<span>© {new Date().getFullYear()} Resetrix Pte. Ltd.</span>
-						<span>Digital transformation, engineered for SMEs.</span>
+						<span>Workflow digitalisation, engineered for Singapore SMEs.</span>
 					</div>
 				</div>
 			</footer>

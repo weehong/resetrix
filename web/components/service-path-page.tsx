@@ -3,8 +3,9 @@ import { ArrowLeft, ArrowRight, Link2, PlugZap, Settings2 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Brand } from "@/components/brand";
 import { ThemeSwitcher } from "@/components/marketing-shared";
+import { CTA_QUALIFIER } from "@/lib/site-config";
 
-export type PathType = "transformation" | "customisation";
+export type PathType = "digitalisation" | "customisation";
 
 type ServiceContent = {
 	readonly eyebrow: string;
@@ -24,15 +25,15 @@ type ServiceContent = {
 };
 
 const CONTENT: Record<PathType, ServiceContent> = {
-	transformation: {
-		eyebrow: "Transform the operation",
+	digitalisation: {
+		eyebrow: "Digitalise the operation",
 		title: (
 			<>
 				Fix the operational bottleneck before buying{" "}
 				<span className="highlight">more tools.</span>
 			</>
 		),
-		lede: "Your team relies on spreadsheets, chat and manual hand-offs, and it is no longer clear which part is holding growth back. We map the operation first, then recommend the least-complex change that moves a business measure.",
+		lede: "Your team still runs on paper, spreadsheets, chat and manual hand-offs, and it is no longer clear which part is holding growth back. We map the operation first, then digitalise it with the least-complex change that moves a business measure.",
 		sibling: "Make your software fit",
 		siblingHref: "/software-customisation",
 		signalsTitle: "The signals that bring SMEs here.",
@@ -104,8 +105,8 @@ const CONTENT: Record<PathType, ServiceContent> = {
 			</>
 		),
 		lede: "You already pay for SaaS and business systems. The problem is the space between them: workarounds, duplicate data and workflows your team has to fight. We close those gaps without asking you to abandon the stack.",
-		sibling: "Transform the operation",
-		siblingHref: "/operational-transformation",
+		sibling: "Digitalise the operation",
+		siblingHref: "/workflow-digitalisation",
 		signalsTitle: "When good software stops fitting.",
 		signalsIntro:
 			"One recurring system gap that costs real capacity is enough to justify a clearer technical and operational decision.",
@@ -177,7 +178,7 @@ export function ServicePathPage({
 }): React.ReactElement {
 	const content = CONTENT[type];
 	const endTitle =
-		type === "transformation" ? (
+		type === "digitalisation" ? (
 			<>
 				Bring us the workflow that is{" "}
 				<span className="highlight">holding growth back.</span>
@@ -195,8 +196,8 @@ export function ServicePathPage({
 				<nav className="container nav" aria-label="Primary navigation">
 					<Brand />
 					<div className="nav-links">
-						<Link href="/operational-transformation">
-							Transform the operation
+						<Link href="/workflow-digitalisation">
+							Digitalise the operation
 						</Link>
 						<Link href="/software-customisation">Customise software</Link>
 						<Link href="/#method">Method</Link>
@@ -344,6 +345,7 @@ export function ServicePathPage({
 						<Link className="btn btn--primary" href="/#contact">
 							Book a System Fit Call <ArrowRight size={16} />
 						</Link>
+						<p className="cta-qualifier">{CTA_QUALIFIER}</p>
 					</div>
 				</section>
 			</main>

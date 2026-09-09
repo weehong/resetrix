@@ -60,11 +60,11 @@ export const siteConfig = {
 	locale: "en_US",
 	/** Default keywords. */
 	keywords: [
-		"digital transformation Singapore",
+		"workflow digitalisation Singapore",
 		"custom software Singapore",
-		"workflow automation",
+		"workflow automation Singapore",
 		"SME systems integration",
-		"operational transformation",
+		"digitalise operations Singapore",
 		"Resetrix",
 	],
 	/** Author / creator attribution. */
@@ -82,3 +82,7 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+/** Lead qualifier shown beside every "fit call" CTA. */
+export const CTA_QUALIFIER =
+	"Best fit: traditional Singapore businesses with S$2M+ annual revenue that are ready to eliminate manual data entry.";

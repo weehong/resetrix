@@ -17,7 +17,7 @@ test("Home page presents the Resetrix value proposition as its h1", () => {
 test("Home page exposes the documented Resetrix services", () => {
 	render(<Home />);
 	expect(
-		screen.getByRole("heading", { name: /transform the operation/i })
+		screen.getByRole("heading", { name: /digitalise the operation/i })
 	).toBeDefined();
 	expect(
 		screen.getByRole("heading", { name: /make your software fit/i })

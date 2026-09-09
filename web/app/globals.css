@@ -752,6 +752,36 @@
 	.decision-note {
 		margin-top: 20px;
 	}
+	.approach-list {
+		display: grid;
+		gap: 12px;
+	}
+	.decision-statement p + p {
+		margin-top: 16px;
+		font-weight: 600;
+	}
+	.industry-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 16px;
+		margin-top: 48px;
+	}
+	.industry-card {
+		min-height: 200px;
+	}
+	.cta-qualifier {
+		max-width: 46ch;
+		margin-top: 16px;
+		color: var(--ink-muted);
+		font-size: 0.8125rem;
+		line-height: 1.5;
+	}
+	.cta-qualifier--contact {
+		margin-top: 24px;
+	}
+	.service-end .cta-qualifier {
+		color: var(--color-stone-700);
+	}
 	.offers {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -1414,6 +1444,9 @@
 	.pain-grid {
 		grid-template-columns: repeat(3, 1fr);
 	}
+	.industry-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
 	.offers {
 		gap: 16px;
 	}
@@ -1521,6 +1554,9 @@
 	.footer-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
+	#approach .decision-grid > .reveal {
+		order: -1;
+	}
 	.path-grid,
 	.offers,
 	.service-signal-grid,
@@ -1605,6 +1641,7 @@
 		padding: 16px;
 	}
 	.pain-grid,
+	.industry-grid,
 	.footer-grid {
 		grid-template-columns: 1fr;
 	}

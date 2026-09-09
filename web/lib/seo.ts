@@ -3,7 +3,9 @@ import { isProductionEnv, siteConfig, SITE_ORIGIN } from "@/lib/site-config";
 import routeSeoEntries from "@/lib/seo-routes.json";
 
 export type PublicRoutePath =
-	"/" | "/operational-transformation" | "/software-customisation";
+	| "/"
+	| "/workflow-digitalisation"
+	| "/software-customisation";
 
 export const PUBLIC_ROUTE_PATHS: ReadonlyArray<PublicRoutePath> =
 	routeSeoEntries.map((route) => route.path as PublicRoutePath);

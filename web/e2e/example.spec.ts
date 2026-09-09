@@ -36,9 +36,10 @@ test("tablet widths use the responsive navigation and content grids", async ({
 	await page.goto("/");
 
 	await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
-	const offerWidth = await page.locator(".offer").first().evaluate((element) =>
-		element.getBoundingClientRect().width
-	);
+	const offerWidth = await page
+		.locator(".offer")
+		.first()
+		.evaluate((element) => element.getBoundingClientRect().width);
 	expect(offerWidth).toBeGreaterThan(700);
 });
 
@@ -82,7 +83,7 @@ test("appearance choice persists across a reload", async ({ page }) => {
 });
 
 const serviceRoutes = [
-	["/operational-transformation", /fix the operational bottleneck/i],
+	["/workflow-digitalisation", /fix the operational bottleneck/i],
 	["/software-customisation", /keep the tools that work/i],
 ] as const;
 
@@ -130,7 +131,7 @@ test("crawl files have direct responses and correct content types", async ({
 
 const socialImagePaths = [
 	"/opengraph-image",
-	"/operational-transformation/opengraph-image",
+	"/workflow-digitalisation/opengraph-image",
 	"/software-customisation/opengraph-image",
 ] as const;
 

@@ -1,6 +1,9 @@
 // Type the build-time environment variables used by server-rendered SEO output.
 declare namespace NodeJS {
 	interface ProcessEnv {
+		readonly NEXT_PUBLIC_TURNSTILE_SITE_KEY?: string;
+		readonly TURNSTILE_SECRET_KEY?: string;
+		readonly TURNSTILE_ALLOWED_HOSTNAMES?: string;
 		/** Absolute canonical HTTPS origin with no trailing slash. */
 		readonly SITE_ORIGIN?: string;
 		/** Set to preview or staging to block indexing outside production. */

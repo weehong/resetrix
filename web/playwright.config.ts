@@ -44,6 +44,8 @@ export default defineConfig({
 
 	/* Run either the dev server or a freshly verified production build. */
 	webServer: {
+		// Contact browser tests intercept the widget script and email endpoint.
+		env: { NEXT_PUBLIC_TURNSTILE_SITE_KEY: "test-site-key" },
 		command: isProductionTest
 			? "npm run build:seo && npm run start:standalone:test"
 			: "npm run dev",

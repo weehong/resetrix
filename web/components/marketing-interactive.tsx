@@ -10,6 +10,7 @@ import {
 	type ReactNode,
 } from "react";
 import { Brand } from "@/components/brand";
+import { ContactVerification } from "@/components/contact-verification";
 import { ThemeSwitcher } from "@/components/marketing-shared";
 
 export function Reveal({
@@ -174,6 +175,10 @@ const CONTACT_TEXTAREAS = [
 ] as const;
 
 export function ContactForm(): React.ReactElement {
+	const [token, setToken] = useState("");
+	const [verificationAttempt, setVerificationAttempt] = useState(0);
+	const [errorMessage, setErrorMessage] = useState("");
+	const submitting = useRef(false);
 	const [status, setStatus] = useState<
 		"idle" | "submitting" | "success" | "error"
 	>("idle");
@@ -182,6 +187,15 @@ export function ContactForm(): React.ReactElement {
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> => {
 		event.preventDefault();
+		if (submitting.current) return;
+		if (!token) {
+			setErrorMessage(
+				"Please complete the verification before sending your enquiry."
+			);
+			setStatus("error");
+			return;
+		}
+		submitting.current = true;
 		const formElement = event.currentTarget;
 		setStatus("submitting");
 
@@ -189,20 +203,52 @@ export function ContactForm(): React.ReactElement {
 			const response = await fetch("/api/contact", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(Object.fromEntries(new FormData(formElement))),
+				body: JSON.stringify({
+					...Object.fromEntries(new FormData(formElement)),
+					"cf-turnstile-response": token,
+				}),
 			});
 			if (!response.ok) {
-				throw new Error("Contact request failed");
+				const messages: Record<number, string> = {
+					403: "Verification failed or expired. Please verify again and retry.",
+					413: "Your enquiry is too long. Please shorten it and try again.",
+					429: "Too many attempts. Please wait 10 minutes before trying again.",
+					503: "Verification is temporarily unavailable. Please try again later or email hello@resetrix.com.",
+				};
+				setErrorMessage(
+					messages[response.status] ??
+						"We could not send your enquiry. Please try again or email hello@resetrix.com."
+				);
+				setStatus("error");
+				return;
 			}
 			formElement.reset();
 			setStatus("success");
 		} catch {
+			setErrorMessage(
+				"We could not send your enquiry. Please try again or email hello@resetrix.com."
+			);
 			setStatus("error");
+		} finally {
+			// This handler owns the lock; concurrent submissions return before the try.
+			// eslint-disable-next-line require-atomic-updates
+			submitting.current = false;
+			setToken("");
+			setVerificationAttempt((attempt) => attempt + 1);
 		}
 	};
 
 	return (
 		<form className="contact-form" onSubmit={submitContact}>
+			<div hidden aria-hidden="true">
+				<label htmlFor="contact-website">Leave this field empty</label>
+				<input
+					id="contact-website"
+					name="website"
+					tabIndex={-1}
+					autoComplete="off"
+				/>
+			</div>
 			<div className="field">
 				<label htmlFor="name">Name</label>
 				<input
@@ -277,6 +323,20 @@ export function ContactForm(): React.ReactElement {
 					<textarea id={name} name={name} required placeholder={placeholder} />
 				</div>
 			))}
+			<ContactVerification key={verificationAttempt} onToken={setToken} />
+			{!token && (
+				<button
+					type="button"
+					className="btn field--full"
+					disabled={status === "submitting"}
+					onClick={() => {
+						setToken("");
+						setVerificationAttempt((attempt) => attempt + 1);
+					}}
+				>
+					Retry verification
+				</button>
+			)}
 			<p className="form-note">
 				Your details will be sent securely to hello@resetrix.com.
 			</p>
@@ -288,7 +348,7 @@ export function ContactForm(): React.ReactElement {
 				{status === "success"
 					? "Thanks. Your enquiry has been sent, and we will be in touch within one business day."
 					: status === "error"
-						? "We could not send your enquiry. Please try again or email hello@resetrix.com."
+						? errorMessage
 						: ""}
 			</p>
 			<button

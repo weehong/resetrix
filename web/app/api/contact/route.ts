@@ -1,3 +1,5 @@
+import { readContactBody, verifyContactToken } from "@/lib/contact-protection";
+
 const RECIPIENT = "hello@resetrix.com";
 const SUBJECT = "System Fit Diagnostic - Fit Call Request";
 const MAILJET_SEND_URL = "https://api.mailjet.com/v3.1/send";
@@ -160,10 +162,7 @@ function parseSubmission(value: unknown): ContactSubmission | null {
 		submission[field] = fieldValue.trim();
 	}
 
-	if (
-		submission.email.length > 254 ||
-		!EMAIL_PATTERN.test(submission.email)
-	) {
+	if (submission.email.length > 254 || !EMAIL_PATTERN.test(submission.email)) {
 		return null;
 	}
 
@@ -186,22 +185,71 @@ function getMailjetConfig(): {
 	return { apiKey, secretKey, fromEmail };
 }
 
+function getMailjetErrorCodes(body: unknown): Array<string> {
+	if (typeof body !== "object" || body === null) return [];
+	const record = body as Record<string, unknown>;
+	// Only structured provider codes are safe to log; free-text errors can
+	// contain addresses, submitted content, or other sensitive values.
+	const codes =
+		typeof record["ErrorCode"] === "string" &&
+		/^(?:send|mj)-\d{4}$/.test(record["ErrorCode"])
+			? [record["ErrorCode"]]
+			: [];
+	for (const field of ["Messages", "Errors"]) {
+		const entries = record[field];
+		if (Array.isArray(entries)) {
+			codes.push(...entries.flatMap(getMailjetErrorCodes));
+		}
+	}
+	return [...new Set(codes)];
+}
+
 export async function POST(request: Request): Promise<Response> {
 	let submission: ContactSubmission | null = null;
+	let token: unknown;
 	try {
-		submission = parseSubmission(await request.json());
-	} catch {
-		return Response.json({ error: "Invalid form submission." }, { status: 400 });
+		const body = await readContactBody(request);
+		if (typeof body === "object" && body !== null && !Array.isArray(body)) {
+			const input = body as Record<string, unknown>;
+			if (input["website"] !== undefined && input["website"] !== "") {
+				return Response.json({ success: true });
+			}
+			token = input["cf-turnstile-response"];
+		}
+		submission = parseSubmission(body);
+	} catch (error) {
+		if (error instanceof RangeError) {
+			return Response.json(
+				{ error: "Form submission is too large." },
+				{ status: 413 }
+			);
+		}
+		return Response.json(
+			{ error: "Invalid form submission." },
+			{ status: 400 }
+		);
 	}
 
 	if (!submission) {
-		return Response.json({ error: "Invalid form submission." }, { status: 400 });
+		return Response.json(
+			{ error: "Invalid form submission." },
+			{ status: 400 }
+		);
 	}
 
+	const diagnostic: {
+		stage: "configuration" | "render" | "mailjet";
+		httpStatus?: number;
+		errorCodes?: Array<string>;
+	} = { stage: "configuration" };
 	try {
 		const config = getMailjetConfig();
+		const verificationFailure = await verifyContactToken(token);
+		if (verificationFailure) return verificationFailure;
+		diagnostic.stage = "render";
 		const email = renderContactEmail(submission);
 
+		diagnostic.stage = "mailjet";
 		const response = await fetch(MAILJET_SEND_URL, {
 			method: "POST",
 			headers: {
@@ -225,11 +273,16 @@ export async function POST(request: Request): Promise<Response> {
 			}),
 		});
 		if (!response.ok) {
+			diagnostic.httpStatus = response.status;
+			diagnostic.errorCodes = getMailjetErrorCodes(
+				await response.json().catch(() => null)
+			);
 			throw new Error(`Mailjet delivery failed with status ${response.status}`);
 		}
 
 		return Response.json({ success: true });
 	} catch {
+		console.error("Contact email delivery failed", diagnostic);
 		return Response.json(
 			{ error: "We could not send your enquiry. Please try again." },
 			{ status: 500 }

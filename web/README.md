@@ -95,6 +95,11 @@ The contact form sends mail through the Mailjet API using `MAILJET_API_KEY` and
 Contact emails are always delivered to `hello@resetrix.com`, with the visitor's
 work email set as the reply-to address.
 
+The form also requires `NEXT_PUBLIC_TURNSTILE_SITE_KEY` at build time and
+`TURNSTILE_SECRET_KEY` on the server. See
+[inquiry spam protection](docs/contact-spam-protection.md) for Cloudflare
+hostname setup, preview support, and the required Vercel Firewall rate-limit rule.
+
 ## Important Notes
 
 1. Brand and SEO defaults live in `lib/site-config.ts`. Update this file before
